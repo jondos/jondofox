@@ -1,0 +1,20 @@
+{
+  "title": "JonDoFox Lite",
+  "name": "jondofoxlite",
+  "version": "0.0.1",
+  "description": "JonDoFox, but build with a new SDK and looking forward to the new API",
+  "main": "index.js",
+  "author": "currently, just me",
+  "engines": {
+    "firefox": ">=38.0a1"
+  },
+  "license": "dunnow",
+  
+  "preferences": [{
+    "name": "JonDoFoxLite_isEnabled",
+    "title": "Some Title",
+    "description": "Defines whether this Addon is enabled or disabled",
+    "type": "bool",
+    "value": true
+  }]
+}
