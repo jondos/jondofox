@@ -44,6 +44,130 @@ function onPrefChange(prefName){
 
 }
 
+function getDOMWindow(channel){
+
+  var notificationCallbacks;
+  var wind = null;
+  var loadGroupNot = false;
+
+  if (channel.notificationCallbacks) {
+  
+    notificationCallbacks = channel.notificationCallbacks;
+    
+  } else {
+  
+    if (channel.loadGroup) {
+    
+      notificationCallbacks = channel.loadGroup.notificationCallbacks;
+      loadGroupNot = true;
+      
+    } else {
+    
+      notificationCallbacks = null;
+      
+    }
+  }
+  
+  if (!notificationCallbacks) {
+  
+    console.log("We found no Notificationcallbacks! Returning null...");
+    
+  } else {
+  
+    try {
+    
+      wind = notificationCallbacks.getInterface(Ci.nsILoadContext).associatedWindow;
+      
+    } catch (e) {
+    
+      // If we aren't here because the loadGroup notificationCallbacks got
+      // used and we get the loadGroup check them. That is e.g. needed for
+      // CORS requests. See:
+      // https://trac.torproject.org/projects/tor/ticket/3739
+      
+      if (!loadGroupNot && channel.loadGroup) {
+      
+        notificationCallbacks = channel.loadGroup.notificationCallbacks;
+        
+        try {
+        
+          wind = notificationCallbacks.getInterface(Ci.nsILoadContext).associatedWindow;
+          
+        } catch (e) {
+        
+          //console.log("Error while trying to get the Window for the second time: " + e);
+          
+        }
+      }
+    }
+  }
+
+  return wind;
+
+}
+
+function getParentHost(channel) {
+
+  var wind;
+  var parentHost = null;
+  wind = this.getDOMWindow(channel);
+    
+  if (wind) {
+    
+    try {
+    
+      parentHost = wind.top.location.hostname;
+      
+      return parentHost;
+      
+    } catch (ex) {
+    
+      console.log("nsIDOMWindow seems not to be available here!");
+      
+    }
+      
+  }
+    
+  // We are still here, thus something went wrong. Trying further things.
+  // We can't rely on the Referer here as this can legitimately be
+  // 1st party while the content is still 3rd party (from a bird's eye
+  // view). Therefore...
+  
+  try {
+  
+    //I still dont know how to get this to work...
+    
+    parentHost = cookiePerm.getOriginatingURI(channel).host;
+    console.log("Used getOrigingURI! And parentHost is: " + parentHost + "\n");
+    
+    return parentHost;
+      
+  } catch (e) {
+  
+    //console.log("getOriginatingURI failed as well: " + e + "\nWe try our last resort the Referer...");
+    
+  } finally {
+    
+    // Getting the host via getOriginatingURI failed as well (e.g. due to
+    // browser-sourced favicon or safebrowsing requests or the method not
+    // being available in Gecko > 17). Resorting to the Referer.
+      
+    if (channel.referrer) {
+    
+      parentHost = channel.referrer.host;
+      
+    } else {
+    
+      console.log("No Referer either. Could be 3rd party interaction though.");
+      
+    }
+    
+  }
+  
+  return parentHost;
+  
+}
+
 /*
 * The observer to get the 'http-on-modify-request' trigger used to intercept
 * incoming HTTP Headers (so we can remove the 'Authorization' Header flag
@@ -56,27 +180,32 @@ var httpRequestObserver = {
   */
   observe: function(subject, topic, data){
   
-    if(topic == "http-on-modify-request") {
+    if(topic == "http-on-examine-response") {
     
       var httpChannel = subject.QueryInterface(Ci.nsIHttpChannel);
       
-      try{
-        if(httpChannel.getRequestHeader("Authorization") != 0x80040111){
+      var parentHost = getParentHost(httpChannel);
       
-          console.log("[i] Blocked Authentication-ID: " + httpChannel.getRequestHeader("Authorization"));
-          console.log("[i] Blocked from Host:         " + httpChannel.getRequestHeader("Host"));
+      if(parentHost && parentHost !== httpChannel.URI.host){
       
-          httpChannel.setRequestHeader("Authorization", "", false);
+        try{
+          if(httpChannel.getResponseHeader("WWW-Authenticate") != 0x80040111){
+          
+            console.log("[i] Blocked Auth-ID: " + httpChannel.getResponseHeader("WWW-Authenticate"));
+      
+            httpChannel.setResponseHeader("WWW-Authenticate", null, false);
         
+          }
         }
-      }
-      catch(e){
-        if(e.result == Cr.NS_ERROR_NOT_AVAILABLE){
-          // this silences the NS_ERROR_NOT_AVAILABLE message
+        catch(e){
+          if(e.result == Cr.NS_ERROR_NOT_AVAILABLE){
+            // this silences the NS_ERROR_NOT_AVAILABLE message
+          }
+          else{
+            console.log("observe() encountered a strange error: " + e);
+          }
         }
-        else{
-          console.log("observe() encountered a strange error: " + e);
-        }
+      
       }
       
     }
@@ -88,11 +217,11 @@ var httpRequestObserver = {
   },
   
   register: function(){
-    this.observerService.addObserver(this, "http-on-modify-request", false);
+    this.observerService.addObserver(this, "http-on-examine-response", false);
   },
   
   unregister: function(){
-    this.observerService.removeObserver(this, "http-on-modify-request");
+    this.observerService.removeObserver(this, "http-on-examine-response");
   }
   
 };
