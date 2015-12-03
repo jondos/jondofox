@@ -70,7 +70,7 @@ function getDOMWindow(channel){
   
   if (!notificationCallbacks) {
   
-    console.log("We found no Notificationcallbacks! Returning null...");
+    //console.log("We found no Notificationcallbacks! Returning null...");
     
   } else {
   
@@ -122,7 +122,7 @@ function getParentHost(channel) {
       
     } catch (ex) {
     
-      console.log("nsIDOMWindow seems not to be available here!");
+      //console.log("nsIDOMWindow seems not to be available here!");
       
     }
       
@@ -138,7 +138,7 @@ function getParentHost(channel) {
     //I still dont know how to get this to work...
     
     parentHost = cookiePerm.getOriginatingURI(channel).host;
-    console.log("Used getOrigingURI! And parentHost is: " + parentHost + "\n");
+    //console.log("Used getOrigingURI! And parentHost is: " + parentHost + "\n");
     
     return parentHost;
       
@@ -158,7 +158,7 @@ function getParentHost(channel) {
       
     } else {
     
-      console.log("No Referer either. Could be 3rd party interaction though.");
+      //console.log("No Referer either. Could be 3rd party interaction though.");
       
     }
     

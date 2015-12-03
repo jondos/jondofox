@@ -3,8 +3,30 @@ var observer = require("../observer.js");
 
 var {Cc, Ci, Cr, components} = require("chrome");
 
+function creatensIHttpChannel(url, authid, referrer){
+
+  var ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
+  var uri = ios.newURI(url, null, null);
+  var ch = ios.newChannelFromURI(uri);
+  var fake_uri = ios.newURI(referrer, null, null);
+  
+  /*
+  * The following three lines must be in this order, else all the whole test is failing
+  */
+  var channel = ch.QueryInterface(Ci.nsIHttpChannel);
+  
+  channel.referrer = fake_uri;
+  
+  ch.open();
+  
+  channel.setResponseHeader("WWW-Authenticate", authid, false);
+  
+  return channel;
+
+}
+
 /*
-* If ou put capital letters inside the [] like: ["Hello"]
+* If you put capital letters inside the [] like: ["Hello"]
 * then the Unittests will magically fail without error message (tests are skipped)
 */
 
@@ -31,41 +53,43 @@ exports["testing on_pref_change"] = function(assert, done){
 */
 exports["testing authentication-id blocking"] = function(assert, done){
 
-  var ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
-  var uri = ios.newURI("http://www.google.de/", null, null);
-  var ch = ios.newChannelFromURI(uri);
+  var channel_with_external_id = creatensIHttpChannel("http://www.google.de/", "Test-ID", "http://www.google-fake.de/");
+  var channel_with_internal_id = creatensIHttpChannel("http://www.google.de/", "Test-ID", "http://www.google.de/");
   
-  ch.open();
-  
-  var channel = ch.QueryInterface(Ci.nsIHttpChannel);
-  
-  channel.setResponseHeader("WWW-Authenticate", "TEST", false);
-  channel.setRequestHeader("Referer", "www.google-fake.de", false);
-  
-  observer.httpRequestObserver.observe(channel.QueryInterface(Ci.nsISupports), "http-on-examine-response", channel);
+  observer.httpRequestObserver.observe(channel_with_external_id.QueryInterface(Ci.nsISupports), "http-on-examine-response", channel_with_external_id);
+  observer.httpRequestObserver.observe(channel_with_internal_id.QueryInterface(Ci.nsISupports), "http-on-examine-response", channel_with_internal_id);
   
   try{
-    console.log("AUTHID: " + channel.getResponseHeader("WWW-Authenticate"));
+    console.log("AUTHID: " + channel_with_external_id.getResponseHeader("WWW-Authenticate"));
   }
   catch(e){
     if(e.result == Cr.NS_ERROR_NOT_AVAILABLE){
+    
+      try{
+        var test = channel_with_internal_id.getResponseHeader("WWW-Authenticate");
+        
+        assert.equal(true, true, "working");
+        done();
+      }
+      catch(ee){
       
-      assert.equal(true, true, "working");
-      done();
+        console.log("Failed while setting a Auth-ID on a first party site: " + ee);
+      
+        assert.equal(true, false, "failed");
+        done();
+      
+      }
       
     }
     else{
       
-      console.log("Not expected error while testing auth-id block: " + e);
+      console.log("Failed while setting a Auth-ID on a third party site: " + e);
       
       assert.equal(true, false, "failed");
       done();
       
     }
   }
-  
-  assert.equal(true, false, "failed");
-  done();
 
 }
 
