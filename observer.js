@@ -44,6 +44,9 @@ function onPrefChange(prefName){
 
 }
 
+/*
+* This is code from the 'old' XPI and should always work if NOT in Uittest Mode
+*/
 function getDOMWindow(channel){
 
   var notificationCallbacks;
@@ -106,6 +109,18 @@ function getDOMWindow(channel){
 
 }
 
+/*
+* This function tries to get the parent Host, meaning the Website the Browser has opened
+* in the current Window/Tab (so that scripts loaded from the Website hosted on a different
+* host are third party Hosts)
+*
+* Tries to identify the parent Host via:
+*  - DOMWindow
+*  - Cookie?
+*  - Referrer
+*
+* This code is from the 'old' XPI
+*/
 function getParentHost(channel) {
 
   var wind;
@@ -169,9 +184,9 @@ function getParentHost(channel) {
 }
 
 /*
-* The observer to get the 'http-on-modify-request' trigger used to intercept
-* incoming HTTP Headers (so we can remove the 'Authorization' Header flag
-* to block the Authentication-ID security flaw)
+* The observer to get the 'http-on-examine-response' trigger used to intercept
+* incoming HTTP Headers (so we can remove the 'WWW-Authenticate' Header flag
+* to block the Authentication-ID security flaw if it is set by a third party Website)
 */
 var httpRequestObserver = {
   
@@ -180,14 +195,17 @@ var httpRequestObserver = {
   */
   observe: function(subject, topic, data){
   
+    // If it is a Server->Client Response
     if(topic == "http-on-examine-response") {
     
       var httpChannel = subject.QueryInterface(Ci.nsIHttpChannel);
       
       var parentHost = getParentHost(httpChannel);
       
+      // If it is a third party Website/Host
       if(parentHost && parentHost !== httpChannel.URI.host){
       
+        // If the 'WWW-Authenticate' Header is set
         try{
           if(httpChannel.getResponseHeader("WWW-Authenticate") != 0x80040111){
           

@@ -3,6 +3,14 @@ var observer = require("../observer.js");
 
 var {Cc, Ci, Cr, components} = require("chrome");
 
+/*
+* This function creates a nsIHttpChannel and sets a Authentication ID and a Referrer
+*
+* The url, authid and referrer should be passed as string
+* 
+* The Auth-ID is set as Server->Client Response (WWW-Authenticate Header)
+* And NOT as Client->Server Request (Authorization Header)
+*/
 function creatensIHttpChannel(url, authid, referrer){
 
   var ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
@@ -11,7 +19,7 @@ function creatensIHttpChannel(url, authid, referrer){
   var fake_uri = ios.newURI(referrer, null, null);
   
   /*
-  * The following three lines must be in this order, else all the whole test is failing
+  * The following three lines must be in this order
   */
   var channel = ch.QueryInterface(Ci.nsIHttpChannel);
   
@@ -19,6 +27,7 @@ function creatensIHttpChannel(url, authid, referrer){
   
   ch.open();
   
+  // This line will fail if 'url' is no valid host or the url is not reachable
   channel.setResponseHeader("WWW-Authenticate", authid, false);
   
   return channel;
@@ -42,18 +51,19 @@ exports["testing on_pref_change"] = function(assert, done){
 /*
 * This is testing the observer() function declared in httpRequestObserver
 *
-* It works by creating a nsIChannel 'ch' pointing to Google, but it can be any website
-* as long as the site is reachable from the testing machine
+* Two different nsIHttpChannel will be created pointing to google.de (it can be any reachable website)
 *
-* Then the nsIChannel is opened and converted into a nsIHttpChannel to reach HTTP
-* specific functions and data
+* One of the Channels is treated as "third party website" and the other as "first party website"
+* based on the referrer (the referrer is only used in Unittest mode, see observer.js:getParentHost() )
 *
-* The nsIHttpChannel is passed to the observe() function which should be tested
-* and the output is being checked
+* The observer() function is run with both Channels and it should remove the Auth-ID of the "third party website"
+*
+* The test returns true if "first party website" does keep its Auth-ID and "third party website" removes it.
 */
 exports["testing authentication-id blocking"] = function(assert, done){
 
-  var channel_with_external_id = creatensIHttpChannel("http://www.google.de/", "Test-ID", "http://www.google-fake.de/");
+  // The browser is on 'google.de', but some script from 'google.com' is setting 'Test-ID' (this should be blocked)
+  var channel_with_external_id = creatensIHttpChannel("http://www.google.com/", "Test-ID", "http://www.google.de/");
   var channel_with_internal_id = creatensIHttpChannel("http://www.google.de/", "Test-ID", "http://www.google.de/");
   
   observer.httpRequestObserver.observe(channel_with_external_id.QueryInterface(Ci.nsISupports), "http-on-examine-response", channel_with_external_id);

@@ -1,7 +1,7 @@
 var main = require("../index.js");
 
 /*
-* If ou put capital letters inside the [] like: ["Hello"]
+* If you put capital letters inside the [] like: ["Hello"]
 * then the Unittests will magically fail without error message (tests are skipped)
 */
 exports["testing addon enable/disable..."] = function(assert){
