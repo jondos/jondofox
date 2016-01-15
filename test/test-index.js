@@ -33,9 +33,7 @@ exports["testing addon enable/disable..."] = function(assert){
       assert.equal(true, false, "failed");
       
     }
-    
   }
-  
 }
 
 require("sdk/test").run(exports);
