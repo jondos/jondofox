@@ -26,6 +26,7 @@ var button = buttons.ActionButton({
   onClick: handleClick
 });
 
+
 /*
 * This function is run when the Toolbar Button is clicked
 * it sets the JonDoFoxLite_isEnabled pref
