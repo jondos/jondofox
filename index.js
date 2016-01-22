@@ -9,7 +9,7 @@ var requests = require("./observer.js");
 * Initiate Observers here
 */
 requests.httpRequestObserver.register();
-    
+
 require("sdk/simple-prefs").on("JonDoFoxLite_isEnabled", requests.onPrefChange);
 
 /*
@@ -44,3 +44,4 @@ function handleClick(state){
 * Exports needed functions so they are available for others when this file is require()
 */
 exports.handleClick = handleClick;
+// test github
