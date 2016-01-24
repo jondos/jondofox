@@ -9,16 +9,34 @@
   "engines": {
     "firefox": ">=38.0a1"
   },
+
   "license": "dunnow",
+
   "permissions": {
-    "multiprocess":true
+    "multiprocess":true ,
+    "alarms" :true ,
+    "bookmarks" : true ,
+    "contextMenus" : true ,
+    "cookies" : true ,
+    "notifications" : true ,
+    "storage" : true ,
+    "tabs" : true ,
+    "webNavigation" : true ,
+    "webRequest" : true ,
+    "webRequestBlocking" : true 
   },
-  
+
   "preferences": [{
     "name": "JonDoFoxLite_isEnabled",
     "title": "Some Title",
     "description": "Defines whether this Addon is enabled or disabled",
     "type": "bool",
     "value": true
+  },{
+      "name": "preferencesButton",
+      "title": "Setting up your preferences",
+      "type": "control",
+      "description": "Enable/disabl popup panel of preferences.",
+      "label": "Preferences"
   }]
 }
