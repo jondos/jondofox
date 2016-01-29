@@ -80,7 +80,8 @@ function onExtPrefClick(){
       worker.port.on("preferences", function(preferences) {
         console.log("AddonScript from contentScript :" + preferences);
         // Set preferences in the storage
-        require("sdk/preferences/service").set("JonDoFoxLite_isEnabled", preferences);
+        console.log("XXX Preference :" + preferences);
+        require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled =  preferences;
       });
     }
   });

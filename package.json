@@ -23,7 +23,8 @@
     "tabs" : true ,
     "webNavigation" : true ,
     "webRequest" : true ,
-    "webRequestBlocking" : true 
+    "webRequestBlocking" : true ,
+    "private-browsing": true
   },
 
   "preferences": [{
