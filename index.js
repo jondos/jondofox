@@ -10,6 +10,8 @@ var self = require("sdk/self");
 var requests = require("./observer.js");
 var style = require('sdk/stylesheet/style');
 var data = require("sdk/self").data;
+var { ToggleButton } = require('sdk/ui/button/toggle');
+var panels = require("sdk/panel");
 
 /*
 * Initiate Observers here
@@ -19,7 +21,8 @@ requests.httpRequestObserver.register();
 /*
 * Create the Toolbar Button
 */
-var button = buttons.ActionButton({
+// Removed by KKP to switch it to an toggleButton
+/*var button = buttons.ActionButton({
   id: "enable-disable",
   label: "Enable/Disable Addon",
   icon: {
@@ -28,7 +31,64 @@ var button = buttons.ActionButton({
     //"64": "./icon-64.png"
   },
   onClick: handleClick
+});*/
+
+var button = ToggleButton({
+  id: "togglePanelMenu",
+  label: "my button",
+  icon: {
+    "16": "./icon-16.png",
+    "32": "./icon-32.png"
+    //"64": "./icon-64.png"
+  },
+  onChange: handleChange
 });
+
+var panelmenu = panels.Panel({
+  width: 200,
+  height:75,
+  contentURL: self.data.url("panelmenu.html"),
+  onHide: handleHide ,
+  contentScriptFile :  data.url("cs_panelmenu.js"),
+});
+
+
+
+
+// Receive data from contentScript "options.js"
+panelmenu.port.on("menuAction", function(jsonParamters) {
+  console.log("panelmenu.port.on begin");
+  if(jsonParamters.option) {
+    console.log(jsonParamters.option)
+    onExtPrefClick();
+  }
+
+  if(null != jsonParamters.JonDoFoxLite_isEnabled) {
+    console.log(jsonParamters.JonDoFoxLite_isEnabled);
+    require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled =  jsonParamters.JonDoFoxLite_isEnabled;
+  }
+
+  console.log(jsonParamters);
+  console.log("panelmenu.port.on end");
+});
+
+function handleChange(state) {
+  if (state.checked) {
+    panelmenu.show({
+      position: button
+    });
+    // INIT PARAMETERS
+    var panelmenuInitParameter =  "  [" +
+                        "  JonDoFoxLite_isEnabled," +
+                        preferences.JonDoFoxLite_isEnabled +
+                        "  ]";
+    panelmenu.port.emit("menuAction", panelmenuInitParameter);
+  }
+}
+
+function handleHide() {
+  button.state('window', {checked: false});
+}
 
 /*
 * This function is run when the Toolbar Button is clicked
@@ -66,7 +126,7 @@ function onExtPrefClick(){
     isPinned: true,
     onReady: function(tab) {
       worker = tab.attach({
-        contentScriptFile: data.url("options.js"),
+        contentScriptFile: data.url("cs_options.js"),
         contentScriptOptions: {
             JonDoFoxLite_isEnabled: preferences.JonDoFoxLite_isEnabled
         }
@@ -74,7 +134,7 @@ function onExtPrefClick(){
 
       // Send data to contentScript "options.js"
       worker.port.emit("preferences", preferences.JonDoFoxLite_isEnabled);
-      console.log("AddonScript to contentScript :" + preferences.JonDoFoxLite_isEnabled);
+
 
       // Receive data from contentScript "options.js"
       worker.port.on("preferences", function(preferences) {
