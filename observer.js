@@ -1,5 +1,5 @@
 var {Cc, Ci, Cr} = require("chrome");
-
+var preferences = require("./preferences.js");
 
 
 require("sdk/tabs").on("ready", function(tab) {
@@ -26,6 +26,8 @@ function onPrefChange(prefName){
     if(require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled){
 
       httpRequestObserver.register();
+        // save system font.blacklist.underline_offset
+        preferences.putFontBlacklist();
 
         /*
         * This is just for testing purpose and yet buggy
@@ -43,6 +45,8 @@ function onPrefChange(prefName){
     else if(!require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled){
 
       httpRequestObserver.unregister();
+        // restore system font.blacklist.underline_offset
+        preferences.restoreFontBlacklist();
 
         /*
         * This is just for testing purpose and yet buggy
@@ -60,6 +64,7 @@ function onPrefChange(prefName){
   }
 
 }
+
 
 /*
 * This is code from the 'old' XPI and should always work if NOT in Uittest Mode

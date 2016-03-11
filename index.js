@@ -12,12 +12,16 @@ var style = require('sdk/stylesheet/style');
 var data = require("sdk/self").data;
 var { ToggleButton } = require('sdk/ui/button/toggle');
 var panels = require("sdk/panel");
+var preferences = require("./preferences.js");
 
 /*
 * Initiate Observers here
 */
 requests.httpRequestObserver.register();
 
+// Initial make a shadowcopy of preferences
+preferences.putFontBlacklist;
+preferences.jonDoFoxPreferenceService.initShadowCopy();
 /*
 * Create the Toolbar Button
 */
@@ -53,8 +57,6 @@ var panelmenu = panels.Panel({
 });
 
 
-
-
 // Receive data from contentScript "options.js"
 panelmenu.port.on("menuAction", function(jsonParamters) {
   console.log("panelmenu.port.on begin");
@@ -82,7 +84,9 @@ function handleChange(state) {
                         "  JonDoFoxLite_isEnabled," +
                         preferences.JonDoFoxLite_isEnabled +
                         "  ]";
+
     panelmenu.port.emit("menuAction", panelmenuInitParameter);
+
   }
 }
 
@@ -98,9 +102,11 @@ function handleHide() {
 function handleClick(state){
   if(preferences.JonDoFoxLite_isEnabled){
     preferences.JonDoFoxLite_isEnabled = false;
+    restoreFontBlacklist();
   }
   else if(!preferences.JonDoFoxLite_isEnabled){
     preferences.JonDoFoxLite_isEnabled = true;
+    putFontBlacklist()
   }
 }
 
@@ -108,6 +114,8 @@ function handleClick(state){
 * Exports needed functions so they are available for others when this file is require()
 */
 exports.handleClick = handleClick;
+
+
 
 
 /*
@@ -150,3 +158,10 @@ function onExtPrefClick(){
 * Set listener to the button
 */
 require("sdk/simple-prefs").on("preferencesButton", onExtPrefClick);
+
+/*
+* Funktion on JonDoFoxLite_isEnabled make shadowcopy of preference
+*/
+function createPreferenceShadowCopy(){
+
+}

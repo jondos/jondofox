@@ -39,5 +39,17 @@
       "type": "control",
       "description": "Enable/disabl popup panel of preferences.",
       "label": "Preferences"
+  },{
+    "name" : "fontBlacklistUnderline_offset" ,
+    "title" : "Allowed fonts",
+    "type" : "string",
+    "hidden": true,
+    "value" : "Liberation Sans, Arial"
+  },{
+    "name" : "restoreFontBlacklistUnderline_offset" ,
+    "title" : "Backup of the system allowed fonts",
+    "type" : "string",
+    "hidden": true ,
+    "value" : ""
   }]
 }
