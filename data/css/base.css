@@ -15,15 +15,21 @@
     padding: 5px 10px;
 }
 
+.panelmenu-item-no-link {
+    float:left;
+    width: 100%;
+    padding: 5px 10px;
+}
+
 .panelmenu-item:hover , .panelmenu-item:focus{
   background : #0096db;
 }
 
-.panelmenu-item{
+.panelmenu-item , .panelmenu-item-no-link{
   border-bottom:1px solid #d3d3d3;
 }
 
-.panelmenu-item:last-child{
+.panelmenu-item:last-child , .panelmenu-item-no-link:last-child {
   border:none;
 }
 

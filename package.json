@@ -56,44 +56,189 @@
       "name" :"custom_backup_ssl_host",
       "hidden" : true ,
       "type" : "string",
-      "value" : "",
-      "title": "How Many?"
+      "value" : " ",
+      "title": "custom_backup_ssl_host"
     },{
       "name" :"custom_backup_ftp_host",
       "hidden" : true ,
       "type" : "string",
       "value" : "" ,
-      "title": "How Many?"
+      "title": "custom_backup_ftp_host"
     },{
       "name" : "custom_backup_ftp_port",
       "hidden" : true ,
       "type" : "integer",
       "value" : 0 ,
-      "title": "How Many?"
+      "title": "custom_backup_ftp_port"
     },{
       "name" :"custom_backup_gopher_port",
       "hidden" : true ,
       "type" : "integer",
       "value" : 0 ,
-      "title": "How Many?"
+      "title": "custom_backup_gopher_port"
     },{
       "name" :"custom_backup_socks_host",
       "hidden" : true ,
       "type" : "string",
       "value" : "",
-      "title": "How Many?"
+      "title": "custom_backup_socks_host"
     },{
       "name" :"custom_backup_socks_port",
       "hidden" : true ,
       "type" : "integer",
       "value" : 0 ,
-      "title": "How Many?"
+      "title": "custom_backup_socks_port"
     },{
       "name" :"custom_backup_socks_version",
       "hidden" : true ,
       "type" : "integer",
       "value" : 5 ,
-      "title": "How Many?"
+      "title": "custom_backup_socks_version"
+    },{
+      "name" :"custom_label",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "" ,
+      "title": "custom_label"
+    },{
+      "name" :"custom_user_agent",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "normal" ,
+      "title": "custom_user_agent"
+    },{
+      "name" :"custom_proxyKeepAlive",
+      "hidden" : true ,
+      "type" : "bool",
+      "value" : true ,
+      "title": "custom_proxyKeepAlive"
+    },{
+      "name" :"custom_http_host",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "" ,
+      "title": "custom_http_host"
+    },{
+      "name" :"custom_http_port",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 0 ,
+      "title": "custom_http_port"
+    },{
+      "name" :"custom_ssl_host",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "" ,
+      "title": "custom_ssl_host"
+    },{
+      "name" :"custom_ssl_port",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 0 ,
+      "title": "custom_ssl_port"
+    },{
+      "name" :"custom_ftp_host",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "" ,
+      "title": "custom_ftp_host"
+    },{
+      "name" :"custom_ftp_port",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 0 ,
+      "title": "custom_ftp_port"
+    },{
+      "name" :"custom_gopher_host",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "" ,
+      "title": "custom_gopher_host"
+    },{
+      "name" :"custom_gopher_port",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 0 ,
+      "title": "custom_gopher_port"
+    },{
+      "name" :"custom_socks_host",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "" ,
+      "title": "custom_socks_host"
+    },{
+      "name" :"custom_socks_port",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 0 ,
+      "title": "custom_socks_port"
+    },{
+      "name" :"custom_socks_version",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 5 ,
+      "title": "custom_socks_version"
+    },{
+      "name" :"custom_share_proxy_settings",
+      "hidden" : true ,
+      "type" : "bool",
+      "value" : false ,
+      "title": "custom_share_proxy_settings"
+    },{
+      "name" :"custom_empty_proxy",
+      "hidden" : true ,
+      "type" : "bool",
+      "value" : true ,
+      "title": "custom_empty_proxy"
+    },
+    {
+      "name" :"jondo_host",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "127.0.0.1" ,
+      "title": "jondo_host"
+    },{
+      "name" :"jondo_port",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 4001 ,
+      "title": "jondo_port"
+    },{
+      "name" :"tor_http_host",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "" ,
+      "title": "tor_http_host"
+    },{
+      "name" :"tor_http_port",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 0 ,
+      "title": "tor_http_port"
+    },{
+      "name" :"tor_ssl_host",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "" ,
+      "title": "tor_ssl_host"
+    },{
+      "name" :"tor_ssl_port",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 0 ,
+      "title": "tor_ssl_port"
+    },{
+      "name" :"tor_socks_host",
+      "hidden" : true ,
+      "type" : "string",
+      "value" : "127.0.0.1" ,
+      "title": "tor_socks_host"
+    },{
+      "name" :"tor_socks_port",
+      "hidden" : true ,
+      "type" : "integer",
+      "value" : 9050 ,
+      "title": "tor_socks_port"
     }
   ]
 }

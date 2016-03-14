@@ -13,6 +13,7 @@ var data = require("sdk/self").data;
 var { ToggleButton } = require('sdk/ui/button/toggle');
 var panels = require("sdk/panel");
 var preferences = require("./preferences.js");
+var proxy = require("./data/bs_proxy.js");
 
 /*
 * Initiate Observers here
@@ -22,6 +23,7 @@ requests.httpRequestObserver.register();
 // Initial make a shadowcopy of preferences
 preferences.putFontBlacklist;
 preferences.jonDoFoxPreferenceService.initShadowCopy();
+proxy.proxyService.initShadowProxyCopy();
 /*
 * Create the Toolbar Button
 */
@@ -50,7 +52,7 @@ var button = ToggleButton({
 
 var panelmenu = panels.Panel({
   width: 200,
-  height:75,
+  height:265,
   contentURL: self.data.url("panelmenu.html"),
   onHide: handleHide ,
   contentScriptFile :  data.url("cs_panelmenu.js"),
@@ -68,6 +70,11 @@ panelmenu.port.on("menuAction", function(jsonParamters) {
   if(null != jsonParamters.JonDoFoxLite_isEnabled) {
     console.log(jsonParamters.JonDoFoxLite_isEnabled);
     require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled =  jsonParamters.JonDoFoxLite_isEnabled;
+  }
+
+  if(null != jsonParamters.proxyChoice) {
+    console.log(jsonParamters.proxyChoice);
+    proxy.proxyService.setProxy(jsonParamters.proxyChoice);
   }
 
   console.log(jsonParamters);
@@ -163,5 +170,6 @@ require("sdk/simple-prefs").on("preferencesButton", onExtPrefClick);
 * Funktion on JonDoFoxLite_isEnabled make shadowcopy of preference
 */
 function createPreferenceShadowCopy(){
+
 
 }

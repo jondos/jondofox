@@ -17,7 +17,28 @@
             <ul id="panelmenu" class="panelmenu-wrapper">
               <li id="JonDoFoxLite_isEnabled" class="panelmenu-item"><div class="panelmenu-item-wrap" ><i class="panelmenu-item-icon material-icons dp64">power_settings_new</i><span class="panelmenu-item-span" >Ein / Aus</span></div></li>
               <li id="JonDoFoxLite_openOptions" class="panelmenu-item"><div class="panelmenu-item-wrap" ><i class="panelmenu-item-icon material-icons dp64">settings</i><span class="panelmenu-item-span" >Einstellungen</span></div></li>
-            </ul>
+              <li id="JonDoFoxLite_proxyOn" class="panelmenu-item-no-link">
+                <div class="panelmenu-item-wrap" >
+                  <i class="panelmenu-item-icon material-icons dp64">language</i><span class="panelmenu-item-span" >Proxy</span><br />
+                  <p>
+                     <input name="proxyChoice" type="radio" id="val1" value="no" />
+                     <label for="val1">Kein Proxy</label>
+                  </p>
+                  <p>
+                    <input name="proxyChoice" type="radio" id="val2" value="tor"/>
+                    <label for="val2">Benutzerdefiniert</label>
+                  </p>
+                  <p>
+                   <input name="proxyChoice" type="radio" id="val3" value="custom"/>
+                   <label for="val3">Tor</label>
+                 </p>
+                 <p>
+                  <input name="proxyChoice" type="radio" id="val4" value="jondo"/>
+                  <label for="val4">JonDoFox</label>
+                </p>
+                </div>
+              </li>
+          </ul>
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <!-- Compiled and minified JavaScript -->

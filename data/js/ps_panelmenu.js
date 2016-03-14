@@ -20,6 +20,13 @@ $( document ).ready(function() {
     event.stopPropagation();
   });
 
+  $("input[name='proxyChoice']").change(function(){
+    var jsonParamters = { "proxyChoice" : $(this).val() };
+    window.postMessage(jsonParamters , "*");
+    console.log(jsonParamters);
+    event.stopPropagation();
+  });
+
 });
 
 // Listener for ContentScript
