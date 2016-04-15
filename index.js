@@ -173,3 +173,22 @@ function createPreferenceShadowCopy(){
 
 
 }
+
+// Check for D-Mode - PA-Mode
+
+var tabs = require("sdk/tabs");
+var { setInterval } = require("sdk/timers");
+
+setInterval(function() {
+  var isTabPrivate = false;
+
+  for (let tab of tabs) {
+      if (require("sdk/private-browsing").isPrivate(tab)) {
+        isTabPrivate = true;
+      }
+  }
+
+  require("sdk/simple-prefs").prefs.privateMode = isTabPrivate;
+
+
+}, 5000);

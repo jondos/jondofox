@@ -41,6 +41,12 @@
         "description": "Enable/disabl popup panel of preferences.",
         "label": "Preferences"
     },{
+      "name" : "privateMode" ,
+      "title" : "If is in PrivateMode or not",
+      "type" : "bool",
+      "hidden" : true,
+      "value" : false
+    },{
       "name" : "fontBlacklistUnderline_offset" ,
       "title" : "Allowed fonts",
       "type" : "string",
