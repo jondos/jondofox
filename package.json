@@ -2,9 +2,9 @@
   "title": "JonDoFox-Lite",
   "name": "jondofox-lite",
   "version": "0.0.1",
-  "description": "JonDoFox, but build with a new SDK and looking forward to the new API",
+  "description": "JonDoFox, but build with then Addon SDK",
   "main": "index.js",
-  "author": "currently, just me",
+  "author": "JonDo Team",
   "id":"jid1-GF76Y9gfW7TzGb@jondofoxLite",
   "engines": {
     "firefox": ">=38.0a1"
