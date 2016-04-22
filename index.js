@@ -174,12 +174,12 @@ function createPreferenceShadowCopy(){
 
 }
 
+////////////////////////////////
 // Check for D-Mode - PA-Mode
+////////////////////////////////
 
-var tabs = require("sdk/tabs");
-var { setInterval } = require("sdk/timers");
-
-setInterval(function() {
+// Check once initial tabs
+function checkIfOneTabIsPrivate(){
   var isTabPrivate = false;
 
   for (let tab of tabs) {
@@ -187,8 +187,18 @@ setInterval(function() {
         isTabPrivate = true;
       }
   }
-
+  console.log(isTabPrivate);
   require("sdk/simple-prefs").prefs.privateMode = isTabPrivate;
+}
 
+tabs.on('open', function () {
+  checkIfOneTabIsPrivate();
+});
 
-}, 5000);
+tabs.on('close', function () {
+  checkIfOneTabIsPrivate();
+});
+var tabs = require("sdk/tabs");
+var { setInterval } = require("sdk/timers");
+
+checkIfOneTabIsPrivate();
