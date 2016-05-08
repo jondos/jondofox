@@ -12,7 +12,7 @@ var style = require('sdk/stylesheet/style');
 var data = require("sdk/self").data;
 var { ToggleButton } = require('sdk/ui/button/toggle');
 var panels = require("sdk/panel");
-var preferences = require("./preferences.js");
+var shadow_preferences = require("./preferences.js"); //renamed cause of dublicated variable declaration, CHECK THIS!
 var proxy = require("./data/bs_proxy.js");
 
 /*
@@ -21,8 +21,8 @@ var proxy = require("./data/bs_proxy.js");
 requests.httpRequestObserver.register();
 
 // Initial make a shadowcopy of preferences
-preferences.putFontBlacklist;
-preferences.jonDoFoxPreferenceService.initShadowCopy();
+shadow_preferences.putFontBlacklist;
+shadow_preferences.jonDoFoxPreferenceService.initShadowCopy();
 proxy.proxyService.initShadowProxyCopy();
 /*
 * Create the Toolbar Button

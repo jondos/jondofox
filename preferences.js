@@ -1,3 +1,66 @@
+var ShadowPrefs = {
+
+  ShadowPrefNames: [],
+  ShadowPrefValues: [],
+  
+  /*
+  *  init the ShadowPrefNames Array with all config names we want to keep track of
+  */
+  initNames: function(){
+  
+    this.ShadowPrefNames.push("font.blacklist.underline_offset");
+  
+  },
+  
+  /*
+  *  init the ShadowPrefValues Array with default values for ShadowPrefNames. MUST BE IN SAME ORDER!
+  */
+  initValues: function(){
+  
+    this.ShadowPrefValues.push("");
+  
+  },
+  
+  /*
+  *  Apply all prefs saved in 'ShadowPrefNames' and 'ShadoPrefValues' to the original values
+  * (meaning the prefs without the 'extensions.jondofox.' prefix)
+  */
+  applyShadowPrefs: function(){
+  
+    if(this.ShadowPrefNames.length != this.ShadowPrefValues.length){
+    
+      console.log("[!] ShadowPrefs do not match!");
+    
+    }
+    else{
+    
+      for(var i = 0; i < this.ShadowPrefNames.length; i++){
+        
+        require("sdk/preferences/service").set(this.ShadowPrefNames[i].value, this.ShadowPrefValues[i].value);
+    
+      }
+    
+    }
+  
+  },
+  
+  /*
+  *  Read all ShadowPrefs from about:config
+  */
+  readShadowPrefs: function(){
+  
+    this.ShadowPrefValues = [];
+    
+    for(var i = 0; i < this.ShadowPrefNames.length; i++){
+    
+      this.ShadowPrefValues.push(require("sdk/preferences/service").get("extensions.jondofox." + this.ShadowPrefNames[i].value));
+    
+    }
+  
+  }
+
+}
+
 var jonDoFoxPreferenceService = {
   initShadowCopy : function initialShadowCopyPreferences(){
     // check if JonDoFoxLite_isEnabled is true (on) and make copy of init prefs / switch to the
