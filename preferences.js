@@ -8,7 +8,10 @@ var ShadowPrefs = {
   */
   initNames: function(){
   
+    this.ShadowPrefNames = [];
+  
     this.ShadowPrefNames.push("font.blacklist.underline_offset");
+    this.ShadowPrefNames.push("network.http.accept-encoding.secure");
   
   },
   
@@ -17,7 +20,10 @@ var ShadowPrefs = {
   */
   initValues: function(){
   
+    this.ShadowPrefValues = [];
+  
     this.ShadowPrefValues.push("");
+    this.ShadowPrefValues.push("gzip, deflate");
   
   },
   
@@ -36,7 +42,7 @@ var ShadowPrefs = {
     
       for(var i = 0; i < this.ShadowPrefNames.length; i++){
         
-        require("sdk/preferences/service").set(this.ShadowPrefNames[i].value, this.ShadowPrefValues[i].value);
+        require("sdk/preferences/service").set(this.ShadowPrefNames[i], this.ShadowPrefValues[i]);
     
       }
     
@@ -45,7 +51,7 @@ var ShadowPrefs = {
   },
   
   /*
-  *  Read all ShadowPrefs from about:config
+  *  Read all ShadowPrefs from about:config into 'ShadowPrefValues'
   */
   readShadowPrefs: function(){
   
@@ -53,7 +59,51 @@ var ShadowPrefs = {
     
     for(var i = 0; i < this.ShadowPrefNames.length; i++){
     
-      this.ShadowPrefValues.push(require("sdk/preferences/service").get("extensions.jondofox." + this.ShadowPrefNames[i].value));
+      this.ShadowPrefValues.push(require("sdk/preferences/service").get("extensions.jondofox." + this.ShadowPrefNames[i]));
+    
+    }
+  
+  },
+  
+  /*
+  *  If no shadow prefs where ever created, create them with this function
+  */
+  createShadowPrefs: function(){
+  
+    if(this.ShadowPrefNames.length != this.ShadowPrefValues.length){
+    
+      console.log("[!] ShadowPrefs do not match!");
+    
+    }
+    else{
+    
+      for(var i = 0; i < this.ShadowPrefNames.length; i++){
+    
+        var tempShadowName = "extensions.jondofox." + this.ShadowPrefNames[i];
+        
+        console.log(tempShadowName);
+      
+        require("sdk/preferences/service").set(tempShadowName, this.ShadowPrefValues[i]);
+    
+      }
+    
+    }
+  
+  }
+  
+  /*
+  *  Modify a ShadowPref loaded into 'ShadowPrefValues' 'ShadowPrefNames'
+  */
+  
+  modShadowPref: function(prefName, prefValue){
+  
+    for(var i = 0; i < this.ShadowPrefNames.length; i++){
+    
+      if(this.ShadowPrefNames[i] == prefName){
+      
+        this.ShadowPrefValues[i] = prefValue;
+      
+      }
     
     }
   
@@ -118,3 +168,4 @@ function createShadowCopyProxyPreferences(){
 exports.putFontBlacklist = putFontBlacklist;
 exports.restoreFontBlacklist = restoreFontBlacklist;
 exports.jonDoFoxPreferenceService = jonDoFoxPreferenceService ;
+exports.ShadowPrefs = ShadowPrefs;
