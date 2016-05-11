@@ -80,8 +80,6 @@ var ShadowPrefs = {
       for(var i = 0; i < this.ShadowPrefNames.length; i++){
     
         var tempShadowName = "extensions.jondofox." + this.ShadowPrefNames[i];
-        
-        console.log(tempShadowName);
       
         require("sdk/preferences/service").set(tempShadowName, this.ShadowPrefValues[i]);
     
@@ -89,10 +87,11 @@ var ShadowPrefs = {
     
     }
   
-  }
+  },
   
   /*
   *  Modify a ShadowPref loaded into 'ShadowPrefValues' 'ShadowPrefNames'
+  *  It is needed to write the prefs after modify with 'applyShadowPrefs' or the modified version will be lost
   */
   
   modShadowPref: function(prefName, prefValue){
