@@ -92,6 +92,10 @@ var ShadowPrefs = {
   /*
   *  Modify a ShadowPref loaded into 'ShadowPrefValues' 'ShadowPrefNames'
   *  It is needed to write the prefs after modify with 'applyShadowPrefs' or the modified version will be lost
+  *  This will however not change the default values of the init() functions
+  *
+  *  To effectively change values, dont init() at every boot but 'readShadowPrefs' and change the ShadowPref value
+  *  in about:config. This cant be done from code right now.
   */
   
   modShadowPref: function(prefName, prefValue){
