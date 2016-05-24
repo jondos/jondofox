@@ -1,7 +1,11 @@
+var Cc = require("chrome");
+
 var ShadowPrefs = {
 
   ShadowPrefNames: [],
   ShadowPrefValues: [],
+  
+  SP_exist: false,
   
   /*
   *  init the ShadowPrefNames Array with all config names we want to keep track of
@@ -12,6 +16,8 @@ var ShadowPrefs = {
   
     this.ShadowPrefNames.push("font.blacklist.underline_offset");
     this.ShadowPrefNames.push("network.http.accept-encoding.secure");
+    this.ShadowPrefNames.push("general.useragent.override");
+    this.ShadowPrefNames.push("intl.accept_languages");
   
   },
   
@@ -24,6 +30,34 @@ var ShadowPrefs = {
   
     this.ShadowPrefValues.push("");
     this.ShadowPrefValues.push("gzip, deflate");
+    this.ShadowPrefValues.push("Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101 Firefox/38.0");
+    this.ShadowPrefValues.push("en-US,en");
+  
+  },
+  
+  /*
+  *  Apply only one pref, for example prefs that need a restart and are not dynamically loaded
+  */
+  applyOneShadowPref: function(PrefName){
+  
+    if(this.ShadowPrefNames.length == 0){
+    
+      console.log("[!] Please init the ShadowPref names before running this function!");
+    
+    }
+    else{
+    
+      for(var i = 0; i < this.ShadowPrefNames.length; i++){
+      
+        if(this.ShadowPrefNames[i] == PrefName){
+        
+          require("sdk/preferences/service").set(this.ShadowPrefNames[i], this.ShadowPrefValues[i]);
+        
+        }
+      
+      }
+    
+    }
   
   },
   
@@ -60,6 +94,26 @@ var ShadowPrefs = {
     for(var i = 0; i < this.ShadowPrefNames.length; i++){
     
       this.ShadowPrefValues.push(require("sdk/preferences/service").get("extensions.jondofox." + this.ShadowPrefNames[i]));
+    
+    }
+  
+  },
+  
+  /*
+  *  Sets the 'SP_exist' value to true if ShadowPrefs exist in about:config
+  */
+  ShadowPref_check_exist: function(){
+  
+    this.readShadowPrefs();
+    
+    if(this.ShadowPrefValues.length != 0){
+    
+      this.SP_exist = true;
+    
+    }
+    else{
+    
+      this.SP_exist = false;
     
     }
   

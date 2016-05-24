@@ -14,15 +14,48 @@ var { ToggleButton } = require('sdk/ui/button/toggle');
 var panels = require("sdk/panel");
 var shadow_preferences = require("./preferences.js"); //renamed cause of dublicated variable declaration, CHECK THIS!
 var proxy = require("./data/bs_proxy.js");
+var PA = require("./PA_mode.js");
+
+/*
+*  Initialize the ShadowPrefs here if needed
+*/
+shadow_preferences.ShadowPrefs.ShadowPref_check_exist();
+
+if(!shadow_preferences.ShadowPrefs.SP_exist){
+
+  // init with hardcoded default values
+  shadow_preferences.ShadowPrefs.initNames();
+  shadow_preferences.ShadowPrefs.initValues();
+  
+  // create ShadowPrefs (extensions.jondofox.xxxx)
+  shadow_preferences.ShadowPrefs.createShadowPrefs();
+  
+  // apply all prefs here that need a restart and cant be loaded dynamically
+  shadow_preferences.ShadowPrefs.applyOneShadowPref("font.blacklist.underline_offset");
+  
+  // restart here if needed
+
+}
+else{
+
+  // init names of preferences we want to keep track of
+  shadow_preferences.ShadowPrefs.initNames();
+  
+  // read ShadowPref values from about:config
+  shadow_preferences.ShadowPrefs.readShadowPrefs();
+
+}
 
 /*
 * Initiate Observers here
 */
+PA.initTabs(PA, shadow_preferences);
 requests.httpRequestObserver.register();
 
 // Initial make a shadowcopy of preferences
-shadow_preferences.putFontBlacklist;
-shadow_preferences.jonDoFoxPreferenceService.initShadowCopy();
+
+//shadow_preferences.putFontBlacklist;
+//shadow_preferences.jonDoFoxPreferenceService.initShadowCopy();
 proxy.proxyService.initShadowProxyCopy();
 /*
 * Create the Toolbar Button
@@ -166,39 +199,4 @@ function onExtPrefClick(){
 */
 require("sdk/simple-prefs").on("preferencesButton", onExtPrefClick);
 
-/*
-* Funktion on JonDoFoxLite_isEnabled make shadowcopy of preference
-*/
-function createPreferenceShadowCopy(){
-
-
-}
-
-////////////////////////////////
-// Check for D-Mode - PA-Mode
-////////////////////////////////
-
-// Check once initial tabs
-function checkIfOneTabIsPrivate(){
-  var isTabPrivate = false;
-
-  for (let tab of tabs) {
-      if (require("sdk/private-browsing").isPrivate(tab)) {
-        isTabPrivate = true;
-      }
-  }
-  console.log(isTabPrivate);
-  require("sdk/simple-prefs").prefs.privateMode = isTabPrivate;
-}
-
-tabs.on('open', function () {
-  checkIfOneTabIsPrivate();
-});
-
-tabs.on('close', function () {
-  checkIfOneTabIsPrivate();
-});
-var tabs = require("sdk/tabs");
-var { setInterval } = require("sdk/timers");
-
-checkIfOneTabIsPrivate();
+PA.PA.checkIfOneTabIsPrivate(shadow_preferences);
