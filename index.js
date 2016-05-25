@@ -199,4 +199,6 @@ function onExtPrefClick(){
 */
 require("sdk/simple-prefs").on("preferencesButton", onExtPrefClick);
 
+// PA-Mode is now in seperate file
+
 PA.PA.checkIfOneTabIsPrivate(shadow_preferences);

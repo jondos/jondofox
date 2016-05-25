@@ -1,3 +1,7 @@
+/*
+*  This is still the same code, only migrated to this location
+*  to be better accessable
+*/
 ////////////////////////////////
 // Check for D-Mode - PA-Mode
 ////////////////////////////////
@@ -36,7 +40,7 @@ var PA = {
     
       this.isTabPrivate = false;
       
-      //Restore Shadow Prefs that are dynamic (not implemented yet)
+      // Restore Shadow Prefs that are dynamic (not implemented yet)
     
     }
     
