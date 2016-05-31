@@ -8,6 +8,7 @@
 
 var tabs = require("sdk/tabs");
 var { setInterval } = require("sdk/timers");
+var requests = require("./observer.js");
 
 var PA = {
 
@@ -34,13 +35,24 @@ var PA = {
         
       // at least one private Tab is open, apply ShadowPrefs.
       ShadowPrefs.ShadowPrefs.applyShadowPrefs();
+      
+      // register HTTP observer
+      requests.httpRequestObserver.register();
     
     }
     else{
     
       this.isTabPrivate = false;
       
-      // Restore Shadow Prefs that are dynamic (not implemented yet)
+      // Restore Shadow Prefs that are dynamic
+      ShadowPrefs.ShadowPrefs.resetShadowPrefs();
+      
+      // unregister HTTP observer if needed
+      if(requests.httpRequestObserver.checkObservingState()){
+      
+        requests.httpRequestObserver.unregister();
+        
+      }
     
     }
     

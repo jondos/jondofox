@@ -5,6 +5,9 @@ var ShadowPrefs = {
   ShadowPrefNames: [],
   ShadowPrefValues: [],
   
+  ShadowPrefNames_noneDyn: [],
+  ShadowPrefValues_noneDyn: [],
+  
   SP_exist: false,
   
   /*
@@ -18,6 +21,16 @@ var ShadowPrefs = {
     this.ShadowPrefNames.push("network.http.accept-encoding.secure");
     this.ShadowPrefNames.push("general.useragent.override");
     this.ShadowPrefNames.push("intl.accept_languages");
+    this.ShadowPrefNames.push("security.ssl.disable_session_identifiers");
+    this.ShadowPrefNames.push("browser.sessionhistory.max_entries");
+    this.ShadowPrefNames.push("webgl.disabled");
+    this.ShadowPrefNames.push("browser.display.use_document_fonts");
+    this.ShadowPrefNames.push("font.name.sans-serif.x-western");
+    this.ShadowPrefNames.push("font.name.serif.x-western");
+    
+    // Define none dynamic config settings here, these should be present permanently
+    
+    this.ShadowPrefNames_noneDyn = [];
   
   },
   
@@ -32,11 +45,21 @@ var ShadowPrefs = {
     this.ShadowPrefValues.push("gzip, deflate");
     this.ShadowPrefValues.push("Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101 Firefox/38.0");
     this.ShadowPrefValues.push("en-US,en");
+    this.ShadowPrefValues.push(true);
+    this.ShadowPrefValues.push(2);
+    this.ShadowPrefValues.push(true);
+    this.ShadowPrefValues.push(0);
+    this.ShadowPrefValues.push("Liberation Sans");
+    this.ShadowPrefValues.push("Liberation Sans");
+    
+    // Define none dynamic config settings here, these should be present permanently
+    
+    this.ShadowPrefValues_noneDyn = [];
   
   },
   
   /*
-  *  Apply only one pref, for example prefs that need a restart and are not dynamically loaded
+  *  Apply only one pref, use this function for dynamic settings
   */
   applyOneShadowPref: function(PrefName){
   
@@ -85,7 +108,104 @@ var ShadowPrefs = {
   },
   
   /*
-  *  Read all ShadowPrefs from about:config into 'ShadowPrefValues'
+  *  Apply only one pref, use this function for none dynamic settings
+  */
+  applyOneShadowPref_noneDyn: function(PrefName){
+  
+    if(this.ShadowPrefNames_noneDyn.length == 0){
+    
+      console.log("[!] Please init the ShadowPref names before running this function!");
+    
+    }
+    else{
+    
+      for(var i = 0; i < this.ShadowPrefNames_noneDyn.length; i++){
+      
+        if(this.ShadowPrefNames_noneDyn[i] == PrefName){
+        
+          require("sdk/preferences/service").set(this.ShadowPrefNames_noneDyn[i], this.ShadowPrefValues_noneDyn[i]);
+        
+        }
+      
+      }
+    
+    }
+  
+  },
+  
+  /*
+  *  Apply all prefs saved in 'ShadowPrefNames_noneDyn' and 'ShadoPrefValues_noneDyn' to the original values
+  * (meaning the prefs without the 'extensions.jondofox.' prefix)
+  */
+  applyShadowPrefs_noneDyn: function(){
+  
+    if(this.ShadowPrefNames_noneDyn.length != this.ShadowPrefValues_noneDyn.length){
+    
+      console.log("[!] ShadowPrefs do not match!");
+    
+    }
+    else{
+    
+      for(var i = 0; i < this.ShadowPrefNames_noneDyn.length; i++){
+        
+        require("sdk/preferences/service").set(this.ShadowPrefNames_noneDyn[i], this.ShadowPrefValues_noneDyn[i]);
+    
+      }
+    
+    }
+  
+  },
+  
+  /*
+  *  Resets all dynamic prefs (meaning those without the ShadowPref prefix)
+  */
+  resetShadowPrefs: function(){
+  
+    if(this.ShadowPrefNames.length == 0){
+    
+      console.log("[!] Please init the ShadowPref names before running this function!");
+    
+    }
+    else{
+    
+      for(var i = 0; i < this.ShadowPrefNames.length; i++){
+      
+        require("sdk/preferences/service").reset(this.ShadowPrefNames[i]);
+      
+      }
+    
+    }
+  
+  },
+  
+  /*
+  *  Reset one dynamic preference (meaning those without the ShadowPref prefix)
+  */
+  resetOneShadowPref: function(PrefName){
+  
+    if(this.ShadowPrefNames.length == 0){
+    
+      console.log("[!] Please init the ShadowPref names before running this function!");
+    
+    }
+    else{
+    
+      for(var i = 0; i < this.ShadowPrefNames.length; i++){
+      
+        if(this.ShadowPrefNames[i] == PrefName){
+        
+          require("sdk/preferences/service").reset(this.ShadowPrefNames[i]);
+        
+        }
+      
+      }
+    
+    }
+  
+  },
+  
+  /*
+  *  Read all ShadowPrefs from about:config into 'ShadowPrefValues' and 'ShadowPrefValues_noneDyn'
   */
   readShadowPrefs: function(){
   
@@ -94,6 +214,12 @@ var ShadowPrefs = {
     for(var i = 0; i < this.ShadowPrefNames.length; i++){
     
       this.ShadowPrefValues.push(require("sdk/preferences/service").get("extensions.jondofox." + this.ShadowPrefNames[i]));
+    
+    }
+    
+    for(var i = 0; i < this.ShadowPrefNames_noneDyn.length; i++){
+    
+      this.ShadowPrefValues_noneDyn.push(require("sdk/preferences/service").get("extensions.jondofox." + this.ShadowPrefNames_noneDyn[i]));
     
     }
   
@@ -107,7 +233,7 @@ var ShadowPrefs = {
     this.readShadowPrefs();
     
     if(this.ShadowPrefValues.length != 0){
-    
+      // check also for none dynamic prefs!!
       this.SP_exist = true;
     
     }

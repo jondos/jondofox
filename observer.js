@@ -213,6 +213,8 @@ function getParentHost(channel) {
 */
 var httpRequestObserver = {
 
+  isObserving: false,
+
   /*
   * This function executes when the Observer gets triggered
   */
@@ -259,10 +261,16 @@ var httpRequestObserver = {
 
   register: function(){
     this.observerService.addObserver(this, "http-on-examine-response", false);
+    this.isObserving = true;
   },
 
   unregister: function(){
     this.observerService.removeObserver(this, "http-on-examine-response");
+    this.isObserving = false;
+  },
+  
+  checkObservingState: function(){
+    return this.isObserving;
   }
 
 };

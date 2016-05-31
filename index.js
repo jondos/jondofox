@@ -31,7 +31,6 @@ if(!shadow_preferences.ShadowPrefs.SP_exist){
   shadow_preferences.ShadowPrefs.createShadowPrefs();
   
   // apply all prefs here that need a restart and cant be loaded dynamically
-  shadow_preferences.ShadowPrefs.applyOneShadowPref("font.blacklist.underline_offset");
   
   // restart here if needed
 
@@ -50,7 +49,7 @@ else{
 * Initiate Observers here
 */
 PA.initTabs(PA, shadow_preferences);
-requests.httpRequestObserver.register();
+//requests.httpRequestObserver.register(); <~~ this code line is gone into PA_mode.js
 
 // Initial make a shadowcopy of preferences
 
