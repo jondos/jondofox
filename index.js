@@ -141,11 +141,11 @@ function handleHide() {
 function handleClick(state){
   if(preferences.JonDoFoxLite_isEnabled){
     preferences.JonDoFoxLite_isEnabled = false;
-    restoreFontBlacklist();
+    restoreFontBlacklist(); // needs an update
   }
   else if(!preferences.JonDoFoxLite_isEnabled){
     preferences.JonDoFoxLite_isEnabled = true;
-    putFontBlacklist()
+    putFontBlacklist(); // needs an update
   }
 }
 
