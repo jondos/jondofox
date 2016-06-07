@@ -31,8 +31,19 @@ if(!shadow_preferences.ShadowPrefs.SP_exist){
   shadow_preferences.ShadowPrefs.createShadowPrefs();
   
   // apply all prefs here that need a restart and cant be loaded dynamically
+  if(shadow_preferences.ShadowPrefs.check_noneDynValues() == -1){
   
-  // restart here if needed
+    /*
+    *  some none dynamic ShadowPrefs default values are not set in about:config.
+    *  because this seems to be the first boot after jdf install, apply all of them.
+    */
+    
+    shadow_preferences.ShadowPrefs.createShadowPrefs_noneDyn();
+    shadow_preferences.ShadowPrefs.applyShadowPrefs_noneDyn();
+    
+    // restart here
+  
+  }
 
 }
 else{
@@ -42,6 +53,17 @@ else{
   
   // read ShadowPref values from about:config
   shadow_preferences.ShadowPrefs.readShadowPrefs();
+  
+  //handle none dynamic prefs
+  if(shadow_preferences.ShadowPrefs.check_noneDynValues() == -1){
+  
+    /*
+    *  some none dynamic ShadowPrefs default values are not set in about::config.
+    *  this seems not to be the first boot after jdf install, maybe the user has changed them manually?
+    *  at this point, just do nothing in this case. 
+    */
+  
+  }
 
 }
 
