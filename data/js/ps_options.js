@@ -6,6 +6,17 @@ $( document ).ready(function() {
     window.postMessage(boolean , "*");
     console.log(boolean);
   });
+  // Init tab functionality
+  $('.menu-tabs a').click(function(){
+		var tab_id = $(this).attr('href');
+
+		$('.menu-tabs a').removeClass('active');
+		$('.tab-content').css('display','none');
+
+		$(this).addClass('active');
+		$(tab_id).css('display','block');
+	})
+
 
 });
 
