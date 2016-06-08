@@ -26,23 +26,23 @@ if(!shadow_preferences.ShadowPrefs.SP_exist){
   // init with hardcoded default values
   shadow_preferences.ShadowPrefs.initNames();
   shadow_preferences.ShadowPrefs.initValues();
-  
+
   // create ShadowPrefs (extensions.jondofox.xxxx)
   shadow_preferences.ShadowPrefs.createShadowPrefs();
-  
+
   // apply all prefs here that need a restart and cant be loaded dynamically
   if(shadow_preferences.ShadowPrefs.check_noneDynValues() == -1){
-  
+
     /*
     *  some none dynamic ShadowPrefs default values are not set in about:config.
     *  because this seems to be the first boot after jdf install, apply all of them.
     */
-    
+
     shadow_preferences.ShadowPrefs.createShadowPrefs_noneDyn();
     shadow_preferences.ShadowPrefs.applyShadowPrefs_noneDyn();
-    
+
     // restart here
-  
+
   }
 
 }
@@ -50,19 +50,19 @@ else{
 
   // init names of preferences we want to keep track of
   shadow_preferences.ShadowPrefs.initNames();
-  
+
   // read ShadowPref values from about:config
   shadow_preferences.ShadowPrefs.readShadowPrefs();
-  
+
   //handle none dynamic prefs
   if(shadow_preferences.ShadowPrefs.check_noneDynValues() == -1){
-  
+
     /*
     *  some none dynamic ShadowPrefs default values are not set in about::config.
     *  this seems not to be the first boot after jdf install, maybe the user has changed them manually?
-    *  at this point, just do nothing in this case. 
+    *  at this point, just do nothing in this case.
     */
-  
+
   }
 
 }
@@ -70,7 +70,7 @@ else{
 /*
 * Initiate Observers here
 */
-PA.initTabs(PA, shadow_preferences);
+PA.checkPrivateTab(PA, shadow_preferences);
 //requests.httpRequestObserver.register(); <~~ this code line is gone into PA_mode.js
 
 // Initial make a shadowcopy of preferences
@@ -222,4 +222,4 @@ require("sdk/simple-prefs").on("preferencesButton", onExtPrefClick);
 
 // PA-Mode is now in seperate file
 
-PA.PA.checkIfOneTabIsPrivate(shadow_preferences);
+//PA.PA.checkIfOneTabIsPrivate(shadow_preferences);
