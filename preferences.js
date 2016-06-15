@@ -25,6 +25,7 @@ var ShadowPrefs = {
     this.ShadowPrefNames.push("browser.display.use_document_fonts");
     this.ShadowPrefNames.push("font.name.sans-serif.x-western");
     this.ShadowPrefNames.push("font.name.serif.x-western");
+    this.ShadowPrefNames.push("privacy.donottrackheader.enabled");
     //do not track ist in about:config
     
     // Define none dynamic config settings here, these should be present permanently
@@ -51,6 +52,7 @@ var ShadowPrefs = {
     this.ShadowPrefValues.push(0);
     this.ShadowPrefValues.push("Liberation Sans");
     this.ShadowPrefValues.push("Liberation Sans");
+    this.ShadowPrefValues.push(true);
     
     // Define none dynamic config settings here, these should be present permanently
     
@@ -410,6 +412,12 @@ var ShadowPrefs = {
       }
     
     }
+  
+  },
+  
+  quitBrowser: function(){
+  
+    require("sdk/system").exit(0);
   
   }
 
