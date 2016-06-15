@@ -62,10 +62,18 @@ function checkPrivateTab(PA, ShadowPrefs) {
     });
 
     tabs.on('close', function(tab) {
-        if (require("sdk/private-browsing").isPrivate(tab) && require("sdk/simple-prefs").prefs.privateMode) {
-            console.log("set D Mode");
-            PA.PA.setDMode(ShadowPrefs);
-        }
+
+      var i = 0;
+
+      for (let tab of tabs) {
+          if (require("sdk/private-browsing").isPrivate(tab)) i++;
+      }
+
+      if (i == 0 && require("sdk/simple-prefs").prefs.privateMode) {
+          console.log("set D Mode");
+          PA.PA.setDMode(ShadowPrefs);
+      }
+
     });
 
 }
