@@ -61,7 +61,7 @@ function checkPrivateTab(PA, ShadowPrefs) {
         }
     });
 
-    tabs.on('close', function(tab) {
+    tabs.on('close', function() {
 
       var i = 0;
 
