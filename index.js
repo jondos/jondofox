@@ -42,7 +42,7 @@ if(!shadow_preferences.ShadowPrefs.SP_exist){
     shadow_preferences.ShadowPrefs.applyShadowPrefs_noneDyn();
 
     // restart here
-    shadow_preferences.ShadowPrefs.quitBrowser();
+    //shadow_preferences.ShadowPrefs.quitBrowser();
 
   }
 
@@ -164,11 +164,15 @@ function handleHide() {
 function handleClick(state){
   if(preferences.JonDoFoxLite_isEnabled){
     preferences.JonDoFoxLite_isEnabled = false;
-    restoreFontBlacklist(); // needs an update
+    /*
+    *  removed 'restoreFontBlacklist()', needs to be done over ShadowPrefs
+    */
   }
   else if(!preferences.JonDoFoxLite_isEnabled){
     preferences.JonDoFoxLite_isEnabled = true;
-    putFontBlacklist(); // needs an update
+    /*
+    *  removed 'putFontBlacklist()', needs to be done over Shadow Prefs
+    */
   }
 }
 

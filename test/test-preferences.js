@@ -21,7 +21,7 @@ exports["testing on_pref_change"] = function(assert, done){
   prefs.ShadowPrefs.createShadowPrefs();
   prefs.ShadowPrefs.readShadowPrefs();
   
-  if(require("sdk/preferences/service").get("extensions.jondofox.font.blacklist.underline_offset") == undefined){
+  if(require("sdk/preferences/service").get("extensions.jondofox.network.http.accept-encoding.secure") == undefined){
   
     assert.equal(true, false, "[!] failed to write ShadowPrefs");
     done();
@@ -34,7 +34,7 @@ exports["testing on_pref_change"] = function(assert, done){
   
   }
   
-  prefs.ShadowPrefs.modShadowPref("font.blacklist.underline_offset", "willsomeonereadthis?");
+  prefs.ShadowPrefs.modShadowPref("network.http.accept-encoding.secure", "willsomeonereadthis?");
   
   if(prefs.ShadowPrefs.ShadowPrefValues[0] != "willsomeonereadthis?"){
   
@@ -45,7 +45,7 @@ exports["testing on_pref_change"] = function(assert, done){
   
   prefs.ShadowPrefs.applyShadowPrefs();
   
-  if(require("sdk/preferences/service").get("font.blacklist.underline_offset") != "willsomeonereadthis?"){
+  if(require("sdk/preferences/service").get("network.http.accept-encoding.secure") != "willsomeonereadthis?"){
   
     assert.equal(true, false, "[!] failed to write modified ShadowPrefs");
     done();

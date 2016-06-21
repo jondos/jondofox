@@ -417,7 +417,7 @@ var ShadowPrefs = {
 
   quitBrowser: function(){
 
-    //require("sdk/system").exit(0);
+    require("sdk/system").exit(0);
 
   }
 
@@ -434,6 +434,9 @@ var jonDoFoxPreferenceService = {
 
 }
 
+/*
+*  the following three functions should be reviewed and maybe deleted (replaced by ShadowPrefs)
+*/
 
 /*
 * Funktion on JonDoFoxLite_isEnabled ture make set BlackList to system pref and restore them before

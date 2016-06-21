@@ -27,8 +27,8 @@ function onPrefChange(prefName){
 
       httpRequestObserver.register();
         // save system font.blacklist.underline_offset
-        preferences.putFontBlacklist();
-        preferences.createShadowCopyProxyPreferences();
+        //preferences.putFontBlacklist(); <---------------------| theese two lines should be reviewed and maybe deleted
+        //preferences.createShadowCopyProxyPreferences(); <-----|
 
         /*
         * This is just for testing purpose and yet buggy
@@ -47,7 +47,7 @@ function onPrefChange(prefName){
 
       httpRequestObserver.unregister();
         // restore system font.blacklist.underline_offset
-        preferences.restoreFontBlacklist();
+        // preferences.restoreFontBlacklist(); <----- this line should be reviewed and maybe deleted
 
         /*
         * This is just for testing purpose and yet buggy
