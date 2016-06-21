@@ -252,6 +252,30 @@ var httpRequestObserver = {
       }
 
     }
+    else if(topic == "http-on-modify-request"){
+    
+    console.log("it starts");
+    
+      var httpChannel = subject.QueryInterface(Ci.nsIHttpChannel);
+      
+      //If Content-Type Header is not correctly set
+      try{
+         if(httpChannel.getRequestHeader("Accept") != "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"){
+           console.log("should work");
+           httpChannel.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", false);
+         
+         }
+      }
+      catch(e){
+        if(e.result == Cr.NS_ERROR_NOT_AVAILABLE){
+          // this silences the NS_ERROR_NOT_AVAILABLE message
+        }
+        else{
+          console.log("observer() encountered a strange error: " + e);
+        }
+      }
+    
+    }
 
   },
 
@@ -261,11 +285,13 @@ var httpRequestObserver = {
 
   register: function(){
     this.observerService.addObserver(this, "http-on-examine-response", false);
+    this.observerService.addObserver(this, "http-on-modify-request", false);
     this.isObserving = true;
   },
 
   unregister: function(){
     this.observerService.removeObserver(this, "http-on-examine-response");
+    this.observerService.removeObserver(this, "http-on-modify-request");
     this.isObserving = false;
   },
   
