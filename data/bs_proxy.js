@@ -54,11 +54,10 @@ function setCustomBackupProxy(){
 function setCustomProxy(){
   require("sdk/preferences/service").set("network.proxy.http",  require("sdk/simple-prefs").prefs.custom_http_host);
   require("sdk/preferences/service").set("network.proxy.http_port",  require("sdk/simple-prefs").prefs.custom_http_port);
-  require("sdk/preferences/service").set("network.proxy.ssl",  require("sdk/simple-prefs").prefs.custom_ssl_host);
-  require("sdk/preferences/service").set("network.proxy.ssl_host",  require("sdk/simple-prefs").prefs.custom_ssl_port);
-  require("sdk/preferences/service").set("network.proxy.ssl",  require("sdk/simple-prefs").prefs.custom_ftp_host);
-  require("sdk/preferences/service").set("network.proxy.ftp",  require("sdk/simple-prefs").prefs.custom_ftp_port);
-  require("sdk/preferences/service").set("network.proxy.ftp_port",  require("sdk/simple-prefs").prefs.custom_backup_ssl_host);
+  require("sdk/preferences/service").set("network.proxy.ssl_host",  require("sdk/simple-prefs").prefs.custom_ssl_host);
+  require("sdk/preferences/service").set("network.proxy.ssl_port",  require("sdk/simple-prefs").prefs.custom_ssl_port);
+  require("sdk/preferences/service").set("network.proxy.ftp",  require("sdk/simple-prefs").prefs.custom_ftp_host);
+  require("sdk/preferences/service").set("network.proxy.ftp_port",  require("sdk/simple-prefs").prefs.custom_ftp_port);
   //require("sdk/preferences/service").set("network.proxy.gopher_host",  require("sdk/simple-prefs").prefs.custom_gopher_host);
   //require("sdk/preferences/service").set("network.proxy.gopher_port",  require("sdk/simple-prefs").prefs.custom_gopher_port);
   require("sdk/preferences/service").set("network.proxy.socks",  require("sdk/simple-prefs").prefs.custom_socks_host);
