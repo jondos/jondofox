@@ -1,4 +1,4 @@
-var Cc = require("chrome");
+var { Cc, Ci } = require("chrome");
 
 var ShadowPrefs = {
 
@@ -415,9 +415,12 @@ var ShadowPrefs = {
 
   },
 
+  // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIAppStartup#Constants
   quitBrowser: function(){
+  
+    var startup = Cc["@mozilla.org/toolkit/app-startup;1"].getService(Ci.nsIAppStartup);
 
-    require("sdk/system").exit(0);
+    startup.quit(0x12);
 
   }
 
