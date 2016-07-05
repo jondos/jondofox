@@ -228,7 +228,7 @@ var httpRequestObserver = {
       var parentHost = getParentHost(httpChannel);
 
       // If it is a third party Website/Host
-      if(parentHost && parentHost !== httpChannel.URI.host){
+      if(parentHost && parentHost != httpChannel.URI.host){
 
         // If the 'WWW-Authenticate' Header is set
         try{
@@ -254,14 +254,29 @@ var httpRequestObserver = {
     }
     else if(topic == "http-on-modify-request"){
     
-    console.log("it starts");
-    
       var httpChannel = subject.QueryInterface(Ci.nsIHttpChannel);
+      
+      var parentHost = getParentHost(httpChannel);
+      
+      // If its a third-party Website
+      if(parentHost && parentHost != httpChannel.URI.host){
+      
+        // handle window.name
+        var wind = getDOMWindow(httpChannel);
+        
+        if(wind && wind.name != ''){
+        
+          console.log("window.name: removed saved values. (" + wind.name + ")");
+        
+          wind.name = '';
+        
+        }
+      
+      }
       
       //If Content-Type Header is not correctly set
       try{
          if(httpChannel.getRequestHeader("Accept") != "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"){
-           console.log("should work");
            httpChannel.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", false);
          
          }
