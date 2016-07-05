@@ -26,7 +26,10 @@ var ShadowPrefs = {
     this.ShadowPrefNames.push("font.name.sans-serif.x-western");
     this.ShadowPrefNames.push("font.name.serif.x-western");
     this.ShadowPrefNames.push("privacy.donottrackheader.enabled");
-    //do not track ist in about:config
+    this.ShadowPrefNames.push("datareporting.healthreport.uploadEnabled");
+    this.ShadowPrefNames.push("datareporting.healthreport.service.enabled");
+    this.ShadowPrefNames.push("datareporting.policy.dataSubmissionEnabled");
+    this.ShadowPrefNames.push("toolkit.crashreporter.enabled");
 
     // Define none dynamic config settings here, these should be present permanently
 
@@ -53,6 +56,10 @@ var ShadowPrefs = {
     this.ShadowPrefValues.push("Liberation Sans");
     this.ShadowPrefValues.push("Liberation Sans");
     this.ShadowPrefValues.push(true);
+    this.ShadowPrefValues.push(false);
+    this.ShadowPrefValues.push(false);
+    this.ShadowPrefValues.push(false)
+    this.ShadowPrefValues.push(false);
 
     // Define none dynamic config settings here, these should be present permanently
 
@@ -138,6 +145,8 @@ var ShadowPrefs = {
         require("sdk/preferences/service").set(this.ShadowPrefNames[i], this.ShadowPrefValues[i]);
 
       }
+      
+      Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = false;
 
     }
 
@@ -209,6 +218,8 @@ var ShadowPrefs = {
         require("sdk/preferences/service").reset(this.ShadowPrefNames[i]);
 
       }
+      
+      Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
 
     }
 
