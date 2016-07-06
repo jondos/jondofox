@@ -61,12 +61,22 @@ function checkPrivateTab(PA, ShadowPrefs) {
         }
     });
 
+    /*tabs.on('ready', function(tab) {
+        if (require("sdk/private-browsing").isPrivate(tab) && !(require("sdk/simple-prefs").prefs.privateMode)) {
+            console.log('tab is loaded', tab.title, tab.url);
+            tab.title =  "JonDoFox Private Browsing" + tab.title ;
+        }
+    });*/
+
     tabs.on('close', function() {
 
       var i = 0;
 
       for (let tab of tabs) {
-          if (require("sdk/private-browsing").isPrivate(tab)) i++;
+          if (require("sdk/private-browsing").isPrivate(tab)) {
+            i++;
+            //tab.title = ""
+          }
       }
 
       if (i == 0 && require("sdk/simple-prefs").prefs.privateMode) {

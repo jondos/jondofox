@@ -6,19 +6,25 @@ var proxyService = {
     }
   },
   setProxy : function setProxy(pProxyName){
-    console.log("Set proxy to: " + pProxyName);
+    require("sdk/notifications").notify({
+      text: "Im Privaten Modus surfen sie nun mit dem Proxy :" + pProxyName
+    });
     switch (pProxyName) {
       case "custom":
         setCustomProxy();
-      break;
-      case "jondo":
-        setJonDoFoxProxy();
+        require("sdk/simple-prefs").prefs.JonDoFoxLite_proxyChoice = 1;
       break;
       case "tor":
         setTorProxy();
+        require("sdk/simple-prefs").prefs.JonDoFoxLite_proxyChoice = 2;
+      break;
+      case "jondo":
+        setJonDoFoxProxy();
+        require("sdk/simple-prefs").prefs.JonDoFoxLite_proxyChoice = 3;
       break;
       default:
         setCustomBackupProxy();
+        require("sdk/simple-prefs").prefs.JonDoFoxLite_proxyChoice = 0;
       break;
 
     }

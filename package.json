@@ -34,7 +34,22 @@
       "description": "Defines whether this Addon is enabled or disabled",
       "type": "bool",
       "value": true
-    },{
+    },
+    {
+      "name": "JonDoFoxLite_proxyChoice",
+      "title": "Some Title",
+      "description": "Choosen Proxy 0:no , 1:custom , 2:tor , 3:jondofox",
+      "type": "integer",
+      "value": 0
+    },
+    {
+      "name": "JonDoFoxLite_remeberPAMode",
+      "title": "Some Title",
+      "description": "Private Browsing confirm - remeber decision",
+      "type": "bool",
+      "value": false
+    },
+    {
         "name": "preferencesButton",
         "title": "Setting up your preferences",
         "type": "control",
