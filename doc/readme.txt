@@ -30,6 +30,12 @@
 	ist zusätzlich die Angabe des FF binries nötig, welches verwendet werden soll.
 	Dies erfolgt über den Parameter -b (binary), also zB
 		> jpm - run -b /home/ffdev/bin/firefox45/firefox
+	
+	- Alternativ XPI erzeugen und im Nightly starten:
+		> jpm xpi
+	
+	- Für Details siehe auch:
+		https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm#jpm_run
 
    c) Addon-Settings von jondofox (vgl. Task #1168)
 	
