@@ -8,7 +8,7 @@ var preferences = require("sdk/simple-prefs").prefs;
 var tabs = require("sdk/tabs");
 var self = require("sdk/self");
 var requests = require("./observer.js");
-var style = require('sdk/stylesheet/style');
+var Style = require("sdk/stylesheet/style").Style;
 var data = require("sdk/self").data;
 var {
     ToggleButton
@@ -117,95 +117,16 @@ var panelmenu = panels.Panel({
 
 // Receive data from contentScript "options.js"
 panelmenu.port.on("menuAction", function(jsonParamters) {
-    console.log("panelmenu.port.on begin");
+    // if key is option
     if (jsonParamters.option) {
         console.log(jsonParamters.option)
         onExtPrefClick();
     }
-
+    // if key is privateBrowsing
     if (null != jsonParamters.privateBrowsing) {
-
-        let {
-            viewFor
-        } = require("sdk/view/core");
-
-        console.log("privateBrowsing");
-        let panelPAMode = require("sdk/panel").Panel({
-            contentURL: data.url("panel_pa_mode.html"),
-            focus: false,
-            contentScriptFile: data.url("cs_panel_pa_mode.js"),
-        });
-
-        // set the panel to no hide doesn't work yet
-        //viewFor(panelPAMode).setAttribute("noautohide", true);
-
-        // show panel
-        if (! require("sdk/simple-prefs").prefs.JonDoFoxLite_remeberPAMode) {
-            panelPAMode.show();
-        } else if (require("sdk/simple-prefs").prefs.JonDoFoxLite_remeberPAMode) {
-            tabs.open({
-                url: "",
-                isPinned: true,
-                isPrivate: true,
-                onOpen: function(newTab) {
-                    for (let tab of tabs) {
-                        if (newTab.id != tab.id) {
-                            tab.close();
-                        }
-                    }
-                },
-                onReady: function(tab) {
-                }
-            });
-
-            // Resize windows
-
-            var win = viewFor(require("sdk/windows").browserWindows[0]);
-            win.resizeTo(1024, 768);
-        }
-
-        // receive decision from panel pa mode
-
-        panelPAMode.port.on("panelPAMode", function(jsonParamters) {
-            if (jsonParamters.PAMODE) {
-                var windows = require("sdk/windows").browserWindows;
-                if (jsonParamters.rememberPAMode = "true") {
-                  require("sdk/simple-prefs").prefs.JonDoFoxLite_remeberPAMode = true;
-                }
-                //hide panel
-
-                panelPAMode.hide();
-
-                // Close all other tabs
-
-                tabs.open({
-                    url: "",
-                    isPinned: true,
-                    isPrivate: true,
-                    onOpen: function(newTab) {
-                        for (let tab of tabs) {
-                            if (newTab.id != tab.id) {
-                                tab.close();
-                            }
-                        }
-                    },
-                    onReady: function(tab) {
-
-                    }
-                });
-
-                // Resize windows
-
-                var win = viewFor(require("sdk/windows").browserWindows[0]);
-                win.resizeTo(1024, 768);
-
-
-            } else if (!jsonParamters.PAMODE) {
-                panelPAMode.hide();
-            }
-        });
+      PA.PA.openPrivateWindow();
     }
-
+    // if key is proxyChoice
     if (null != jsonParamters.proxyChoice) {
         proxy.proxyService.setProxy(jsonParamters.proxyChoice);
     }
@@ -301,6 +222,4 @@ function onExtPrefClick() {
  */
 require("sdk/simple-prefs").on("preferencesButton", onExtPrefClick);
 
-// PA-Mode is now in seperate file
-
-//PA.PA.checkIfOneTabIsPrivate(shadow_preferences);
+PA.PA.showNotificationBoxIfTabIsPrivate();

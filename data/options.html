@@ -8,6 +8,7 @@
     <!--Import materialize.css-->
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/infobar.css">
     <script>
         window.foo = "hello from page script"
     </script>
@@ -17,7 +18,17 @@
 
 <body>
     <!-- Navbar goes here -->
-
+    <div id="mozilla-infobar" class="mozilla-infobar infobar-hidden" role="dialog" aria-hidden="true">
+        <p></p>
+        <ul>
+            <li>
+                <button class="btn-accept" type="button"></button>
+            </li>
+            <li>
+                <button class="btn-cancel" type="button"></button>
+            </li>
+        </ul>
+    </div>
     <!-- Page Layout here -->
     <div class="row">
 
@@ -389,6 +400,7 @@
     <!-- Compiled and minified JavaScript -->
     <script src="js/materialize.min.js"></script>
     <script src="js/ps_options.js"></script>
+    <script src="js/infobar.js"></script>
 </body>
 
 </html>

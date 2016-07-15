@@ -41,15 +41,13 @@
       "description": "Choosen Proxy 0:no , 1:custom , 2:tor , 3:jondofox",
       "type": "integer",
       "value": 0
-    },
-    {
-      "name": "JonDoFoxLite_remeberPAMode",
+    },{
+      "name": "JonDoFoxLite_closeNormalTabsInPrivateMode",
       "title": "Some Title",
-      "description": "Private Browsing confirm - remeber decision",
+      "description": "Close all normal tabs in private mode",
       "type": "bool",
-      "value": false
-    },
-    {
+      "value": true
+    },{
         "name": "preferencesButton",
         "title": "Setting up your preferences",
         "type": "control",
