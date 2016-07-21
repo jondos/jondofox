@@ -44,7 +44,7 @@ if (!shadow_preferences.ShadowPrefs.SP_exist) {
         shadow_preferences.ShadowPrefs.applyShadowPrefs_noneDyn();
 
         // restart here
-        //shadow_preferences.ShadowPrefs.quitBrowser();
+        shadow_preferences.ShadowPrefs.quitBrowser();
 
     }
 

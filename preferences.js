@@ -285,6 +285,9 @@ var ShadowPrefs = {
     this.resetShadowPrefs();
     this.resetShadowPrefs_noneDyn();
     this.delete_allShadowPrefs();
+    
+    // Notify the user that he needs to restart in order to fully reset all prefs
+    this.quitBrowser();
 
   },
 
@@ -430,8 +433,29 @@ var ShadowPrefs = {
   quitBrowser: function(){
   
     var startup = Cc["@mozilla.org/toolkit/app-startup;1"].getService(Ci.nsIAppStartup);
+    
+    var _ = require("sdk/l10n").get;
+    var notifications = require("sdk/notifications");
+    var ntfBoxLabel = _("notification_box_restart_nondynPrefs");
+    var ntfBoxButtonOkLabel = _("notification_box_restart_nondynPrefs_button_ok");
+    var data = require("sdk/self").data;
 
-    startup.quit(0x12);
+    var notification = require("./lib/notification-box.js").NotificationBox({
+                        'value': 'important-message',
+                        'label': ntfBoxLabel,
+                        'priority': 'WARNING_HIGH',
+                        'image': data.url("icons/ic_info_outline_black_18dp.png"),
+                        'buttons': [{
+                            'label': ntfBoxButtonOkLabel,
+                            'onClick': function() {
+                                // Restart Browser
+                                startup.quit(0x12);
+                            }
+                       }],
+                       'eventCallback': function() {
+                           // Reaction on click X
+                        }
+                    });
 
   }
 
