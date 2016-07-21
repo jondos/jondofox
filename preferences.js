@@ -345,7 +345,7 @@ var ShadowPrefs = {
 
     this.readShadowPrefs();
 
-    if(this.ShadowPrefValues.length != 0){
+    if(this.ShadowPrefValues.length != 0 && this.ShadowPrefValues[0] != undefined){
       // check also for none dynamic prefs!!
       this.SP_exist = true;
 

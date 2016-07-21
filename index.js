@@ -21,6 +21,9 @@ var PA = require("./PA_mode.js");
 /*
  *  Initialize the ShadowPrefs here if needed
  */
+shadow_preferences.ShadowPrefs.initNames();
+shadow_preferences.ShadowPrefs.initValues();
+
 shadow_preferences.ShadowPrefs.ShadowPref_check_exist();
 
 if (!shadow_preferences.ShadowPrefs.SP_exist) {
@@ -223,3 +226,15 @@ function onExtPrefClick() {
 require("sdk/simple-prefs").on("preferencesButton", onExtPrefClick);
 
 PA.PA.showNotificationBoxIfTabIsPrivate();
+
+exports.onUnload = function (reason){
+
+  if(reason == "uninstall" || reason == "disable"){
+  
+    var shadow_preferences = require("./preferences.js");
+  
+    shadow_preferences.ShadowPrefs.uninstall();
+  
+  }
+
+};
