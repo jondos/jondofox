@@ -33,7 +33,7 @@ var PA = {
     },
 
     setPAMode: function(ShadowPrefs) {
-        ShadowPrefs.ShadowPrefs.applyShadowPrefs();
+        ShadowPrefs.SPref.activate("", true, 0);
         // register HTTP observer
         requests.httpRequestObserver.register();
         require("sdk/simple-prefs").prefs.privateMode = true;
@@ -46,7 +46,7 @@ var PA = {
     },
 
     setDMode: function(ShadowPrefs) {
-        ShadowPrefs.ShadowPrefs.resetShadowPrefs();
+        ShadowPrefs.SPref.disable("", true, 0, false);
         // unregister HTTP observer if needed
         if (requests.httpRequestObserver.checkObservingState()) {
             requests.httpRequestObserver.unregister();
