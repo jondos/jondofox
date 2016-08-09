@@ -9,7 +9,7 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="css/materialize.min.css">
     <link rel="stylesheet" href="css/base.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
@@ -27,20 +27,24 @@
                 <span class="panelmenu-item-span" data-l10n-id="option_panelmenu_item_proxy_label"></span>
                 <br />
                 <p>
-                    <input name="proxyChoice" type="radio" id="val1" value="no" />
+                    <input name="proxy.choice" type="radio" id="val1" value="no" />
                     <label for="val1" data-l10n-id="option_panelmenu_item_proxy_no_label"></label>
                 </p>
                 <p>
-                    <input name="proxyChoice" type="radio" id="val2" value="custom" />
-                    <label for="val2" data-l10n-id="option_panelmenu_item_proxy_custom_label"></label>
+                    <input name="proxy.choice" type="radio" id="val2" value="default" />
+                    <label for="val2" data-l10n-id="option_panelmenu_item_proxy_default_label"></label>
                 </p>
                 <p>
-                    <input name="proxyChoice" type="radio" id="val3" value="tor" />
-                    <label for="val3" data-l10n-id="option_panelmenu_item_proxy_tor_label"></label>
+                    <input name="proxy.choice" type="radio" id="val3" value="custom" />
+                    <label for="val3" data-l10n-id="option_panelmenu_item_proxy_custom_label"></label>
                 </p>
                 <p>
-                    <input name="proxyChoice" type="radio" id="val4" value="jondo" />
-                    <label for="val4" data-l10n-id="option_panelmenu_item_proxy_jondofox_label"></label>
+                    <input name="proxy.choice" type="radio" id="val4" value="tor" />
+                    <label for="val4" data-l10n-id="option_panelmenu_item_proxy_tor_label"></label>
+                </p>
+                <p>
+                    <input name="proxy.choice" type="radio" id="val5" value="jondo" />
+                    <label for="val5" data-l10n-id="option_panelmenu_item_proxy_jondofox_label"></label>
                 </p>
             </div>
         </li>

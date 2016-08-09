@@ -41,31 +41,19 @@ if (shadow_preferences.SPref.check_installation() == -1) {
  * Initiate Observers here
  */
 PA.checkPrivateTab(PA, shadow_preferences);
-//requests.httpRequestObserver.register(); <~~ this code line is gone into PA_mode.js
 
-// Initial make a shadowcopy of preferences
+var { PrefsTarget } = require("sdk/preferences/event-target");
 
-//shadow_preferences.putFontBlacklist;
-//shadow_preferences.jonDoFoxPreferenceService.initShadowCopy();
-proxy.proxyService.initShadowProxyCopy();
-/*
- * Create the Toolbar Button
- */
-// Removed by KKP to switch it to an toggleButton
-/*var button = buttons.ActionButton({
-  id: "enable-disable",
-  label: "Enable/Disable Addon",
-  icon: {
-    "16": "./icon-16.png",
-    "32": "./icon-32.png",
-    //"64": "./icon-64.png"
-  },
-  onClick: handleClick
-});*/
+// listen to the same branch which reqire("sdk/simple-prefs") does
+var target = PrefsTarget({ branchName: "extensions.jondofox.privateMode" });
+target.on("test", function(prefName) {
+  console.log(prefName) // logs "test"
+  console.log(target.prefs[name]) // logs true
+});
 
 var button = ToggleButton({
     id: "togglePanelMenu",
-    label: "my button",
+    label: "JonDoFox",
     icon: {
         "16": "./icon-16.png",
         "32": "./icon-32.png"
@@ -76,10 +64,10 @@ var button = ToggleButton({
 
 var panelmenu = panels.Panel({
     width: 200,
-    height: 290,
+    height: 310 ,
     contentURL: self.data.url("panelmenu.html"),
     onHide: handleHide,
-    contentScriptFile: data.url("cs_panelmenu.js"),
+    contentScriptFile: data.url("cs_panelmenu.js")
 });
 
 
@@ -96,7 +84,10 @@ panelmenu.port.on("menuAction", function(jsonParamters) {
     }
     // if key is proxyChoice
     if (null != jsonParamters.proxyChoice) {
-        proxy.proxyService.setProxy(jsonParamters.proxyChoice);
+        require("sdk/preferences/service").set("extensions.jondofox.proxy.choice" , jsonParamters.proxyChoice);
+        if(require("sdk/preferences/service").get("extensions.jondofox.privateMode")){
+          proxy.proxyService.setProxy(jsonParamters.proxyChoice);
+        }
     }
 });
 
@@ -106,11 +97,10 @@ function handleChange(state) {
             position: button
         });
         // INIT PARAMETERS
-        var panelmenuInitParameter = "  [" +
-            "  JonDoFoxLite_isEnabled," +
-            preferences.JonDoFoxLite_isEnabled +
-            "  ]";
-
+        var panelmenuInitParameter = [];
+        var obj = {};
+        obj["proxy.choice"] = require("sdk/preferences/service").get("extensions.jondofox.proxy.choice");
+        panelmenuInitParameter.push(obj);
         panelmenu.port.emit("menuAction", panelmenuInitParameter);
 
     }
@@ -195,11 +185,11 @@ PA.PA.showNotificationBoxIfTabIsPrivate();
 exports.onUnload = function (reason){
 
   if(reason == "uninstall" || reason == "disable"){
-  
+
     var shadow_preferences = require("./preferences.js");
-  
+
     shadow_preferences.SPref.uninstall();
-  
+
   }
 
 };

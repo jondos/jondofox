@@ -3,7 +3,7 @@ $( document ).ready(function() {
 
   $("#JonDoFoxLite_isEnabled").click(function() {
     var boolean = $('#JonDoFoxLite_isEnabled').prop('checked');
-    window.postMessage(boolean , "*");
+    //window.postMessage(boolean , "*");
     console.log(boolean);
   });
   // Init tab functionality
@@ -22,5 +22,5 @@ $( document ).ready(function() {
 
 // Listener for ContentScript
 window.addEventListener('message', function(event) {
-  document.getElementById("JonDoFoxLite_isEnabled").checked = event.data ;  // Message from content script
+  //document.getElementById("JonDoFoxLite_isEnabled").checked = event.data ;  // Message from content script
 }, false);

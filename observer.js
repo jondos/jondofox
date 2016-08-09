@@ -2,7 +2,8 @@ var {Cc, Ci, Cr} = require("chrome");
 var preferences = require("./preferences.js");
 
 
-require("sdk/tabs").on("ready", function(tab) {
+// KKP removed cause no functionality - only logging  - 04.08.2016
+/*require("sdk/tabs").on("ready", function(tab) {
   // Private mode
   if (!require("sdk/private-browsing").isPrivate(tab)) {
     console.log("JONDOFOX : NON PRIVATE Tab");
@@ -16,55 +17,7 @@ require("sdk/tabs").on("ready", function(tab) {
   } else if(!require("sdk/preferences/service").isSet("privacy.donottrackheader.enabled")){
     console.log("JONDOFOX : DO NOT TRACK IS DISABLED");
   }
-});
-/*
-* Should be fired when a preference get changed
-*/
-function onPrefChange(prefName){
-
-  if(prefName == "JonDoFoxLite_isEnabled"){
-    if(require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled){
-
-      httpRequestObserver.register();
-        // save system font.blacklist.underline_offset
-        //preferences.putFontBlacklist(); <---------------------| theese two lines should be reviewed and maybe deleted
-        //preferences.createShadowCopyProxyPreferences(); <-----|
-
-        /*
-        * This is just for testing purpose and yet buggy
-        */
-        require("sdk/notifications").notify({
-          title: "JonDoFox Lite Enabled",
-          test: "You have enabled the Addon, i like this!",
-          data: "Addon enabled",
-          onClick: function(data){
-            console.log(data);
-          }
-        });
-
-    }
-    else if(!require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled){
-
-      httpRequestObserver.unregister();
-        // restore system font.blacklist.underline_offset
-        // preferences.restoreFontBlacklist(); <----- this line should be reviewed and maybe deleted
-
-        /*
-        * This is just for testing purpose and yet buggy
-        */
-        require("sdk/notifications").notify({
-          title: "JonDoFox Lite Disabled",
-          test: "You have disabled the Addon, now you will not be protected anymore!",
-          data: "Addon disabled",
-          onClick: function(data){
-            console.log(data);
-          }
-        });
-
-    }
-  }
-
-}
+});*/
 
 
 /*
@@ -253,32 +206,32 @@ var httpRequestObserver = {
 
     }
     else if(topic == "http-on-modify-request"){
-    
+
       var httpChannel = subject.QueryInterface(Ci.nsIHttpChannel);
-      
+
       var parentHost = getParentHost(httpChannel);
-      
+
       // If its a third-party Website
       if(parentHost && parentHost != httpChannel.URI.host){
-      
+
         // handle window.name
         var wind = getDOMWindow(httpChannel);
-        
+
         if(wind && wind.name != ''){
-        
+
           console.log("window.name: removed saved values. (" + wind.name + ")");
-        
+
           wind.name = '';
-        
+
         }
-      
+
       }
-      
+
       //If Content-Type Header is not correctly set
       try{
          if(httpChannel.getRequestHeader("Accept") != "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"){
            httpChannel.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", false);
-         
+
          }
       }
       catch(e){
@@ -289,7 +242,7 @@ var httpRequestObserver = {
           console.log("observer() encountered a strange error: " + e);
         }
       }
-    
+
     }
 
   },
@@ -309,7 +262,7 @@ var httpRequestObserver = {
     this.observerService.removeObserver(this, "http-on-modify-request");
     this.isObserving = false;
   },
-  
+
   checkObservingState: function(){
     return this.isObserving;
   }

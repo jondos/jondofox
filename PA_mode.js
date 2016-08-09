@@ -10,6 +10,7 @@ var tabs = require("sdk/tabs");
 var tabUtils = require('sdk/tabs/utils');
 var data = require("sdk/self").data;
 var requests = require("./observer.js");
+var proxy = require("./data/bs_proxy.js");
 var _ = require("sdk/l10n").get;
 var notifications = require("sdk/notifications");
 var windows = require("sdk/windows").browserWindows;
@@ -36,13 +37,9 @@ var PA = {
         ShadowPrefs.SPref.activate("", true, 0);
         // register HTTP observer
         requests.httpRequestObserver.register();
-        require("sdk/simple-prefs").prefs.privateMode = true;
-        /*var notification_pamode_label = _("notification_pamode_label");
-        var checkIcon = data.url("icons\ic_verified_user_black_18dp.png");
-        notifications.notify({
-            text: notification_pamode_label,
-            iconURL: checkIcon
-        });*/
+        require("sdk/preferences/service").set("extensions.jondofox.privateMode" , true);
+        proxy.proxyService.setProxyIfWasEnabledInDefault();
+
     },
 
     setDMode: function(ShadowPrefs) {
@@ -51,15 +48,10 @@ var PA = {
         if (requests.httpRequestObserver.checkObservingState()) {
             requests.httpRequestObserver.unregister();
         }
-        /*if (require("sdk/simple-prefs").prefs.privateMode) {
-            var notification_dmode_label = _("notification_dmode_label");
-            var cancelIcon = data.url("icons\ic_highlight_off_black_18dp");
-            notifications.notify({
-                text: notification_dmode_label,
-                iconURL: cancelIcon
-            });
-        }*/
-        require("sdk/simple-prefs").prefs.privateMode = false;
+        if(require("sdk/preferences/service").get("extensions.jondofox.privateMode")){
+          proxy.proxyService.restoreDefaultBackupProxy();
+        }
+        require("sdk/preferences/service").set("extensions.jondofox.privateMode" , false);
     },
     showNotificationBoxIfTabIsPrivate: function() {
 
@@ -69,7 +61,7 @@ var PA = {
 
         // Throw notification-box if tab is private and notification-box is enabled
         tabs.on('ready', function onOpen(tab) {
-            if (require("sdk/private-browsing").isPrivate(tab) && require("sdk/simple-prefs").prefs.JonDoFoxLite_closeNormalTabsInPrivateMode) {
+            if (require("sdk/private-browsing").isPrivate(tab) && require("sdk/preferences/service").get("extensions.jondofox.close.normalTabsInPrivateMode" )) {
                 var notification = require("./lib/notification-box.js").NotificationBox({
                     'value': 'important-message',
                     'label': ntfBoxLabel,
@@ -130,7 +122,7 @@ function checkPrivateTab(PA, ShadowPrefs) {
 
 
     tabs.on('open', function(tab) {
-        if (require("sdk/private-browsing").isPrivate(tab) && !(require("sdk/simple-prefs").prefs.privateMode)) {
+        if (require("sdk/private-browsing").isPrivate(tab) && !( require("sdk/preferences/service").get("extensions.jondofox.privateMode" ))) {
             PA.PA.setPAMode(ShadowPrefs);
 
         }
@@ -149,7 +141,7 @@ function checkPrivateTab(PA, ShadowPrefs) {
             }
         }
 
-        if (i == 0 && require("sdk/simple-prefs").prefs.privateMode) {
+        if (i == 0 && require("sdk/preferences/service").get("extensions.jondofox.privateMode" )) {
             console.log("set D Mode");
             PA.PA.setDMode(ShadowPrefs);
         }

@@ -1,4 +1,5 @@
 self.port.on("menuAction", function(menuAction) {
+  console.log("ON CS_PANELMENU TO PS_PANELMENU");
   console.log("Panelmenu From AddonScript to ContentScript ");
   console.log(menuAction);
   window.postMessage(menuAction, "*");
