@@ -22,11 +22,13 @@ var PA = require("./PA_mode.js");
  *  Initialize the ShadowPrefs here if needed
  */
 shadow_preferences.SPref.init();
+proxy.proxyService.init();
 
 if (shadow_preferences.SPref.check_installation() == -1) {
 
     // create ShadowPrefs (extensions.jondofox.xxxx) and activate none dyn prefs, notify about restart
     shadow_preferences.SPref.install();
+    proxy.proxyService.install();
 
 } else {
 
@@ -113,39 +115,6 @@ function handleHide() {
 }
 
 /*
- * This function is run when the Toolbar Button is clicked
- * it sets the JonDoFoxLite_isEnabled pref
- * the return value is used for Unittests
- */
-function handleClick(state) {
-    if (preferences.JonDoFoxLite_isEnabled) {
-        preferences.JonDoFoxLite_isEnabled = false;
-        /*
-         *  removed 'restoreFontBlacklist()', needs to be done over ShadowPrefs
-         */
-    } else if (!preferences.JonDoFoxLite_isEnabled) {
-        preferences.JonDoFoxLite_isEnabled = true;
-        /*
-         *  removed 'putFontBlacklist()', needs to be done over Shadow Prefs
-         */
-    }
-}
-
-/*
- * Exports needed functions so they are available for others when this file is require()
- */
-exports.handleClick = handleClick;
-
-
-
-
-/*
- * Set listerner to pref storage
- */
-require("sdk/simple-prefs").on("JonDoFoxLite_isEnabled", requests.onPrefChange);
-
-
-/*
  * Listener button and open the tab
  */
 function onExtPrefClick() {
@@ -157,12 +126,12 @@ function onExtPrefClick() {
             worker = tab.attach({
                 contentScriptFile: data.url("cs_options.js"),
                 contentScriptOptions: {
-                    JonDoFoxLite_isEnabled: preferences.JonDoFoxLite_isEnabled
+                    //JonDoFoxLite_isEnabled: preferences.JonDoFoxLite_isEnabled
                 }
             });
 
             // Send data to contentScript "options.js"
-            worker.port.emit("preferences", preferences.JonDoFoxLite_isEnabled);
+            //worker.port.emit("preferences", preferences.JonDoFoxLite_isEnabled);
 
 
             // Receive data from contentScript "options.js"
@@ -170,7 +139,7 @@ function onExtPrefClick() {
                 console.log("AddonScript from contentScript :" + preferences);
                 // Set preferences in the storage
                 console.log("XXX Preference :" + preferences);
-                require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled = preferences;
+                //require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled = preferences;
             });
         }
     });
@@ -193,3 +162,7 @@ exports.onUnload = function (reason){
   }
 
 };
+
+function install(){
+  console.log("install");
+}

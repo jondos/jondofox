@@ -270,4 +270,3 @@ var httpRequestObserver = {
 };
 
 exports.httpRequestObserver = httpRequestObserver;
-exports.onPrefChange = onPrefChange;

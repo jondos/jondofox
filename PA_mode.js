@@ -124,7 +124,7 @@ function checkPrivateTab(PA, ShadowPrefs) {
     tabs.on('open', function(tab) {
         if (require("sdk/private-browsing").isPrivate(tab) && !( require("sdk/preferences/service").get("extensions.jondofox.privateMode" ))) {
             PA.PA.setPAMode(ShadowPrefs);
-
+            console.log("test");
         }
     });
 

@@ -54,7 +54,7 @@ var proxyService = {
   },
 
   createDefaultProxy : function createDefaultProxy(){
-    require("sdk/preferences/service").set("extensions.jondofox.proxy.default.backautoconfig_retry_interval_max" , require("sdk/preferences/service").get("network.proxy.autoconfig_retry_interval_max"));
+    require("sdk/preferences/service").set("extensions.jondofox.proxy.default.autoconfig_retry_interval_max" , require("sdk/preferences/service").get("network.proxy.autoconfig_retry_interval_max"));
     require("sdk/preferences/service").set("extensions.jondofox.proxy.default.autoconfig_retry_interval_min" , require("sdk/preferences/service").get("network.proxy.autoconfig_retry_interval_min"));
     require("sdk/preferences/service").set("extensions.jondofox.proxy.default.autoconfig_url" , require("sdk/preferences/service").get("network.proxy.autoconfig_url"));
     require("sdk/preferences/service").set("extensions.jondofox.proxy.default.failover_timeout" , require("sdk/preferences/service").get("network.proxy.failover_timeout"));
@@ -312,7 +312,7 @@ var proxyService = {
     this.add("proxy.jondo.share_proxy_settings" ,  false);
     this.add("proxy.jondo.socks" ,  "" );
     this.add("proxy.jondo.socks_port" , 0 );
-    this.add("proxy.jondo.socks_remote_dns" );
+    this.add("proxy.jondo.socks_remote_dns" , "");
     this.add("proxy.jondo.socks_version" ,  5 );
     this.add("proxy.jondo.ssl" ,  "" );
     this.add("proxy.jondo.ssl_port" ,  0 );
@@ -347,11 +347,14 @@ var proxyService = {
       tempArray.push(prefName);
       tempArray.push(value);
       this.proxy_prefs.push(tempArray);
+      //this.check_installation();
   },
 
   install : function(){
     for(var i = 0; i < this.proxy_prefs.length; i++){
-      require("sdk/preferences/service").set("extensions.jondofox." + this.proxy_prefs[i][0]  , this.proxy_prefs[i][1] );
+
+        require("sdk/preferences/service").set("extensions.jondofox." + this.proxy_prefs[i][0]  , this.proxy_prefs[i][1] );
+
     }
   },
 
