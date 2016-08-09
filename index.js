@@ -44,14 +44,7 @@ if (shadow_preferences.SPref.check_installation() == -1) {
  */
 PA.checkPrivateTab(PA, shadow_preferences);
 
-var { PrefsTarget } = require("sdk/preferences/event-target");
 
-// listen to the same branch which reqire("sdk/simple-prefs") does
-var target = PrefsTarget({ branchName: "extensions.jondofox.privateMode" });
-target.on("test", function(prefName) {
-  console.log(prefName) // logs "test"
-  console.log(target.prefs[name]) // logs true
-});
 
 var button = ToggleButton({
     id: "togglePanelMenu",
@@ -156,13 +149,11 @@ exports.onUnload = function (reason){
   if(reason == "uninstall" || reason == "disable"){
 
     var shadow_preferences = require("./preferences.js");
+    var proxy = require("./data/bs_proxy.js");
 
     shadow_preferences.SPref.uninstall();
+    proxy.proxyService.uninstall();
 
   }
 
 };
-
-function install(){
-  console.log("install");
-}
