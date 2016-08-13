@@ -16,7 +16,9 @@ var {
 var panels = require("sdk/panel");
 var shadow_preferences = require("./preferences.js"); //renamed cause of dublicated variable declaration, CHECK THIS!
 var proxy = require("./data/bs_proxy.js");
+var options = require("./optionpage.js");
 var PA = require("./PA_mode.js");
+var _ = require("sdk/l10n").get;
 
 /*
  *  Initialize the ShadowPrefs here if needed
@@ -115,6 +117,7 @@ function onExtPrefClick() {
     tabs.open({
         url: data.url("options.html"),
         isPinned: true,
+        title:  _("option_optionpage_title") ,
         onReady: function(tab) {
             worker = tab.attach({
                 contentScriptFile: data.url("cs_options.js"),
@@ -122,21 +125,20 @@ function onExtPrefClick() {
                     //JonDoFoxLite_isEnabled: preferences.JonDoFoxLite_isEnabled
                 }
             });
-
             // Send data to contentScript "options.js"
-            //worker.port.emit("preferences", preferences.JonDoFoxLite_isEnabled);
+            worker.port.emit("preferences", options.optionpage.createOptionsArray());
 
 
             // Receive data from contentScript "options.js"
-            worker.port.on("preferences", function(preferences) {
-                console.log("AddonScript from contentScript :" + preferences);
-                // Set preferences in the storage
-                console.log("XXX Preference :" + preferences);
-                //require("sdk/simple-prefs").prefs.JonDoFoxLite_isEnabled = preferences;
+            worker.port.on("pOptions", function(pOptions) {
+              console.log(pOptions);
+              options.optionpage.saveOptionsArray(pOptions);
             });
         }
     });
 }
+
+
 /*
  * Set listener to the button
  */

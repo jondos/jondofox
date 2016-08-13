@@ -130,7 +130,7 @@ var proxyService = {
     require("sdk/preferences/service").set("network.proxy.http_port",  require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.http_port"));
     require("sdk/preferences/service").set("network.proxy.no_proxies_on" , require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.no_proxies_on"));
     require("sdk/preferences/service").set("network.proxy.proxy_over_tls", require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.proxy_over_tls" ));
-    require("sdk/preferences/service").set("network.proxy.share_proxy_settings", require("sdk/preferences/service").get("extensions.jondofox.custom.default.share_proxy_settings" ));
+    require("sdk/preferences/service").set("network.proxy.share_proxy_settings", require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.share_proxy_settings" ));
     require("sdk/preferences/service").set("network.proxy.socks" , require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.socks"));
     require("sdk/preferences/service").set("network.proxy.socks_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.socks_port"));
     require("sdk/preferences/service").set("network.proxy.socks_remote_dns" , require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.socks_remote_dns"));

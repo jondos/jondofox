@@ -4,403 +4,205 @@
 <head>
     <meta charset="utf-8" />
     <!--Import Google Icon Font-->
-    <!--<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="css/materialize.min.css">
-    <link rel="stylesheet" href="css/infobar.css">
+    <link rel="stylesheet" href="css/base.css">
     <script>
         window.foo = "hello from page script"
     </script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-l10n-id="option_optionpage_title" ></title>
 </head>
 
 <body>
     <!-- Navbar goes here -->
-    <div id="mozilla-infobar" class="mozilla-infobar infobar-hidden" role="dialog" aria-hidden="true">
-        <p></p>
-        <ul>
-            <li>
-                <button class="btn-accept" type="button"></button>
-            </li>
-            <li>
-                <button class="btn-cancel" type="button"></button>
-            </li>
-        </ul>
-    </div>
-    <!-- Page Layout here -->
-    <div class="row">
+    <header>
+      <nav class="top-nav">
+        <div class="container">
 
-        <div class="col s3">
-            <!-- Grey navigation panel -->
-            <div class="collection menu-tabs">
-                <a href="#tab1" class="collection-item active">Über JonDoFox</a>
-                <a href="#tab2" class="collection-item">Einstellungen</a>
-                <a href="#tab3" class="collection-item">Benutzerdefinierte Proxy-Konfiguration</a>
-                <a href="#tab4" class="collection-item">Tempor&auml;re E-Mails</a>
-            </div>
+          <div class="nav-wrapper"><div class="page-title" data-l10n-id="option_optionpage_title_label"></div></div>
         </div>
-        <div class="col s9 tab-content" id="tab1">
-            <div class="col s12">
-                <h4>Über JonDoFox</h4>
-                <hr />
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0px);">
+        <li class="logo center-align">
+          <div id="logo-container"  class="brand-logo">
+            <img src="icon-32.png" alt="logo jondofox"/>
+          </div>
+        </li>
+        <li class="bold"><a href="#preferences" class="waves-effect waves-jondo waves-ripple" data-l10n-id="option_optionpage_menu_item_preferences_label" ></a></li>
+        <li class="bold"><a href="#proxy" class="waves-effect waves-jondo waves-ripple" data-l10n-id="option_optionpage_menu_item_proxy_label" ></a></li>
+        <li class="bold"><a href="#email" class="waves-effect waves-jondo waves-ripple" data-l10n-id="option_optionpage_menu_item_email_label"></a></li>
+        <li class="bold"><a href="#about" class="waves-effect waves-jondo waves-ripple" data-l10n-id="option_optionpage_menu_item_about_label" ></a></li>
+      </ul>
+    </header>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col s12">
+            <div id="preferences" class="section scrollspy">
+              <h4 class="header" data-l10n-id="option_optionpage_menu_item_preferences_label">Einstellungen</h4>
             </div>
-        </div>
-        <div class="col s9 tab-content" style="display: none;" id="tab2">
-            <div class="col s12">
-                <h4>Einstellungen</h4>
-                <hr />
-            </div>
-            <div class="col s12">
-                <!-- Preferences Content Begin -->
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">Beispiel JonDoFox pref value</span>
-                                <p>
+            <div id="proxy" class="section scrollspy">
+              <h4 class="header"  data-l10n-id="option_optionpage_menu_item_proxy_label"></h4>
+              <div class="row">
+                <div class="col s12">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card white">
+                                <div class="card-content black-text">
+                                    <span class="card-title"></span>
                                     <div class="row">
-                                        <div class="col s2">
-                                            <div class="switch">
-                                                <label>
-                                                    Off
-                                                    <input id="JonDoFoxLite_isEnabled" name="JonDoFoxLite_isEnabled" type="checkbox">
-                                                    <span class="lever"></span> On
-                                                </label>
+                                        <div class="col s12">
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input type="text" name="proxy.custom.name" id="proxy.custom.name" />
+                                                    <label for="proxy.custom.name" data-l10n-id="option_optionpage_proxy_custom_name_label"></label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col s10">
-                                            <label for="JonDoFoxLite_isEnabled">
-                                                <h5>JonDoFoxLite Ein/Aus</h5></label>
+                                        <div class="col s12">
+                                            <div class="row">
+                                                <div class="col s12"> <h6 data-l10n-id="option_optionpage_proxy_user_agent_label"></h6></div>
+                                                <div class="col s12">
+                                                    <input type="radio" id="agent1" name="proxy.custom.user_agent" />
+                                                    <label for="agent1"  data-l10n-id="option_optionpage_proxy_user_agent_item_default_label"></label>
+                                                </div>
+                                                <div class="col s12">
+                                                    <input type="radio" id="agent2" name="proxy.custom.user_agent" />
+                                                    <label for="agent2"  data-l10n-id="option_optionpage_proxy_user_agent_item_firefox_label"></label>
+                                                </div>
+                                                <div class="col s12">
+                                                    <input type="radio" id="agent3" name="proxy.custom.user_agent" />
+                                                    <label for="agent3"  data-l10n-id="option_optionpage_proxy_user_agent_item_jondo_label"></label>
+                                                </div>
+                                                <div class="col s12">
+                                                    <input type="radio" id="agent4" name="proxy.custom.user_agent" />
+                                                    <label for="agent4"  data-l10n-id="option_optionpage_proxy_user_agent_item_tor_label" ></label>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                        <div class="col s12">
+                                            <div class="row">
+                                                <div class="col s12"><h6 data-l10n-id="option_optionpage_proxy_custom_connection_label"></h6></div>
+                                                <div class="col s12">
+                                                    <p>
+                                                        <input type="checkbox" class="filled-in" id="proxy.custom.keep_alive" name="proxy.custom.keep_alive" />
+                                                        <label for="proxy.custom.keep_alive" data-l10n-id="option_optionpage_proxy_custom_keep_alive_label" >Proxy Keep-Alive</label>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s12">
+                                            <div class="row">
+                                                <div class="input-field col s8">
+                                                    <input type="text" name="proxy.custom.http" id="proxy.custom.http"/>
+                                                  <label for="proxy.custom.http" data-l10n-id="option_optionpage_proxy_custom_http_label"></label>
+                                                </div>
+                                                <div class="input-field col s4">
+                                                    <input type="text" name="proxy.custom.http_port" id="proxy.custom.http_port" />
+                                                    <label for="proxy.custom.http_port" data-l10n-id="option_optionpage_proxy_custom_http_port_label"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s12">
+                                            <div class="row">
+                                                <div class="col s2"></div>
+                                                <div class="col s10">
+                                                    <p>
+                                                        <input type="checkbox" class="filled-in" id="proxy.custom.share_proxy_settings" name="proxy.custom.share_proxy_settings" />
+                                                        <label for="proxy.custom.share_proxy_settings" data-l10n-id="option_optionpage_proxy_custom_share_proxy_label"></label>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s12">
+                                            <div class="row">
+                                                <div class="input-field col s8">
+                                                    <input type="text" name="proxy.custom.ssl" id="proxy.custom.ssl" />
+                                                    <label for="proxy.custom.ssl" data-l10n-id="option_optionpage_proxy_custom_ssl_label"></label>
+                                                </div>
+                                                <div class="input-field col s4">
 
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">Schutz gegen Tracking</span>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref1" checked="checked" />
-                                    <label for="pref1">Aktiviviere Referer-Management</label>
-                                </p>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref2" checked="checked" />
-                                    <label for="pref2">Aktiviviere SafeCache und HTTP-Authentifikationsschutz</label>
-                                </p>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref3" checked="checked" />
-                                    <label for="pref3">Deaktiviere Flash im JonDo-Mode</label>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">Cookie Controller</span>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref4" checked="checked" />
-                                    <label for="pref4">Website neu laden wenn Cookies Ein/Aus geschaltet werden</label>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">Validierung von SSL-Zertifikaten</span>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref5" checked="checked" />
-                                    <label for="pref5">verwenden SSL Observatory mit JonDo</label>
-                                </p>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref6" checked="checked" />
-                                    <label for="pref6">verwenden SSL Observatory mit Tor</label>
-                                </p>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref7" checked="checked" />
-                                    <label for="pre7">verwenden SSL Observatory ohne Proxy</label>
-                                </p>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref8" checked="checked" />
-                                    <label for="pref8">verwenden Certificate Patrol (lokale Datenbank)</label>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">Erzwingen von sicheren SSL-Verbindungen</span>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref9" checked="checked" />
-                                    <label for="pref9">Deaktivieren von SSLv3 und schwacher SSL Chiffre (RC4, 3DES)</label>
-                                </p>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref10" checked="checked" />
-                                    <label for="pref10">Deaktivieren von Insecure Renegotation(paypal, EBay u.a funtionieren nicht)</label>
-                                </p>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref11" checked="checked" />
-                                    <label for="pref11">Blockieren von Mixed Content (Suchmaschinen für Bilder funktionieren nicht)</label>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">Warnungen</span>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref9" checked="checked" />
-                                    <label for="pref9">Zeige Warnung bei notwendigem Profil-Update</label>
-                                </p>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref10" checked="checked" />
-                                    <label for="pref10">Zeige Warnung bei Veränderung wichtiger Einstellungen</label>
-                                </p>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref11" checked="checked" />
-                                    <label for="pref11">Zeige Warnung bei nicht eingestelltem Proxy</label>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">Startverhalten</span>
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref12" checked="checked" />
-                                    <label for="pref4">beim Start immer JonDo Proxy setzen</label>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Preferences Content End -->
-            </div>
-            <!-- Teal page content  -->
-        </div>
-        <div class="col s9 tab-content" style="display: none;" id="tab3">
-            <div class="col s12">
-                <h4>Benutzerdefinierte Proxy-Konfiguration</h4>
-                <hr />
-            </div>
-            <div class="col s12">
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title"></span>
-                                <div class="row">
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2">Name</div>
-                                            <div class="col s10">
-                                                <input type="text" id="JonDoFoxLite_proxyName" />
+                                                    <input type="text" name="proxy.custom.ssl_port" id="proxy.custom.ssl_port" />
+                                                    <label for="proxy.custom.ssl_port" data-l10n-id="option_optionpage_proxy_custom_ssl_port_label"></label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2">User Agent</div>
-                                            <div class="col s2">
-                                                <input type="radio" id="agent1" name="JonDoFoxLite_UserAgent" />
-                                                <label for="agent1">Unverändert</label>
-                                            </div>
-                                            <div class="col s2">
-                                                <input type="radio" id="agent2" name="JonDoFoxLite_UserAgent" />
-                                                <label for="agent2">Firefox(Win32)</label>
-                                            </div>
-                                            <div class="col s2">
-                                                <input type="radio" id="agent3" name="JonDoFoxLite_UserAgent" />
-                                                <label for="agent3">JonDo-UA</label>
-                                            </div>
-                                            <div class="col s2">
-                                                <input type="radio" id="agent4" name="JonDoFoxLite_UserAgent" />
-                                                <label for="agent4">Tor-UA</label>
+                                        <div class="col s12">
+                                            <div class="row">
+                                                <div class="input-field col s8">
+                                                    <input type="text" name="proxy.custom.ftp" id="proxy.custom.ftp"/>
+                                                  <label for="proxy.custom.ftp" data-l10n-id="option_optionpage_proxy_custom_ftp_label"></label>
+                                                </div>
+                                                <div class="input-field col s4">
+                                                    <input type="text" name="proxy.custom.ftp_port" id="proxy.custom.ftp_port" />
+                                                    <label for="proxy.custom.ftp_port" data-l10n-id="option_optionpage_proxy_custom_ftp_port_label"></label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2">Verbindungsart</div>
-                                            <div class="col s10">
-                                                <p>
-                                                    <input type="checkbox" class="filled-in" id="pref1" checked="checked" />
-                                                    <label for="pref1">Proxy Keep-Alive</label>
-                                                </p>
+                                        <div class="col s12">
+                                            <div class="row">
+                                                <div class="input-field col s8">
+                                                    <input type="text" name="proxy.custom.socks" id="proxy.custom.socks"/>
+                                                  <label for="proxy.custom.socks" data-l10n-id="option_optionpage_proxy_custom_socks_label"></label>
+                                                </div>
+                                                <div class="input-field col s4">
+                                                    <input type="text" name="proxy.custom.socks_port" id="proxy.custom.socks_port" />
+                                                    <label for="proxy.custom.socks_port" data-l10n-id="option_optionpage_proxy_custom_socks_port_label"></label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2">HTTP Proxy</div>
-                                            <div class="col s6">
-                                                <input type="text" id="JonDoFoxLite_httpProxy" />
+                                        <div class="col s12">
+                                            <div class="row">
+                                              <div class="col s2">
+                                                  <input type="radio" id="socksv4" name="proxy.custom.socks_version" value="4" />
+                                                  <label for="socksv4" data-l10n-id="option_optionpage_proxy_custom_socks_version_socksv4_label"></label>
+                                              </div>
+                                              <div class="col s2">
+                                                  <input type="radio" id="socksv5" name="proxy.custom.socks_version" value="5" />
+                                                  <label for="socksv5" data-l10n-id="option_optionpage_proxy_custom_socks_version_socksv5_label"></label>
+                                              </div>
                                             </div>
-                                            <div class="col s2">Port</div>
+                                        </div>
+                                        <div class="col s12">
+                                          <div class="row">
                                             <div class="col s2">
-                                                <input type="text" id="JonDoFoxLite_httpProxyPort" />
-                                            </div>
+                                              <button class="btn waves-effect waves-jondo waves-ripple" type="submit" id="proxySubmit" data-l10n-id="option_optionpage_button_save_label">
+                                              </button>
+                                          </div>
+                                          <div class="col s2 offset-s1">
+                                            <button class="btn waves-effect waves-jondo waves-ripple" type="submit" id="proxyCancel" data-l10n-id="option_optionpage_button_cancel_label">
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2"></div>
-                                            <div class="col s10">
-                                                <p>
-                                                    <input type="checkbox" class="filled-in" id="pref1" checked="checked" />
-                                                    <label for="pref1">Verwende diesen Proxy für alle Protokolle</label>
-                                                </p>
-                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2">SSL Proxy</div>
-                                            <div class="col s6">
-                                                <input type="text" id="JonDoFoxLite_httpProxy" />
-                                            </div>
-                                            <div class="col s2">Port</div>
-                                            <div class="col s2">
-                                                <input type="text" id="JonDoFoxLite_httpProxyPort" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2">FTP Proxy</div>
-                                            <div class="col s6">
-                                                <input type="text" id="JonDoFoxLite_httpProxy" />
-                                            </div>
-                                            <div class="col s2">Port</div>
-                                            <div class="col s2">
-                                                <input type="text" id="JonDoFoxLite_httpProxyPort" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2">Gopher Proxy</div>
-                                            <div class="col s6">
-                                                <input type="text" id="JonDoFoxLite_httpProxy" />
-                                            </div>
-                                            <div class="col s2">Port</div>
-                                            <div class="col s2">
-                                                <input type="text" id="JonDoFoxLite_httpProxyPort" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2">SOCKS Proxy</div>
-                                            <div class="col s6">
-                                                <input type="text" id="JonDoFoxLite_httpProxy" />
-                                            </div>
-                                            <div class="col s2">Port</div>
-                                            <div class="col s2">
-                                                <input type="text" id="JonDoFoxLite_httpProxyPort" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col s12">
-                                        <div class="row">
-                                            <div class="col s2"></div>
-                                            <div class="col s2">
-                                                <input type="radio" id="socks1" name="JonDoFoxLite_socks" />
-                                                <label for="socks1">SOCKS v4</label>
-                                            </div>
-                                            <div class="col s2">
-                                                <input type="radio" id="socks2" name="JonDoFoxLite_socks" />
-                                                <label for="socks2">SOCKS v5</label>
-                                            </div>
-                                        </div>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+              </div>
             </div>
+            <div id="email" class="section scrollspy">
+              <h4 class="header" data-l10n-id="option_optionpage_menu_item_email_label"></h4>
+            </div>
+            <div id="about" class="section scrollspy">
+              <h4 class="header" data-l10n-id="option_optionpage_menu_item_about_label"></h4>
+            </div>
+          </div>
         </div>
-        <div class="col s9 tab-content" style="display: none;" id="tab4">
-            <div class="col s12">
-                <h4>Tempor&auml;re E-Mails</h4>
-                <hr />
-
-            </div>
-            <div class="col s12">
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <p>
-                                    <input type="checkbox" class="filled-in" id="pref12" checked="checked" />
-                                    <label for="pref4">Aktiviere temporäre E-Mail Dienste</label>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12">
-                <div class="row">
-                    <div class="col s12">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">E-Mail Dienste:</span>
-                                <p>
-                                    <input name="mail" type="radio" id="mail1" />
-                                    <label for="mail1">10minutemail.com*</label>
-                                </p>
-                                <p>
-                                    <input name="mail" type="radio" id="mail2" />
-                                    <label for="mail2">anonxbox.net*</label>
-                                </p>
-                                <p>
-                                    <input name="mail" type="radio" id="mail3" />
-                                    <label for="mail3">dispostable.com</label>
-                                </p>
-                                <p>
-                                    <input name="mail" type="radio" id="mail4" />
-                                    <label for="mail4">mailforspam.com</label>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+      </div>
+    </main>
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="js/materialize.min.js"></script>
     <script src="js/ps_options.js"></script>
-    <script src="js/infobar.js"></script>
 </body>
 
 </html>
