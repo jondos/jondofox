@@ -76,24 +76,24 @@ var proxyService = {
 
   setNoProxy : function setNoProxy(){
     // set no proxy
-    require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_max"  , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.autoconfig_retry_interval_max"));
-    require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_min" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.autoconfig_retry_interval_min"));
-    require("sdk/preferences/service").set("network.proxy.autoconfig_url" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.autoconfig_url"));
-    require("sdk/preferences/service").set("network.proxy.failover_timeout" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.failover_timeout"));
-    require("sdk/preferences/service").set("network.proxy.ftp" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.ftp"));
-    require("sdk/preferences/service").set("network.proxy.ftp_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.ftp_port"));
-    require("sdk/preferences/service").set("network.proxy.http" ,  require("sdk/preferences/service").get("extensions.jondofox.proxy.no.http"));
-    require("sdk/preferences/service").set("network.proxy.http_port",  require("sdk/preferences/service").get("extensions.jondofox.proxy.no.http_port"));
-    require("sdk/preferences/service").set("network.proxy.no_proxies_on" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.no_proxies_on"));
-    require("sdk/preferences/service").set("network.proxy.proxy_over_tls", require("sdk/preferences/service").get("extensions.jondofox.proxy.no.proxy_over_tls" ));
-    require("sdk/preferences/service").set("network.proxy.share_proxy_settings", require("sdk/preferences/service").get("extensions.jondofox.no.default.share_proxy_settings" ));
-    require("sdk/preferences/service").set("network.proxy.socks" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.socks"));
-    require("sdk/preferences/service").set("network.proxy.socks_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.socks_port"));
-    require("sdk/preferences/service").set("network.proxy.socks_remote_dns" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.socks_remote_dns"));
-    require("sdk/preferences/service").set("network.proxy.socks_version" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.socks_version"));
-    require("sdk/preferences/service").set("network.proxy.ssl" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.ssl"));
-    require("sdk/preferences/service").set("network.proxy.ssl_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.ssl_port"));
-    require("sdk/preferences/service").set("network.proxy.type" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.type"));
+    require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_max"  , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.autoconfig_retry_interval_max"));
+    require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_min" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.autoconfig_retry_interval_min"));
+    require("sdk/preferences/service").set("network.proxy.autoconfig_url" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.autoconfig_url"));
+    require("sdk/preferences/service").set("network.proxy.failover_timeout" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.failover_timeout"));
+    require("sdk/preferences/service").set("network.proxy.ftp" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.ftp"));
+    require("sdk/preferences/service").set("network.proxy.ftp_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.ftp_port"));
+    require("sdk/preferences/service").set("network.proxy.http" ,  require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.http"));
+    require("sdk/preferences/service").set("network.proxy.http_port",  require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.http_port"));
+    require("sdk/preferences/service").set("network.proxy.no_proxies_on" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.no_proxies_on"));
+    require("sdk/preferences/service").set("network.proxy.proxy_over_tls", require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.proxy_over_tls" ));
+    require("sdk/preferences/service").set("network.proxy.share_proxy_settings", require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.share_proxy_settings" ));
+    require("sdk/preferences/service").set("network.proxy.socks" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.socks"));
+    require("sdk/preferences/service").set("network.proxy.socks_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.socks_port"));
+    require("sdk/preferences/service").set("network.proxy.socks_remote_dns" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.socks_remote_dns"));
+    require("sdk/preferences/service").set("network.proxy.socks_version" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.socks_version"));
+    require("sdk/preferences/service").set("network.proxy.ssl" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.ssl"));
+    require("sdk/preferences/service").set("network.proxy.ssl_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.ssl_port"));
+    require("sdk/preferences/service").set("network.proxy.type" , require("sdk/preferences/service").get("extensions.jondofox.proxy.no.backup.type"));
   },
 
   setDefaultProxy : function setDefaultProxy(){
@@ -167,7 +167,7 @@ var proxyService = {
     require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_max"  , require("sdk/preferences/service").get("extensions.jondofox.proxy.tor.autoconfig_retry_interval_max"));
     require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_min" , require("sdk/preferences/service").get("extensions.jondofox.proxy.tor.autoconfig_retry_interval_min"));
     require("sdk/preferences/service").set("network.proxy.autoconfig_url" , require("sdk/preferences/service").get("extensions.jondofox.proxy.tor.autoconfig_url"));
-    require("sdk/preferences/service").set("network.proxy.failover_timeout" , require("sdk/preferences/service").get("extensions.jondofox.tor.default.failover_timeout"));
+    require("sdk/preferences/service").set("network.proxy.failover_timeout" , require("sdk/preferences/service").get("extensions.jondofox.proxy.tor.failover_timeout"));
     require("sdk/preferences/service").set("network.proxy.ftp" , require("sdk/preferences/service").get("extensions.jondofox.proxy.tor.ftp"));
     require("sdk/preferences/service").set("network.proxy.ftp_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.tor.ftp_port"));
     require("sdk/preferences/service").set("network.proxy.http" ,  require("sdk/preferences/service").get("extensions.jondofox.proxy.tor.http"));
@@ -196,7 +196,7 @@ var proxyService = {
     require("sdk/preferences/service").set("network.proxy.http_port",  require("sdk/preferences/service").get("extensions.jondofox.proxy.default.backup.http_port"));
     require("sdk/preferences/service").set("network.proxy.no_proxies_on" , require("sdk/preferences/service").get("extensions.jondofox.proxy.default.backup.no_proxies_on"));
     require("sdk/preferences/service").set("network.proxy.proxy_over_tls", require("sdk/preferences/service").get("extensions.jondofox.proxy.default.backup.proxy_over_tls" ));
-    require("sdk/preferences/service").set("network.proxy.share_proxy_settings", require("sdk/preferences/service").get("extensions.jondofox.default.backup.default.share_proxy_settings" ));
+    require("sdk/preferences/service").set("network.proxy.share_proxy_settings", require("sdk/preferences/service").get("extensions.jondofox.proxy.default.backup.share_proxy_settings" ));
     require("sdk/preferences/service").set("network.proxy.socks" , require("sdk/preferences/service").get("extensions.jondofox.proxy.default.backup.socks"));
     require("sdk/preferences/service").set("network.proxy.socks_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.default.backup.socks_port"));
     require("sdk/preferences/service").set("network.proxy.socks_remote_dns" , require("sdk/preferences/service").get("extensions.jondofox.proxy.default.backup.socks_remote_dns"));
@@ -252,7 +252,7 @@ var proxyService = {
     this.add("proxy.no.backup.socks_remote_dns" ,  false );
     this.add("proxy.no.backup.socks_version" ,  5 );
     this.add("proxy.no.backup.ssl" ,  "");
-    this.add("proxy.denofault.backup.ssl_port" ,  0 );
+    this.add("proxy.no.backup.ssl_port" ,  0 );
     this.add("proxy.no.backup.type" ,  0 );
 
     // Proxy preferences default

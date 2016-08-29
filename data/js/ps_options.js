@@ -97,6 +97,9 @@ $( document ).ready(function() {
 window.addEventListener('message', function(event) {
   //document.getElementById("JonDoFoxLite_isEnabled").checked = event.data ;  // Message from content script
   // get Arrays
+
+  console.log("message:");
+  console.log(event.data);
   var options = event.data;
   var proxy = options["proxy"];
   var email = options["email"];
@@ -117,7 +120,7 @@ window.addEventListener('message', function(event) {
               var labels = document.querySelectorAll('[for="' + key + '"]');
               var label = labels[0];
               var className = " active ";
-              if ( (" " + label.className + " ").replace(/[\n\t]/g, " ").indexOf(" active ") > -1 )
+              if ( (" " + label.className + " ").replace(/[\n\t]/g, " ").indexOf(" active ") > -1 ){}
             }
           }
           if (elements[element].type == "checkbox") {

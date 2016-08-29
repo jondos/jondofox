@@ -14,12 +14,13 @@ var proxy = require("./data/bs_proxy.js");
 var _ = require("sdk/l10n").get;
 var notifications = require("sdk/notifications");
 var windows = require("sdk/windows").browserWindows;
+var PMS = require("./panelmenu.js");
 
 var PA = {
 
     // Check once initial tabs
     InitialCheckIfOneTabIsPrivate: function(ShadowPrefs) {
-
+        var closedNormalTabs  = false;
         var i = 0;
 
         for (let tab of tabs) {
@@ -62,33 +63,40 @@ var PA = {
         // Throw notification-box if tab is private and notification-box is enabled
         tabs.on('ready', function onOpen(tab) {
             if (require("sdk/private-browsing").isPrivate(tab) && require("sdk/preferences/service").get("extensions.jondofox.close.normalTabsInPrivateMode" )) {
-                var notification = require("./lib/notification-box.js").NotificationBox({
-                    'value': 'important-message',
-                    'label': ntfBoxLabel,
-                    'priority': 'WARNING_HIGH',
-                    'image': data.url("icons/ic_info_outline_black_18dp.png"),
-                    'buttons': [{
-                        'label': ntfBoxButtonOkLabel,
-                        'onClick': function() {
-                            // Reaction on click Ok
-                        }
-                    }],
-                    'eventCallback': function() {
-                        // Reaction on click X
-                    }
-                });
-
-                PA.setTabTitle(tab);
 
                 PA.closeNormalTabsInPrivateMode();
 
+                if(closedNormalTabs){
+                  var notification = require("./lib/notification-box.js").NotificationBox({
+                      'value': 'important-message',
+                      'label': ntfBoxLabel,
+                      'priority': 'WARNING_HIGH',
+                      'image': data.url("icons/ic_info_outline_black_18dp.png"),
+                      'buttons': [{
+                          'label': ntfBoxButtonOkLabel,
+                          'onClick': function() {
+                              // Reaction on click Ok
+                          }
+                      }],
+                      'eventCallback': function() {
+                          // Reaction on click X
+                      }
+                  });
+                }
+                PA.setTabTitle(tab);
+
                 PA.setWindowSize(tab);
+
+                //restore variable
+
+                closedNormalTabs = false;
             }
         });
     },
     closeNormalTabsInPrivateMode: function() {
         for (let tab of tabs) {
             if (!require("sdk/private-browsing").isPrivate(tab)) {
+                closedNormalTabs = true;
                 tab.close();
             }
         }
@@ -113,6 +121,7 @@ var PA = {
             isPinned: false,
             isPrivate: true
         });
+        PMS.pannelmenuService.recreatePanelAndListener();
     }
 }
 
@@ -124,8 +133,14 @@ function checkPrivateTab(PA, ShadowPrefs) {
     tabs.on('open', function(tab) {
         if (require("sdk/private-browsing").isPrivate(tab) && !( require("sdk/preferences/service").get("extensions.jondofox.privateMode" ))) {
             PA.PA.setPAMode(ShadowPrefs);
+            windows.on('resize', function(window) {
+              console.log("resize");
+            });
             console.log("test");
+        }else if (!require("sdk/private-browsing").isPrivate(tab) && ( require("sdk/preferences/service").get("extensions.jondofox.privateMode" ))){
+          PA.PA.setDMode(ShadowPrefs)
         }
+
     });
 
 

@@ -13,7 +13,7 @@
   "license": "dunnow",
 
   "permissions": {
-    "multiprocess":true ,
+    "multiprocess":false ,
     "alarms" :true ,
     "bookmarks" : true ,
     "contextMenus" : true ,
