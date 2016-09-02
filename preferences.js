@@ -5,10 +5,14 @@ var SPref = {
   important_prefs: [],
 
   initialized: false,
+  
+  xpi_version: 001,
 
   init: function(){
 
       this.important_prefs = [];
+      
+      this.add("xpi_version", "", xpi_version, true, 999); // <-- this is a special setting, only for internal purposes. never activate this.
 
       this.add("network.http.accept-encoding.secure", "", "gzip, deflate", true, 0);
       this.add("general.useragent.override", "", "Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101 Firefox/38.0", true, 0);
@@ -33,7 +37,7 @@ var SPref = {
 
   },
 
-  add: function(prefName, userDefValue, ourDefValue, isDynamic, importance){
+  add: function(prefName, userDefValue, ourDefValue, isDynamic, pref_class){
 
       var tempArray = [];
 
@@ -41,19 +45,33 @@ var SPref = {
       tempArray.push(userDefValue);
       tempArray.push(ourDefValue);
       tempArray.push(isDynamic);
-      tempArray.push(importance);
+      tempArray.push(pref_class);
 
       this.important_prefs.push(tempArray);
+  },
+  
+  check_if_update: function(){
+  
+      if(!this.initialized){
 
-      /*
-      this.important_prefs[this.important_prefs.length-1] = [];
+          console.log("[!] getSPValue: initialize shadowprefs first!");
 
-      this.important_prefs[this.important_prefs.length-1].push(prefName);
-      this.important_prefs[this.important_prefs.length-1].push(userDefValue);
-      this.important_prefs[this.important_prefs.length-1].push(ourDefValue);
-      this.important_prefs[this.important_prefs.length-1].push(isDynamic);
-      this.important_prefs[this.important_prefs.length-1].push(importance);
-      */
+      }
+      else{
+      
+          if(require("sdk/preferences/service").get("extensions.jondofox.xpi_version") < this.xpi_version){
+          
+              return true;
+          
+          }
+          else{
+          
+              return false;
+          
+          }
+      
+      }
+  
   },
 
   /*
@@ -62,7 +80,7 @@ var SPref = {
   * valID = 0 => userDefValue
   * valID = 1 => ourDefValue
   * valID = 2 => isDynamic
-  * valID = 3 => importance
+  * valID = 3 => pref_class
   */
   getSPValue: function(prefName, valID){
 
@@ -102,7 +120,7 @@ var SPref = {
   * valID = 0 => userDefValue
   * valID = 1 => ourDefValue
   * valID = 2 => isDynamic
-  * valID = 3 => importance
+  * valID = 3 => pref_class
   */
   setSPValue: function(prefName, valID, value){
 
@@ -148,7 +166,8 @@ var SPref = {
       }
       else{
 
-          for(var i = 0; i < this.important_prefs.length; i++){
+          // index 1 cause of xpi version number at 0
+          for(var i = 1; i < this.important_prefs.length; i++){
 
               this.setSPValue(this.important_prefs[i][0], 0, require("sdk/preferences/service").get(this.important_prefs[i][0]));
 
@@ -161,7 +180,7 @@ var SPref = {
   /*
   * Checks if shadowprefs (extensions.jondofox.*) are present.
   *
-  * returns 0 if TRUE and -1 if FALSE
+  * returns 0 if TRUE, -1 if FALSE and -2 if some prefs are missing (eg we are updating or someone destroyed parts of our prefs)
   */
   check_installation: function(){
 
@@ -186,19 +205,68 @@ var SPref = {
 
           }
 
-          if(count > 0){
+          if(count > 0 && count < this.important_prefs.length){
+
+              return -2;
+
+          }
+          else if(count == this.important_prefs.length){
 
               return -1;
 
           }
           else{
-
+          
               return 0;
-
+          
           }
 
       }
 
+  },
+  
+  /*
+  * goes through all saved prefs in 'important_prefs' and matches them with the 'extensions.jondofox.*' values from about:config.
+  * 
+  * If 'is_update' is TRUE, the value in 'extensions.jondofox.*' will be overwritten with our def value
+  * If 'is_update' is FALSE, the value in 'extensions.jondofox.*' will only be overwritten if it is empty
+  */
+  fix_missing: function(is_update){
+  
+      if(!this.initialized){
+      
+          console.log("[!] check_installation: initialize shadowprefs first!");
+
+          return -1;
+      
+      }
+      else{
+      
+          for(var i = 0; i < this.important_prefs.length; i++){
+          
+              if(is_update){
+              
+                  if(require("sdk/preferences/service").get("extensions.jondofox." + this.important_prefs[i][0]) != this.getSPValue(this.important_prefs[i][0], 1)){
+                  
+                      require("sdk/preferences/service").set("extensions.jondofox." + this.important_prefs[i][0], this.getSPValue(this.important_prefs[i][0], 1));
+                  
+                  }
+              
+              }
+              else{
+              
+                  if(require("sdk/preferences/service").get("extensions.jondofox." + this.important_prefs[i][0]) == ""){
+                  
+                      require("sdk/preferences/service").set("extensions.jondofox." + this.important_prefs[i][0], this.getSPValue(this.important_prefs[i][0], 1));
+                  
+                  }
+              
+              }
+          
+          }
+      
+      }
+  
   },
 
   /*
@@ -206,8 +274,7 @@ var SPref = {
   *
   * This function takes three args where the first one can be empty (pass "").
   *
-  * 'importance' controlls the maximum allowed importance "level" of a sp (shadowpref) to be activated.
-  * For example, passing a 1 to 'importance' activates all sp with an importance level of 1 or below.
+  * 'pref_class' defines the preference class which should be activated.
   * Mind that the other args still have influence!
   *
   * 'isDynamic' can be set to true or false, activating either dynamic or none dynamic sp.
@@ -217,7 +284,7 @@ var SPref = {
   * use the '*' character to wildcard like 'browser.*' to activate all sp that start with
   * 'browser.'.
   */
-  activate: function(prefName, isDynamic, importance){
+  activate: function(prefName, isDynamic, pref_class){
 
       if(!this.initialized){
 
@@ -230,7 +297,7 @@ var SPref = {
 
           for(var i = 0; i < this.important_prefs.length; i++){
 
-              if(this.getSPValue(this.important_prefs[i][0], 2) == isDynamic && this.getSPValue(this.important_prefs[i][0], 3) <= importance){
+              if(this.getSPValue(this.important_prefs[i][0], 2) == isDynamic && this.getSPValue(this.important_prefs[i][0], 3) == pref_class){
 
                   if(prefName == ""){
 
@@ -277,8 +344,7 @@ var SPref = {
   *
   * This function takes 4 args where the first one can be empty (pass "").
   *
-  * 'importance' controlls the maximum allowed importance "level" of a sp (shadowpref) to be disabled.
-  * For example, passing a 1 to 'importance' disables all sp with an importance level of 1 or below.
+  * 'pref_class' defines the preference class which should be disabled.
   * Mind that the other args still have influence!
   *
   * 'isDynamic' can be set to true or false, disableing either dynamic or none dynamic sp.
@@ -290,7 +356,7 @@ var SPref = {
   *
   * 'should_reset' must be set to true or false, either resetting the pref to system default or to the saved user value.
   */
-  disable: function(prefName, isDynamic, importance, should_reset){
+  disable: function(prefName, isDynamic, pref_class, should_reset){
 
       if(!this.initialized){
 
@@ -303,7 +369,7 @@ var SPref = {
 
           for(var i = 0; i < this.important_prefs.length; i++){
 
-              if(this.getSPValue(this.important_prefs[i][0], 2) == isDynamic && this.getSPValue(this.important_prefs[i][0], 3) <= importance){
+              if(this.getSPValue(this.important_prefs[i][0], 2) == isDynamic && this.getSPValue(this.important_prefs[i][0], 3) == pref_class){
 
                   if(prefName == ""){
 

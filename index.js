@@ -32,12 +32,27 @@ if (shadow_preferences.SPref.check_installation() == -1) {
     shadow_preferences.SPref.install();
     proxy.proxyService.install();
 
-} else {
+} else if(shadow_preferences.SPref.check_installation() == 0){
 
     // read ShadowPref values from about:config
     shadow_preferences.SPref.config_readSPValue();
 
-    // check if values read out differ from our default values (but what should i do then?)
+} else if(shadow_preferences.SPref.check_installation() == -2){
+
+    // some 'extensions.jondofox.*' values are missing or differ from our def values.
+    if(shadow_preferences.SPref.check_if_update()){
+    
+        shadow_preferences.SPref.fix_missing(true);
+    
+    }
+    else{
+    
+        shadow_preferences.SPref.fix_missing(false);
+    
+    }
+    
+    // read ShadowPref values from about:config
+    shadow_preferences.SPref.config_readSPValue();
 
 }
 
