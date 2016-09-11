@@ -1,7 +1,7 @@
 {
   "title": "JonDoFox-Lite",
   "name": "jondofox-lite",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JonDoFox, but build with then Addon SDK",
   "main": "index.js",
   "author": "JonDo Team",
