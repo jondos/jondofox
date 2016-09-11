@@ -6,13 +6,16 @@ var SPref = {
 
   initialized: false,
   
-  xpi_version: 001,
+  crashed: false, // set this to true when entering pr mode, and to false when leaving (thus this is set to true when we dont exit pr mode cleanly)
+  
+  xpi_version: 1,
 
   init: function(){
 
       this.important_prefs = [];
       
-      this.add("xpi_version", "", xpi_version, true, 999); // <-- this is a special setting, only for internal purposes. never activate this.
+      this.add("xpi_version", "", this.xpi_version, true, 999); // <-- this is a special setting, only for internal purposes. never activate this.
+      this.add("crashed", "", this.crashed, true, 999); // <-- this is a special setting, only for internal purposes. never activate this.
 
       this.add("network.http.accept-encoding.secure", "", "gzip, deflate", true, 0);
       this.add("general.useragent.override", "", "Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101 Firefox/38.0", true, 0);
@@ -34,6 +37,12 @@ var SPref = {
       this.initialized = true;
 
       this.getCurrUserVal();
+      
+      if(require("sdk/preferences/service").get("extensions.jondofox.crashed") != undefined){
+      
+          this.setSPValue("crashed", 1, require("sdk/preferences/service").get("extensions.jondofox.crashed"));
+      
+      }
 
   },
 
@@ -294,6 +303,9 @@ var SPref = {
 
       }
       else{
+      
+          this.crashed = true;
+          this.backup_for_crash();
 
           for(var i = 0; i < this.important_prefs.length; i++){
 
@@ -366,6 +378,8 @@ var SPref = {
 
       }
       else{
+      
+          this.crashed = false;
 
           for(var i = 0; i < this.important_prefs.length; i++){
 
@@ -494,6 +508,59 @@ var SPref = {
       }
 
   },
+  
+  /*
+  * creates for every modified user pref a 'extensions.jondofox.crashbackup.*' pref to restore from in case of a crash while in pr mode
+  */
+  backup_for_crash: function(){
+  
+      if(!this.initialized){
+
+          console.log("[!] install: initialize shadowprefs first!");
+
+          return -1;
+
+      }
+      else{
+      
+          for(var i = 0; i < this.important_prefs.length; i++){
+          
+              var tempPref = "extensions.jondofox.crashbackup." + this.important_prefs[i][0];
+              
+              if(this.getSPValue(this.important_prefs[i][0], 0) != undefined && this.getSPValue(this.important_prefs[i][0], 0) != ""){
+              
+                  require("sdk/preferences/service").set(tempPref, this.getSPValue(this.important_prefs[i][0], 0));
+              
+              }
+          
+          }
+      
+      }
+  
+  },
+  
+  restore_backup_after_crash: function(){
+  
+      if(!this.initialized){
+
+          console.log("[!] install: initialize shadowprefs first!");
+
+          return -1;
+
+      }
+      else{
+      
+          for(var i = 0; i < this.important_prefs.length; i++){
+          
+              var tempPref = "extensions.jondofox.crashbackup." + this.important_prefs[i][0];
+              
+              require("sdk/preferences/service").set(this.important_prefs[i][0], require("sdk/preferences/service").get(tempPref));
+          
+          }
+      
+      }
+  
+  },
 
   install: function(){
 
@@ -537,9 +604,11 @@ var SPref = {
           for(var i = 0; i < this.important_prefs.length; i++){
 
               var tempPref = "extensions.jondofox." + this.important_prefs[i][0];
+              var tempPrefBackup = "extensions.jondofox.crashbackup." + this.important_prefs[i][0];
 
               require("sdk/preferences/service").reset(this.important_prefs[i][0]);
               require("sdk/preferences/service").reset(tempPref);
+              require("sdk/preferences/service").reset(tempPrefBackup);
 
           }
 

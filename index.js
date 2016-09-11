@@ -36,8 +36,13 @@ if (shadow_preferences.SPref.check_installation() == -1) {
 
     // read ShadowPref values from about:config
     shadow_preferences.SPref.config_readSPValue();
+    
+    // check if we crashed in pr mode and if so restore user prefs
+    if(shadow_preferences.SPref.crashed){
+        shadow_preferences.SPref.restore_backup_after_crash();
+    }
 
-} else if(shadow_preferences.SPref.check_installation() == -2){
+} else if(shadow_preferences.SPref.check_installation() == -2 || shadow_preferences.SPref.check_if_update()){
 
     // some 'extensions.jondofox.*' values are missing or differ from our def values.
     if(shadow_preferences.SPref.check_if_update()){
@@ -53,6 +58,11 @@ if (shadow_preferences.SPref.check_installation() == -1) {
     
     // read ShadowPref values from about:config
     shadow_preferences.SPref.config_readSPValue();
+    
+    // check if we crashed in pr mode and if so restore user prefs
+    if(shadow_preferences.SPref.crashed){
+        shadow_preferences.SPref.restore_backup_after_crash();
+    }
 
 }
 
