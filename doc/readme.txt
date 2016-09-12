@@ -1,5 +1,11 @@
 0) Installation des Mozilla SDKs
 
+  HINWEIS: 
+  Enmtwickeln und testen sollte nur noch mit der Developer-Edition erfolgen (eventuell auch mit unbranded builds):
+  https://stackoverflow.com/questions/38887048/jpm-run-does-not-work-with-firefox-48-or-later
+  https://www.mozilla.org/en-US/firefox/developer/
+  TODO Muss noch besser dokumentiert werden!
+
   a) Installation npm / jpm
 
 	die Anleitung folgt der offiziellen Mozilla Docu unter
