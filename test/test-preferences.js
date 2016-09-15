@@ -2,55 +2,41 @@ var prefs = require("../preferences.js");
 
 exports["testing on_pref_change"] = function(assert, done){
 
-  prefs.ShadowPrefs.initNames();
-  prefs.ShadowPrefs.initValues();
+  prefs.SPref.init();
   
-  if(prefs.ShadowPrefs.ShadowPrefNames[0] == undefined){
+  if(prefs.SPref.check_installation() != 0){
   
-    assert.equal(true, false, "[!] failed to init ShadowPrefs");
-    done();
-  
-  }
-  if(prefs.ShadowPrefs.ShadowPrefValues[0] == undefined){
-  
-    assert.equal(true, false, "[!] failed to init ShadowPrefs");
+    assert.equal(true, false, "[!] ShadowPref check_installation() failed - something is really wrong...");
     done();
   
   }
   
-  prefs.ShadowPrefs.createShadowPrefs();
-  prefs.ShadowPrefs.readShadowPrefs();
+  prefs.SPref.add("test_pref", "", "test_our_value", true, 0);
   
-  if(require("sdk/preferences/service").get("extensions.jondofox.network.http.accept-encoding.secure") == undefined){
+  if(prefs.SPref.important_prefs[prefs.SPref.important_prefs.length-1][1] != "" || prefs.SPref.important_prefs[prefs.SPref.important_prefs.length-1][2] != "test_our_value"){
   
-    assert.equal(true, false, "[!] failed to write ShadowPrefs");
-    done();
-  
-  }
-  if(prefs.ShadowPrefs.ShadowPrefValues[0] == undefined){
-  
-    assert.equal(true, false, "[!] failed to read ShadowPrefs");
+    assert.equal(true, false, "[!] ShadowPref add() failed.");
     done();
   
   }
   
-  prefs.ShadowPrefs.modShadowPref("network.http.accept-encoding.secure", "willsomeonereadthis?");
+  if(prefs.SPref.getSPValue("test_pref", 0) != "" || prefs.SPref.getSPValue("test_pref", 1) != "test_our_value"){
   
-  if(prefs.ShadowPrefs.ShadowPrefValues[0] != "willsomeonereadthis?"){
-  
-    assert.equal(true, false, "[!] failed to modify ShadowPrefs");
+    assert.equal(true, false, "[!] ShadowPref getSPValue() failed.");
     done();
   
   }
   
-  prefs.ShadowPrefs.applyShadowPrefs();
+  prefs.SPref.setSPValue("test_pref", 0, "test_user_value");
   
-  if(require("sdk/preferences/service").get("network.http.accept-encoding.secure") != "willsomeonereadthis?"){
+  if(prefs.SPref.getSPValue("test_pref", 0) != "test_user_value"){
   
-    assert.equal(true, false, "[!] failed to write modified ShadowPrefs");
+    assert.equal(true, false, "[!] ShadowPref setSPValue() failed.");
     done();
   
   }
+  
+  //more needs to be added here
   
   assert.equal(true, true, "[i] ShadowPrefs are working!");
   done();
