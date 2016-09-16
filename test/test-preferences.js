@@ -99,6 +99,50 @@ exports["testing on_pref_change"] = function(assert, done){
   
   }
   
+  prefs.SPref.disable("", true, 0, false);
+  
+  for(var i = 0; i < prefs.SPref.important_prefs.length; i++){
+  
+    if(prefs.SPref.getSPValue(prefs.SPref.important_prefs[i][0], 2) == true && prefs.SPref.getSPValue(prefs.SPref.important_prefs[i][0], 3) == 0){
+    
+      if(prefs.SPref.getSPValue(prefs.SPref.important_prefs[i][0], 0) != require("sdk/preferences/service").get(prefs.SPref.important_prefs[i][0])){
+      
+        assert.equal(true, false, "[!] ShadowPref disable() failed!");
+        done();
+      
+      }
+    
+    }
+  
+  }
+  
+  require("sdk/preferences/service").set("extensions.jondofox.test_pref", "wolo!");
+  prefs.SPref.config_readSPValue();
+  
+  if(prefs.SPref.getSPValue("test_pref", 1) != "wolo!"){
+  
+    assert.equal(true, false, "[!] ShadowPref config_readSPValue() failed!");
+    done();
+  
+  }
+  
+  prefs.SPref.backup_for_crash();
+  
+  for(var i = 0; i < prefs.SPref.important_prefs.length; i++){
+  
+    if(require("sdk/preferences/service").get("extensions.jondofox.crashbackup." + prefs.SPref.important_prefs[i][0]) != undefined && prefs.SPref.getSPValue(prefs.SPref.important_prefs[i][0], 0) != ""){
+    
+      if(require("sdk/preferences/service").get("extensions.jondofox.crashbackup." + prefs.SPref.important_prefs[i][0]) != prefs.SPref.getSPValue(prefs.SPref.important_prefs[i][0], 0)){
+    
+        assert.equal(true, false, "[!] ShadowPref backup_for_crash() failed!");
+        done();
+    
+      }
+    
+    }
+  
+  }
+  
   assert.equal(true, true, "[i] ShadowPrefs are working!");
   done();
   
