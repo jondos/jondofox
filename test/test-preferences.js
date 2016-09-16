@@ -36,7 +36,68 @@ exports["testing on_pref_change"] = function(assert, done){
   
   }
   
-  //more needs to be added here
+  if(require("sdk/preferences/service").get(prefs.SPref.important_prefs[7][0]) != prefs.SPref.getSPValue(prefs.SPref.important_prefs[7][0], 0)){
+  
+    assert.equal(true, false, "[!] ShadowPref getCurrUserVal() failed.");
+    done();
+  
+  }
+  
+  prefs.SPref.install();
+  
+  if(require("sdk/preferences/service").get("extensions.jondofox.test_pref") != prefs.SPref.getSPValue("test_pref", 1)){
+  
+    assert.equal(true, false, "[!] ShadowPref install() failed.");
+    done();
+  
+  }
+  
+  prefs.SPref.setSPValue("test_pref", 1, "test_our_new_value");
+  prefs.SPref.fix_missing(false);
+  
+  if(require("sdk/preferences/service").get("extensions.jondofox.test_pref") == "test_our_new_value"){
+  
+    assert.equal(true, false, "[!] ShadowPref fix_missing() failed!");
+    done();
+  
+  }
+  
+  prefs.SPref.fix_missing(true);
+  
+  if(require("sdk/preferences/service").get("extensions.jondofox.test_pref") != "test_our_new_value"){
+  
+    assert.equal(true, false, "[!] ShadowPref fix_missing() failed!");
+    done();
+  
+  }
+  
+  prefs.SPref.setSPValue("test_pref", 1, "test_our_old_value");
+  require("sdk/preferences/service").set("extensions.jondofox.test_pref", "");
+  prefs.SPref.fix_missing(false);
+  
+  if(require("sdk/preferences/service").get("extensions.jondofox.test_pref") != "test_our_old_value"){
+  
+    assert.equal(true, false, "[!] ShadowPref fix_missing() failed!");
+    done();
+  
+  }
+  
+  prefs.SPref.activate("", true, 0);
+  
+  for(var i = 0; i < prefs.SPref.important_prefs.length; i++){
+  
+    if(prefs.SPref.getSPValue(prefs.SPref.important_prefs[i][0], 2) == true && prefs.SPref.getSPValue(prefs.SPref.important_prefs[i][0], 3) == 0){
+    
+      if(require("sdk/preferences/service").get(prefs.SPref.important_prefs[i][0]) != require("sdk/preferences/service").get("extensions.jondofox." + prefs.SPref.important_prefs[i][0])){
+      
+        assert.equal(true, false, "[!] ShadowPref activate() failed!");
+        done();
+      
+      }
+    
+    }
+  
+  }
   
   assert.equal(true, true, "[i] ShadowPrefs are working!");
   done();
