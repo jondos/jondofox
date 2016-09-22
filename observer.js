@@ -80,6 +80,21 @@ function getDOMWindow(channel){
       }
     }
   }
+  
+  if(!wind){
+  
+    try{
+          
+      wind = require("sdk/window/utils").getMostRecentBrowserWindow()
+          
+    }
+    catch(e){
+          
+      //console.log("failed: " + e);
+          
+    }
+  
+  }
 
   return wind;
 
