@@ -30,6 +30,7 @@ var SPref = {
       this.add("datareporting.healthreport.service.enabled", "", false, true, 0);
       this.add("datareporting.policy.dataSubmissionEnabled", "", false, true, 0);
       this.add("toolkit.crashreporter.enabled", "", false, true, 0);
+      this.add("toolkit.telemetry.enabled", "", false, true, 0);
 
       this.add("font.blacklist.underline_offset", "", "", false, 0);
       this.add("security.ssl.disable_session_identifiers", "", true, false, 0);
@@ -314,6 +315,12 @@ var SPref = {
                   if(prefName == ""){
 
                       require("sdk/preferences/service").set(this.important_prefs[i][0], this.getSPValue(this.important_prefs[i][0], 1));
+                      
+                      if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                          Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = false;
+                      
+                      }
 
                   }
                   else{
@@ -334,6 +341,12 @@ var SPref = {
                           if(this.important_prefs[i][0] == prefName){
 
                               require("sdk/preferences/service").set(this.important_prefs[i][0], this.getSPValue(this.important_prefs[i][0], 1));
+                              
+                              if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                                  Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = false;
+                      
+                              }
 
                           }
 
@@ -390,6 +403,12 @@ var SPref = {
                       if(should_reset){
 
                           require("sdk/preferences/service").reset(this.important_prefs[i][0]);
+                          
+                          if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                              Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
+                      
+                          }
 
                       }
                       else{
@@ -400,11 +419,23 @@ var SPref = {
 
                             // no user value does exist, thus resetting to system default
                             require("sdk/preferences/service").reset(this.important_prefs[i][0]);
+                            
+                            if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                                Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
+                      
+                            }
 
                           }
                           else{
 
                             require("sdk/preferences/service").set(this.important_prefs[i][0], tempVal);
+                            
+                            if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                                Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
+                      
+                            }
 
                           }
 
@@ -422,6 +453,12 @@ var SPref = {
                               if(should_reset){
 
                                   require("sdk/preferences/service").reset(this.important_prefs[i][0]);
+                                  
+                                  if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                                      Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
+                      
+                                  }
 
                               }
                               else{
@@ -432,11 +469,23 @@ var SPref = {
 
                                     // no user value does exist, thus resetting to system default
                                     require("sdk/preferences/service").reset(this.important_prefs[i][0]);
+                                    
+                                    if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                                        Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
+                      
+                                    }
 
                                   }
                                   else{
 
                                     require("sdk/preferences/service").set(this.important_prefs[i][0], tempVal);
+                                    
+                                    if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                                         Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
+                      
+                                     }
 
                                   }
 
@@ -452,6 +501,12 @@ var SPref = {
                               if(should_reset){
 
                                   require("sdk/preferences/service").reset(this.important_prefs[i][0]);
+                                  
+                                  if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                                      Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
+                      
+                                  }
 
                               }
                               else{
@@ -462,11 +517,23 @@ var SPref = {
 
                                     // no user value does exist, thus resetting to system default
                                     require("sdk/preferences/service").reset(this.important_prefs[i][0]);
+                                    
+                                    if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                                        Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
+                      
+                                    }
 
                                   }
                                   else{
 
                                     require("sdk/preferences/service").set(this.important_prefs[i][0], tempVal);
+                                    
+                                    if(this.important_prefs[i][0] == "toolkit.crashreporter.enabled"){
+                      
+                                        Cc["@mozilla.org/toolkit/crash-reporter;1"].getService(Ci.nsICrashReporter).submitReports = true;
+                      
+                                    }
 
                                   }
 

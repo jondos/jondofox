@@ -35,6 +35,7 @@ var PA = {
     },
 
     setPAMode: function(ShadowPrefs) {
+        ShadowPrefs.SPref.getCurrUserVal(); // so that we dont miss anything
         ShadowPrefs.SPref.activate("", true, 0);
         // register HTTP observer
         requests.httpRequestObserver.register();
