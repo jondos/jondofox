@@ -90,7 +90,7 @@ function getDOMWindow(channel){
     }
     catch(e){
           
-      //console.log("failed: " + e);
+      console.log("failed: " + e);
           
     }
   
@@ -122,7 +122,8 @@ function getParentHost(channel) {
 
     try {
 
-      parentHost = wind.top.location.hostname;
+      //parentHost = wind.top.location.hostname;
+      parentHost = wind.getBrowser().selectedBrowser.contentWindow.location.host;
 
       return parentHost;
 
@@ -217,6 +218,22 @@ var httpRequestObserver = {
           }
         }
 
+      }
+      else if(parentHost && parentHost == httpChannel.URI.host){
+          //update this later for custom proxy settings
+          if(require("sdk/preferences/service").get("extensions.jondofox.proxy.choice") == "jondo"){
+            
+              try{
+                  //still not enough to get ipcheck green..
+                  httpChannel.setResponseHeader("Proxy-Connection", "close", false);
+                  httpChannel.setResponseHeader("Connection", "close", false);
+              
+              }
+              catch(e){
+              }
+          
+          }
+      
       }
 
     }
