@@ -18,22 +18,32 @@ var SPref = {
       this.add("crashed", "", this.crashed, true, 999); // <-- this is a special setting, only for internal purposes. never activate this.
 
       this.add("network.http.accept-encoding.secure", "", "gzip, deflate", true, 0);
+      
       this.add("general.useragent.override", "", "Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101 Firefox/38.0", true, 0);
+      
       this.add("intl.accept_languages", "", "en-US,en", true, 0);
-      this.add("browser.sessionhistory.max_entries", "", 2, true, 0);
+      
       this.add("webgl.disabled", "", true, true, 0);
+      
+      this.add("browser.sessionhistory.max_entries", "", 2, true, 0);
       this.add("browser.display.use_document_fonts", "", 0, true, 0);
+      
       this.add("font.name.sans-serif.x-western", "", "Liberation Sans", true, 0);
       this.add("font.name.serif.x-wester", "", "Liberation Sans", true, 0);
+      this.add("font.blacklist.underline_offset", "", "", false, 0);
+      
       this.add("privacy.donottrackheader.enabled", "", true, true, 0);
+      
       this.add("datareporting.healthreport.uploadEnabled", "", false, true, 0);
       this.add("datareporting.healthreport.service.enabled", "", false, true, 0);
       this.add("datareporting.policy.dataSubmissionEnabled", "", false, true, 0);
+      
       this.add("toolkit.crashreporter.enabled", "", false, true, 0);
       this.add("toolkit.telemetry.enabled", "", false, true, 0);
-
-      this.add("font.blacklist.underline_offset", "", "", false, 0);
+      
       this.add("security.ssl.disable_session_identifiers", "", true, false, 0);
+      
+      this.add("media.peerconnection.enabled", "", false, true, 0);
 
       this.initialized = true;
 
