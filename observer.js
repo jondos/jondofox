@@ -224,7 +224,7 @@ var httpRequestObserver = {
           if(require("sdk/preferences/service").get("extensions.jondofox.proxy.choice") == "jondo"){
             
               try{
-                  //still not enough to get ipcheck green..
+
                   httpChannel.setResponseHeader("Proxy-Connection", "close", false);
                   httpChannel.setResponseHeader("Connection", "close", false);
               
