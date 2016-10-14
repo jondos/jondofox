@@ -219,22 +219,6 @@ var httpRequestObserver = {
         }
 
       }
-      else if(parentHost && parentHost == httpChannel.URI.host){
-          //update this later for custom proxy settings
-          if(require("sdk/preferences/service").get("extensions.jondofox.proxy.choice") == "jondo"){
-            
-              try{
-
-                  httpChannel.setResponseHeader("Proxy-Connection", "close", false);
-                  httpChannel.setResponseHeader("Connection", "close", false);
-              
-              }
-              catch(e){
-              }
-          
-          }
-      
-      }
 
     }
     else if(topic == "http-on-modify-request"){
@@ -257,6 +241,22 @@ var httpRequestObserver = {
 
         }
 
+      }
+      else if(parentHost && parentHost == httpChannel.URI.host){
+          //update this later for custom proxy settings
+          if(require("sdk/preferences/service").get("extensions.jondofox.proxy.choice") == "jondo"){
+            
+              try{
+
+                  httpChannel.setRequestHeader("Proxy-Connection", "close", false);
+                  httpChannel.setRequestHeader("Connection", "close", false);
+              
+              }
+              catch(e){
+              }
+          
+          }
+      
       }
 
       //If Content-Type Header is not correctly set
