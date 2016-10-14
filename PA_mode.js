@@ -250,9 +250,9 @@ function checkPrivateTab(PA, ShadowPrefs) {
             console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
           
             worker = tab.attach({
-      
-              //contentScript: 'window.alert("needtofreelocalstoragehere");'
-      
+              // clear window.name here
+              contentScript: 'if(window.name != \'\'){ window.name = \'\'; }'
+        
             });
         
           }

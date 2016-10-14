@@ -230,17 +230,6 @@ var httpRequestObserver = {
       // If its a third-party Website
       if(parentHost && parentHost != httpChannel.URI.host){
 
-        // handle window.name
-        var wind = getDOMWindow(httpChannel);
-
-        if(wind && wind.name != ''){
-
-          console.log("window.name: removed saved values. (" + wind.name + ")");
-
-          wind.name = '';
-
-        }
-
       }
       else if(parentHost && parentHost == httpChannel.URI.host){
           //update this later for custom proxy settings
