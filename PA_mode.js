@@ -129,6 +129,7 @@ var PA = {
 var localStorage = {
 
   tab_data: [],
+  need_to_clear: [],
   
   get_tab_count: function(tab, tabs){
   
@@ -196,12 +197,48 @@ var localStorage = {
       if(tab.id == this.tab_data[i][1]){
       
         if(this.get_host_from_url(tab.url) != this.tab_data[i][0]){
-        
+          
+          if(!this.host_known(this.tab_data[i][0])){
+            this.need_to_clear.push(this.tab_data[i][0]);
+          }
+          
           this.tab_data[i][0] = this.get_host_from_url(tab.url);
         
           return true;
         
         }
+      
+      }
+    
+    }
+    
+    return false;
+  
+  },
+  
+  should_clear: function(tab){
+  
+    for(var i = 0; i < this.need_to_clear.length; i++){
+    
+      if(this.get_host_from_url(tab.url) == this.need_to_clear[i]){
+      
+        return true;
+      
+      }
+    
+    }
+    
+    return false;
+  
+  },
+  
+  host_known: function(host){
+  
+    for(var i = 0; i < this.need_to_clear.length; i++){
+    
+      if(this.need_to_clear[i] == host){
+      
+        return true;
       
       }
     
@@ -219,9 +256,8 @@ function checkPrivateTab(PA, ShadowPrefs) {
 
     PA.PA.InitialCheckIfOneTabIsPrivate(ShadowPrefs);
 
-
     tabs.on('open', function(tab) {
-        // Is the secons condition correct?? (take a look at line 239)
+    
         if (require("sdk/private-browsing").isPrivate(tab) && !( require("sdk/preferences/service").get("extensions.jondofox.privateMode" ))) {
             PA.PA.setPAMode(ShadowPrefs);
             windows.on('resize', function(window) {
@@ -244,10 +280,33 @@ function checkPrivateTab(PA, ShadowPrefs) {
       
         }
         else{
+        
+          if(storage.should_clear(tab)){
+          
+            console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
+            
+              worker = tab.attach({
+            
+                contentScriptFile: require("sdk/self").data.url("js/localStorage.js")
+            
+              });
+            
+              worker.port.on("proceed", function(message){
+            
+                if(message == "YES"){
+              
+                  console.log("storage is cleared, but to late :(");
+                
+                }
+                else{
+                  console.log("no local storage for me :/");
+                }
+            
+              });
+          
+          }
       
           if(storage.is_different_domain(tab)){
-        
-            console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
           
             worker = tab.attach({
               // clear window.name here
