@@ -120,6 +120,7 @@ var proxyService = {
 
   setCustomProxy : function setCustomProxy(){
     // Set proxy to manuell
+    console.log("Set Proxy Custom");
     require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_max"  , require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.autoconfig_retry_interval_max"));
     require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_min" , require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.autoconfig_retry_interval_min"));
     require("sdk/preferences/service").set("network.proxy.autoconfig_url" , require("sdk/preferences/service").get("extensions.jondofox.proxy.custom.autoconfig_url"));
@@ -284,39 +285,39 @@ var proxyService = {
     this.add("proxy.custom.autoconfig_url" ,  "");
     this.add("proxy.custom.failover_timeout" ,  1800 );
     this.add("proxy.custom.ftp" ,  "" );
-    this.add("proxy.custom.ftp_port" ,  0 );
+    this.add("proxy.custom.ftp_port" ,  00000 );
     this.add("proxy.custom.http" ,  "" );
-    this.add("proxy.custom.http_port",  0 );
+    this.add("proxy.custom.http_port",  00000 );
     this.add("proxy.custom.no_proxies_on" ,  "localhost, 127.0.0.1" );
     this.add("proxy.custom.proxy_over_tls" ,  true );
     this.add("proxy.custom.share_proxy_settings" ,  false );
     this.add("proxy.custom.socks" ,  "" );
-    this.add("proxy.custom.socks_port" , 0 );
+    this.add("proxy.custom.socks_port" , 00000 );
     this.add("proxy.custom.socks_remote_dns" ,  false );
     this.add("proxy.custom.socks_version" ,  5 );
     this.add("proxy.custom.ssl" ,  "" );
-    this.add("proxy.custom.ssl_port" ,  0  );
-    this.add("proxy.custom.type" ,  5 );
+    this.add("proxy.custom.ssl_port" ,  00000  );
+    this.add("proxy.custom.type" ,  1 );
 
     // Proxy preferences JonDoFox
     this.add("proxy.jondo.autoconfig_retry_interval_max" ,  300 );
     this.add("proxy.jondo.autoconfig_retry_interval_min" ,  5 );
     this.add("proxy.jondo.autoconfig_url" ,  "" );
     this.add("proxy.jondo.failover_timeout" ,  1800 );
-    this.add("proxy.jondo.ftp" ,  "" , "", false,0);
+    this.add("proxy.jondo.ftp" ,  "127.0.01");
     this.add("proxy.jondo.ftp_port" ,  4001 );
     this.add("proxy.jondo.http" ,  "127.0.0.1" );
-    this.add("proxy.jondo.http_port",  0 );
+    this.add("proxy.jondo.http_port",  4001 );
     this.add("proxy.jondo.no_proxies_on" ,  "");
     this.add("proxy.jondo.proxy_over_tls" ,  true);
     this.add("proxy.jondo.share_proxy_settings" ,  false);
-    this.add("proxy.jondo.socks" ,  "" );
-    this.add("proxy.jondo.socks_port" , 0 );
-    this.add("proxy.jondo.socks_remote_dns" , "");
+    this.add("proxy.jondo.socks" ,  "127.0.0.1" );
+    this.add("proxy.jondo.socks_port" , 4001 );
+    this.add("proxy.jondo.socks_remote_dns" , true);
     this.add("proxy.jondo.socks_version" ,  5 );
-    this.add("proxy.jondo.ssl" ,  "" );
-    this.add("proxy.jondo.ssl_port" ,  0 );
-    this.add("proxy.jondo.type" ,  5 );
+    this.add("proxy.jondo.ssl" ,  "127.0.0.1" );
+    this.add("proxy.jondo.ssl_port" ,  4001);
+    this.add("proxy.jondo.type" ,  1 );
 
 
     // Proxy preferences Tor
@@ -325,19 +326,19 @@ var proxyService = {
     this.add("proxy.tor.autoconfig_url" ,  "" );
     this.add("proxy.tor.failover_timeout" ,  1800 );
     this.add("proxy.tor.ftp" ,  "" );
-    this.add("proxy.tor.ftp_port" ,  4001 );
-    this.add("proxy.tor.http" ,  "127.0.0.1" );
+    this.add("proxy.tor.ftp_port" ,  0 );
+    this.add("proxy.tor.http" ,  "" );
     this.add("proxy.tor.http_port",  0 );
-    this.add("proxy.tor.no_proxies_on" ,  "localhost, 127.0.0.1" );
+    this.add("proxy.tor.no_proxies_on" , "" );
     this.add("proxy.tor.proxy_over_tls" ,  true );
     this.add("proxy.tor.share_proxy_settings" ,  false );
     this.add("proxy.tor.socks" ,  "127.0.0.1" );
     this.add("proxy.tor.socks_port" , 9050 );
-    this.add("proxy.tor.socks_remote_dns" ,  false );
+    this.add("proxy.tor.socks_remote_dns" ,  true );
     this.add("proxy.tor.socks_version" ,  5 );
     this.add("proxy.tor.ssl" ,  "" );
     this.add("proxy.tor.ssl_port" ,  0 );
-    this.add("proxy.tor.type" ,  5 );
+    this.add("proxy.tor.type" ,  1 );
   },
 
   add: function(prefName, value){

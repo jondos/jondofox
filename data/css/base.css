@@ -39,6 +39,10 @@
     font-size: 18px;
 }
 
+.panelmenu-item-span a , .panelmenu-item-span a:hover , .panelmenu-item-span a:focus {
+    color:black;
+}
+
 .panelmenu-item-icon{
   float:left;
 }

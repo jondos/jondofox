@@ -36,8 +36,15 @@ var optionpage = {
   // Save options
   saveOptionsArray : function(pOptions){
     var proxy = pOptions.proxy;
+    console.log(proxy);
     for(var option in proxy){
-      require("sdk/preferences/service").set("extensions.jondofox." + option  , proxy[option]);
+      var reg = new RegExp('^[0-9]+$');
+      var isnum = reg.test(proxy[option]);
+      if(isnum){
+        require("sdk/preferences/service").set("extensions.jondofox." + option  , parseInt(proxy[option]));
+      }else{
+        require("sdk/preferences/service").set("extensions.jondofox." + option  , proxy[option]);
+      }
     }
   }
 

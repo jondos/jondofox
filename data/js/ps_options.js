@@ -24,7 +24,14 @@ $( document ).ready(function() {
                       var element = elements[key];
 
                       if (element.type == "text") {
-                        options.proxy[elements[key].name] = elements[key].value;
+                        var val = elements[key].value;
+                        var reg = new RegExp('^[0-9]+$');
+                        var isnum = reg.test(elements[key].value);
+                        if(isnum){
+                          options.proxy[elements[key].name] = parseInt(elements[key].value);
+                        }else{
+                          options.proxy[elements[key].name] = elements[key].value;
+                        }
                       }
                       if (element.type == "checkbox") {
                         if(elements[key].checked){
@@ -40,7 +47,6 @@ $( document ).ready(function() {
                       }
                     }
                   }
-
                   window.postMessage(options , "*");
                   break;
               case "preferencesSubmit":

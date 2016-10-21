@@ -80,7 +80,7 @@ function getPanelCall(jsonParamters) {
 function buildPanel(){
   panelmenu = panels.Panel({
       width: 200,
-      height: 310 ,
+      height: 340 ,
       contentURL: self.data.url("panelmenu.html"),
       onHide: handleHide,
       contentScriptFile: data.url("cs_panelmenu.js"),
