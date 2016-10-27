@@ -1,10 +1,10 @@
 {
-  "title": "JonDoFox-Lite",
-  "name": "jondofox-lite",
-  "version": "0.0.2",
-  "description": "JonDoFox, but build with then Addon SDK",
+  "title": "JonDoFox+",
+  "name": "jondofox",
+  "version": "0.1.0",
+  "description": "JonDoFox provides strong browser privacy and security, especially in the scope of anonymization networks like Tor, JonDonym and VPNs. You may use it together with any of these systems to get better privacy and defend your browser against fingerprinting attacks. See more here: https://github.com/jondos/jondofox/wiki",
   "main": "index.js",
-  "author": "JonDo Team",
+  "author": "JonDos, Germany",
   "id":"jid1-GF76Y9gfW7TzGb@jondofoxLite",
   "engines": {
     "firefox": ">=38.0a1"
@@ -30,10 +30,10 @@
   "preferences": [
     {
         "name": "preferencesButton",
-        "title": "Setting up your preferences",
+        "title": "JonDoFox custom settings",
         "type": "control",
-        "description": "Show custom preferences page",
-        "label": "Preferences"
+        "description": "Configure custom browser settings and get general configuration options, infos and help for JonDoFox here.",
+        "label": "Configure"
     }
   ]
 }
