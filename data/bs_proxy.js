@@ -17,7 +17,7 @@ var proxyService = {
         require("sdk/preferences/service").set("extensions.jondofox.proxy.choice" , pProxyName);
       break;
       case "jondo":
-        this.setCustomProxy();
+        this.setJonDoFoxProxy();
         require("sdk/preferences/service").set("extensions.jondofox.proxy.choice" , pProxyName);
       break;
       case "tor":
@@ -146,7 +146,7 @@ var proxyService = {
     require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_max"  , require("sdk/preferences/service").get("extensions.jondofox.proxy.jondo.autoconfig_retry_interval_max"));
     require("sdk/preferences/service").set("network.proxy.autoconfig_retry_interval_min" , require("sdk/preferences/service").get("extensions.jondofox.proxy.jondo.autoconfig_retry_interval_min"));
     require("sdk/preferences/service").set("network.proxy.autoconfig_url" , require("sdk/preferences/service").get("extensions.jondofox.proxy.jondo.autoconfig_url"));
-    require("sdk/preferences/service").set("network.proxy.failover_timeout" , require("sdk/preferences/service").get("extensions.jondofox.jondo.default.failover_timeout"));
+    require("sdk/preferences/service").set("network.proxy.failover_timeout" , require("sdk/preferences/service").get("extensions.jondofox.proxy.jondo.failover_timeout"));
     require("sdk/preferences/service").set("network.proxy.ftp" , require("sdk/preferences/service").get("extensions.jondofox.proxy.jondo.ftp"));
     require("sdk/preferences/service").set("network.proxy.ftp_port" , require("sdk/preferences/service").get("extensions.jondofox.proxy.jondo.ftp_port"));
     require("sdk/preferences/service").set("network.proxy.http" ,  require("sdk/preferences/service").get("extensions.jondofox.proxy.jondo.http"));
@@ -307,10 +307,10 @@ var proxyService = {
     this.add("proxy.jondo.ftp" ,  "127.0.01");
     this.add("proxy.jondo.ftp_port" ,  4001 );
     this.add("proxy.jondo.http" ,  "127.0.0.1" );
-    this.add("proxy.jondo.http_port",  4001 );
-    this.add("proxy.jondo.no_proxies_on" ,  "");
+    this.add("proxy.jondo.http_port", 4001);
+    this.add("proxy.jondo.no_proxies_on" ,  "localhost,127.0.0.1");
     this.add("proxy.jondo.proxy_over_tls" ,  true);
-    this.add("proxy.jondo.share_proxy_settings" ,  false);
+    this.add("proxy.jondo.share_proxy_settings" ,  true);
     this.add("proxy.jondo.socks" ,  "127.0.0.1" );
     this.add("proxy.jondo.socks_port" , 4001 );
     this.add("proxy.jondo.socks_remote_dns" , true);
@@ -329,7 +329,7 @@ var proxyService = {
     this.add("proxy.tor.ftp_port" ,  0 );
     this.add("proxy.tor.http" ,  "" );
     this.add("proxy.tor.http_port",  0 );
-    this.add("proxy.tor.no_proxies_on" , "" );
+    this.add("proxy.tor.no_proxies_on" , "localhost,127.0.0.1" );
     this.add("proxy.tor.proxy_over_tls" ,  true );
     this.add("proxy.tor.share_proxy_settings" ,  false );
     this.add("proxy.tor.socks" ,  "127.0.0.1" );
