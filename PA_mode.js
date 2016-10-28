@@ -283,7 +283,7 @@ function checkPrivateTab(PA, ShadowPrefs) {
         
           if(storage.should_clear(tab)){
           
-            console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
+              console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
             
               worker = tab.attach({
             

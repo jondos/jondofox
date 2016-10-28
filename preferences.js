@@ -661,7 +661,7 @@ var SPref = {
           // activate non dyn prefs
           this.activate("", false, 0);
 
-          this.browser_restart();
+          this.browser_restart(true);
 
       }
 
@@ -689,13 +689,13 @@ var SPref = {
 
           }
 
-          this.browser_restart();
+          this.browser_restart(false);
 
       }
 
   },
 
-  browser_restart: function(){
+  browser_restart: function(should_popup){
 
       var startup = Cc["@mozilla.org/toolkit/app-startup;1"].getService(Ci.nsIAppStartup);
 
@@ -705,7 +705,9 @@ var SPref = {
       var ntfBoxButtonOkLabel = _("notification_box_restart_nondynPrefs_button_ok");
       var data = require("sdk/self").data;
 
-      var notification = require("./lib/notification-box.js").NotificationBox({
+      if(should_popup){
+      
+        var notification = require("./lib/notification-box.js").NotificationBox({
                                                                               'value': 'important-message',
                                                                               'label': ntfBoxLabel,
                                                                               'priority': 'WARNING_HIGH',
@@ -721,6 +723,13 @@ var SPref = {
                                                                               // Reaction on click X
                                                                               }
                                                                               });
+      
+      }
+      else{
+        //is this okay?
+        startup.quit(0x12);
+      
+      }
 
   }
 
