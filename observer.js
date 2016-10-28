@@ -1,6 +1,21 @@
 var {Cc, Ci, Cr} = require("chrome");
 var preferences = require("./preferences.js");
 
+var ShadowPrefs = null;
+
+// dont tell me, i know it..
+function saveShadowPrefs(prefs){
+
+  ShadowPrefs = prefs;
+
+}
+
+function getShadowPref(){
+
+  return ShadowPrefs;
+
+}
+
 
 // KKP removed cause no functionality - only logging  - 04.08.2016
 /*require("sdk/tabs").on("ready", function(tab) {
@@ -100,6 +115,31 @@ function getDOMWindow(channel){
 
 }
 
+function getCurrentTab(channel){
+
+  var wind = this.getDOMWindow(channel);
+  
+  if(wind){
+  
+    try{
+      //thanks to #extdev @mozilla irc, altho this is not the "right" way to go...
+      var { modelFor } = require("sdk/model/core");
+      
+      return modelFor(wind.getBrowser().getTabForBrowser(wind.getBrowser().selectedBrowser));
+    
+    }
+    catch(e){
+    
+      return null;
+    
+    }
+  
+  }
+  
+  return null;
+
+}
+
 /*
 * This function tries to get the parent Host, meaning the Website the Browser has opened
 * in the current Window/Tab (so that scripts loaded from the Website hosted on a different
@@ -176,6 +216,48 @@ function getParentHost(channel) {
 }
 
 /*
+* This function checks wether the Referer header needs to be cleared, and does it if needed.
+* It does this the following way:
+*
+* If wen can match the current httpChannel to the correct tab{
+*       If the domain of the current httpChannel differs from the saved domain of the corresponding tab{
+*              clear the referer
+*       }
+* }
+*
+* see preferences.js into localStorage for the list.
+*/
+function clearReferer(httpChannel){
+
+  try{
+            
+    var ShadowPrefs = getShadowPref();
+            
+    if(getCurrentTab(httpChannel) && ShadowPrefs.localStorage.get_host_from_url(httpChannel.URI.host) != ShadowPrefs.localStorage.httpChannel_get_host(getCurrentTab(httpChannel).id)){
+            
+      //clear referrer
+      var referrer = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService).newURI("https://nothing.org", "", null);
+          
+      httpChannel.setReferrerWithPolicy(referrer, httpChannel.REFERRER_POLICY_NO_REFERRER);
+          
+      return httpChannel;
+              
+    }
+          
+  }
+  catch(e){
+  
+    console.log(e);
+  
+    return httpChannel;
+            
+  }
+  
+  return httpChannel;
+
+}
+
+/*
 * The observer to get the 'http-on-examine-response' trigger used to intercept
 * incoming HTTP Headers (so we can remove the 'WWW-Authenticate' Header flag
 * to block the Authentication-ID security flaw if it is set by a third party Website)
@@ -187,7 +269,7 @@ var httpRequestObserver = {
   /*
   * This function executes when the Observer gets triggered
   */
-  observe: function(subject, topic, data){
+  observe: function(subject, topic, data, ShadowPrefs){
 
     // If it is a Server->Client Response
     if(topic == "http-on-examine-response") {
@@ -230,6 +312,8 @@ var httpRequestObserver = {
       // If its a third-party Website
       if(parentHost && parentHost != httpChannel.URI.host){
 
+          httpChannel = clearReferer(httpChannel);
+
       }
       else if(parentHost && parentHost == httpChannel.URI.host){
           //update this later for custom proxy settings
@@ -246,16 +330,7 @@ var httpRequestObserver = {
           
           }
           
-          try{
-            //clear referrer
-            var referrer = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService).newURI("https://nothing.org", "", null);
-          
-            httpChannel.setReferrerWithPolicy(referrer, httpChannel.REFERRER_POLICY_NO_REFERRER);
-          
-          }
-          catch(e){
-          
-          }
+          httpChannel = clearReferer(httpChannel);
       
       }
 
@@ -283,10 +358,11 @@ var httpRequestObserver = {
     return Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverService);
   },
 
-  register: function(){
+  register: function(ShadowPrefs){
     this.observerService.addObserver(this, "http-on-examine-response", false);
     this.observerService.addObserver(this, "http-on-modify-request", false);
     this.isObserving = true;
+    saveShadowPrefs(ShadowPrefs);
   },
 
   unregister: function(){

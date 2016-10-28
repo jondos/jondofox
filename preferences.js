@@ -726,11 +726,193 @@ var SPref = {
       
       }
       else{
-        //is this okay?
-        startup.quit(0x12);
+        
+        var notification = require("./lib/notification-box.js").NotificationBox({
+                                                                              'value': 'important-message',
+                                                                              'label': ntfBoxLabel,
+                                                                              'priority': 'WARNING_HIGH',
+                                                                              'image': data.url("icons/ic_info_outline_black_18dp.png"),
+                                                                              'eventCallback': function() {
+                                                                              // Reaction on click X
+                                                                              }
+                                                                              });
       
       }
 
+  }
+
+}
+
+var localStorage = {
+
+  tab_data: [],
+  need_to_clear: [],
+  
+  get_tab_count: function(tab, tabs){
+  
+    var count = 0;
+  
+    for(let tab of tabs){
+    
+      count = count + 1;
+    
+    }
+    
+    return count;
+  
+  },
+  
+  add: function(tab){
+  
+    var tempArray = [];
+    
+    tempArray.push(this.get_host_from_url(tab.url));
+    tempArray.push(tab.id);
+    
+    this.tab_data.push(tempArray);
+  
+  },
+  
+  is_known: function(tab){
+  
+    for(var i = 0; i < this.tab_data.length; i++){
+    
+      if(this.tab_data[i][1] == tab.id){
+      
+        return true;
+      
+      }
+    
+    }
+    
+    return false;
+  
+  },
+  
+  get_host_from_url: function(url){
+  
+    if(url.indexOf("http://") == 0){
+      url = url.substr(7, url.length);
+    }
+    else if(url.indexOf("https://") == 0){
+      url = url.substr(8, url.length);
+    }
+    
+    if(url.indexOf("/") != -1){
+      url = url.substr(0, url.indexOf("/"));
+    }
+    
+    if(url.indexOf("www.") == 0){
+      url = url.substr(4, url.length);
+    }
+    
+    // for subdomains
+    if(url.indexOf(".") != -1 && url.indexOf(".") != url.length){
+    
+      var temp = url.substr(url.indexOf(".")+1, url.length);
+
+      if(temp.indexOf(".") != -1){
+        url = url.substr(url.indexOf(".")+1, url.length);
+      }
+    
+    }
+    
+    return url;
+  
+  },
+  
+  // The following function checks wether we are facing a new domain and updates the internal memory accordingly
+  is_different_domain: function(tab){
+  
+    for(var i = 0; i < this.tab_data.length; i++){
+    
+      if(tab.id == this.tab_data[i][1]){
+      
+        if(this.get_host_from_url(tab.url) != this.tab_data[i][0]){
+          
+          if(!this.host_known(this.tab_data[i][0])){
+            this.need_to_clear.push(this.tab_data[i][0]);
+          }
+          
+          this.tab_data[i][0] = this.get_host_from_url(tab.url);
+        
+          return true;
+        
+        }
+      
+      }
+    
+    }
+    
+    return false;
+  
+  },
+  
+  should_clear: function(tab){
+  
+    for(var i = 0; i < this.need_to_clear.length; i++){
+    
+      if(this.get_host_from_url(tab.url) == this.need_to_clear[i]){
+      
+        return true;
+      
+      }
+    
+    }
+    
+    return false;
+  
+  },
+  
+  host_known: function(host){
+  
+    for(var i = 0; i < this.need_to_clear.length; i++){
+    
+      if(this.need_to_clear[i] == host){
+      
+        return true;
+      
+      }
+    
+    }
+    
+    return false;
+  
+  },
+  
+  cleared: function(tab){
+  
+    var temp_array = [];
+    var host = this.get_host_from_url(tab.url);
+  
+    for(var i = 0; i < this.need_to_clear.length; i++){
+    
+      if(this.need_to_clear[i] != host){
+      
+        temp_array.push(host);
+      
+      }
+    
+    }
+    
+    need_to_clear = temp_array;
+  
+  },
+  
+  httpChannel_get_host: function(id){
+  
+    for(var i = 0; i < this.tab_data.length; i++){
+    
+      if(this.tab_data[i][1] == id){
+      
+        return this.tab_data[i][0];
+      
+      }
+      
+    }
+    
+    return null;
+  
   }
 
 }
@@ -794,5 +976,6 @@ function createShadowCopyProxyPreferences(){
 
 exports.putFontBlacklist = putFontBlacklist;
 exports.restoreFontBlacklist = restoreFontBlacklist;
-exports.jonDoFoxPreferenceService = jonDoFoxPreferenceService ;
+exports.jonDoFoxPreferenceService = jonDoFoxPreferenceService;
 exports.SPref = SPref;
+exports.localStorage = localStorage;

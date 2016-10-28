@@ -38,7 +38,7 @@ var PA = {
         ShadowPrefs.SPref.getCurrUserVal(); // so that we dont miss anything
         ShadowPrefs.SPref.activate("", true, 0);
         // register HTTP observer
-        requests.httpRequestObserver.register();
+        requests.httpRequestObserver.register(ShadowPrefs);
         require("sdk/preferences/service").set("extensions.jondofox.privateMode" , true);
         proxy.proxyService.setProxyIfWasEnabledInDefault();
 
@@ -126,132 +126,6 @@ var PA = {
     }
 }
 
-var localStorage = {
-
-  tab_data: [],
-  need_to_clear: [],
-  
-  get_tab_count: function(tab, tabs){
-  
-    var count = 0;
-  
-    for(let tab of tabs){
-    
-      count = count + 1;
-    
-    }
-    
-    return count;
-  
-  },
-  
-  add: function(tab){
-  
-    var tempArray = [];
-    
-    tempArray.push(this.get_host_from_url(tab.url));
-    tempArray.push(tab.id);
-    
-    this.tab_data.push(tempArray);
-  
-  },
-  
-  is_known: function(tab){
-  
-    for(var i = 0; i < this.tab_data.length; i++){
-    
-      if(this.tab_data[i][1] == tab.id){
-      
-        return true;
-      
-      }
-    
-    }
-    
-    return false;
-  
-  },
-  
-  get_host_from_url: function(url){
-  
-    if(url.search("http://") == 0){
-      url = url.substr(7, url.length);
-    }
-    else if(url.search("https://") == 0){
-      url = url.substr(8, url.length);
-    }
-    
-    if(url.search("/") != -1){
-      url = url.substr(0, url.search("/"));
-    }
-    
-    return url;
-  
-  },
-  
-  // The following function checks wether we are facing a new domain and updates the internal memory accordingly
-  is_different_domain: function(tab){
-  
-    for(var i = 0; i < this.tab_data.length; i++){
-    
-      if(tab.id == this.tab_data[i][1]){
-      
-        if(this.get_host_from_url(tab.url) != this.tab_data[i][0]){
-          
-          if(!this.host_known(this.tab_data[i][0])){
-            this.need_to_clear.push(this.tab_data[i][0]);
-          }
-          
-          this.tab_data[i][0] = this.get_host_from_url(tab.url);
-        
-          return true;
-        
-        }
-      
-      }
-    
-    }
-    
-    return false;
-  
-  },
-  
-  should_clear: function(tab){
-  
-    for(var i = 0; i < this.need_to_clear.length; i++){
-    
-      if(this.get_host_from_url(tab.url) == this.need_to_clear[i]){
-      
-        return true;
-      
-      }
-    
-    }
-    
-    return false;
-  
-  },
-  
-  host_known: function(host){
-  
-    for(var i = 0; i < this.need_to_clear.length; i++){
-    
-      if(this.need_to_clear[i] == host){
-      
-        return true;
-      
-      }
-    
-    }
-    
-    return false;
-  
-  }
-
-}
-
-var storage = localStorage;
-
 function checkPrivateTab(PA, ShadowPrefs) {
 
     PA.PA.InitialCheckIfOneTabIsPrivate(ShadowPrefs);
@@ -273,15 +147,15 @@ function checkPrivateTab(PA, ShadowPrefs) {
     tabs.on('ready', function(tab) {
     
       if(require("sdk/private-browsing").isPrivate(tab) && (require("sdk/preferences/service").get("extensions.jondofox.privateMode"))){
+
+        if(!ShadowPrefs.localStorage.is_known(tab)){
       
-        if(!storage.is_known(tab)){
-      
-          storage.add(tab);
+          ShadowPrefs.localStorage.add(tab);
       
         }
         else{
         
-          if(storage.should_clear(tab)){
+          if(ShadowPrefs.localStorage.should_clear(tab)){
           
               console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
             
@@ -296,6 +170,8 @@ function checkPrivateTab(PA, ShadowPrefs) {
                 if(message == "YES"){
               
                   console.log("storage is cleared, but to late :(");
+                  
+                  ShadowPrefs.localStorage.cleared(tab);
                 
                 }
                 else{
@@ -306,7 +182,7 @@ function checkPrivateTab(PA, ShadowPrefs) {
           
           }
       
-          if(storage.is_different_domain(tab)){
+          if(ShadowPrefs.localStorage.is_different_domain(tab)){
           
             worker = tab.attach({
               // clear window.name here
