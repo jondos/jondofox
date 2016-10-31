@@ -39,9 +39,13 @@ window.addEventListener('menuAction', function(event) {
 window.addEventListener('message', function(event) {
         var messageArray = event.data;
         var messageValue = messageArray[0]
-        window.console.log(messageValue["proxy.choice"]);
         window.document.querySelector('input[value="' + messageValue["proxy.choice"] + '"]').checked = true;
-
+        if(messageValue["proxy.isPrivateBrowsing"]){
+          var inputsProxyChoice = window.document.querySelectorAll('input[name="proxy.choice"]');
+          for (index = 0; index < inputsProxyChoice.length; ++index) {
+              inputsProxyChoice[index].disabled=false
+          }
+        }
       }, false);
 
 });

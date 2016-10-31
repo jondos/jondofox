@@ -135,6 +135,7 @@ function handleChange(state) {
         var panelmenuInitParameter = [];
         var obj = {};
         obj["proxy.choice"] = require("sdk/preferences/service").get("extensions.jondofox.proxy.choice");
+        obj["proxy.isPrivateBrowsing"] = require("sdk/preferences/service").get("extensions.jondofox.privateMode");
         panelmenuInitParameter.push(obj);
         //panelmenu.port.emit("menuAction", panelmenuInitParameter);
         pannelmenuService.sendMessage(panelmenuInitParameter);
