@@ -290,7 +290,7 @@ var proxyService = {
     this.add("proxy.custom.http_port",  00000 );
     this.add("proxy.custom.no_proxies_on" ,  "localhost, 127.0.0.1" );
     this.add("proxy.custom.proxy_over_tls" ,  true );
-    this.add("proxy.custom.share_proxy_settings" ,  false );
+    this.add("proxy.custom.share_proxy_settings" ,  true );
     this.add("proxy.custom.socks" ,  "" );
     this.add("proxy.custom.socks_port" , 00000 );
     this.add("proxy.custom.socks_remote_dns" ,  false );

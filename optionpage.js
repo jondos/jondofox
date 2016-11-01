@@ -34,10 +34,10 @@ var optionpage = {
     // Save options
     saveOptionsArray: function(pOptions) {
         var proxy = pOptions.proxy;
-        console.log(proxy);
+        var isShareProxy = pOptions.proxy["proxy.custom.share_proxy_settings"];
         for (var option in proxy) {
             var typeOfPreference = typeof require("sdk/preferences/service").get("extensions.jondofox." + option);
-            console.log(typeOfPreference);
+            console.log(option + " - " + proxy[option] );
             switch (typeOfPreference) {
                 case "number":
                       if (proxy[option]) {
@@ -45,14 +45,14 @@ var optionpage = {
                       }
                     break;
                 case "boolean":
-                      if (proxy[option]) {
+                      if (proxy[option] !== "undefined") {
                         require("sdk/preferences/service").set("extensions.jondofox." + option , proxy[option]);
                       }
                     break;
                 case "string":
                       if (proxy[option]) {
                         require("sdk/preferences/service").set("extensions.jondofox." + option , proxy[option]);
-                      }  
+                      }
                     break;
                 default:
                     // do nothing

@@ -97,15 +97,34 @@ $( document ).ready(function() {
 
 });
 
+function disableInputs(){
+    window.document.querySelector('input[name="proxy.custom.ssl"]').disabled = true;
+    window.document.querySelector('input[name="proxy.custom.ssl_port"]').disabled = true;
+    window.document.querySelector('input[name="proxy.custom.ftp"]').disabled = true;
+    window.document.querySelector('input[name="proxy.custom.ftp_port"]').disabled = true;
+    window.document.querySelector('input[name="proxy.custom.socks"]').disabled = true;
+    window.document.querySelector('input[name="proxy.custom.socks_port"]').disabled = true;
+}
 
+function enableInputs(){
+  window.document.querySelector('input[name="proxy.custom.ssl"]').disabled = false;
+  window.document.querySelector('input[name="proxy.custom.ssl_port"]').disabled = false;
+  window.document.querySelector('input[name="proxy.custom.ftp"]').disabled = false;
+  window.document.querySelector('input[name="proxy.custom.ftp_port"]').disabled = false;
+  window.document.querySelector('input[name="proxy.custom.socks"]').disabled = false;
+  window.document.querySelector('input[name="proxy.custom.socks_port"]').disabled = false;
+}
+
+function toggleEnable(event){
+  if(event.checked){
+    disableInputs();
+  }else{
+    enableInputs();
+  }
+}
 
 // Listener for ContentScript
 window.addEventListener('message', function(event) {
-  //document.getElementById("JonDoFoxLite_isEnabled").checked = event.data ;  // Message from content script
-  // get Arrays
-
-  console.log("message:");
-  console.log(event.data);
   var options = event.data;
   var proxy = options["proxy"];
   var email = options["email"];
@@ -142,9 +161,11 @@ window.addEventListener('message', function(event) {
       }
     }
   }
-
-
-
+  if(proxy["proxy.custom.share_proxy_settings"]){
+    disableInputs();
+  }else {
+    enableInputs();
+  }
 
 
 }, false);

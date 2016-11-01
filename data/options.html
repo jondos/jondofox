@@ -3,10 +3,6 @@
 
 <head>
     <meta charset="utf-8" />
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="css/materialize.min.css">
     <link rel="stylesheet" href="css/base.css">
     <script>
@@ -99,12 +95,12 @@
                                         <div class="col s12">
                                             <div class="row">
                                                 <div class="input-field col s8">
-                                                    <input type="text" name="proxy.custom.http" id="proxy.custom.http"/>
-                                                  <label for="proxy.custom.http" data-l10n-id="option_optionpage_proxy_custom_http_label"></label>
+                                                    <input type="text" name="proxy.custom.http" id="proxy.custom.http" placeholder="127.0.0.1"/>
+                                                  <label for="proxy.custom.http" data-l10n-id="option_optionpage_proxy_custom_http_label" ></label>
                                                 </div>
                                                 <div class="input-field col s4">
-                                                    <input type="text" name="proxy.custom.http_port" id="proxy.custom.http_port" />
-                                                    <label for="proxy.custom.http_port" data-l10n-id="option_optionpage_proxy_custom_http_port_label"></label>
+                                                    <input type="text" name="proxy.custom.http_port" id="proxy.custom.http_port" placeholder="0" />
+                                                    <label for="proxy.custom.http_port" data-l10n-id="option_optionpage_proxy_custom_http_port_label" ></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -113,7 +109,7 @@
                                                 <div class="col s2"></div>
                                                 <div class="col s10">
                                                     <p>
-                                                        <input type="checkbox" class="filled-in" id="proxy.custom.share_proxy_settings" name="proxy.custom.share_proxy_settings" />
+                                                        <input type="checkbox" class="filled-in" id="proxy.custom.share_proxy_settings" name="proxy.custom.share_proxy_settings" onchange="toggleEnable(this)"/>
                                                         <label for="proxy.custom.share_proxy_settings" data-l10n-id="option_optionpage_proxy_custom_share_proxy_label"></label>
                                                     </p>
                                                 </div>
@@ -122,12 +118,12 @@
                                         <div class="col s12">
                                             <div class="row">
                                                 <div class="input-field col s8">
-                                                    <input type="text" name="proxy.custom.ssl" id="proxy.custom.ssl" />
+                                                    <input type="text" name="proxy.custom.ssl" id="proxy.custom.ssl" disabled="disabled" placeholder="127.0.0.1"/>
                                                     <label for="proxy.custom.ssl" data-l10n-id="option_optionpage_proxy_custom_ssl_label"></label>
                                                 </div>
                                                 <div class="input-field col s4">
 
-                                                    <input type="text" name="proxy.custom.ssl_port" id="proxy.custom.ssl_port" />
+                                                    <input type="text" name="proxy.custom.ssl_port" id="proxy.custom.ssl_port" disabled="disabled" placeholder="0"/>
                                                     <label for="proxy.custom.ssl_port" data-l10n-id="option_optionpage_proxy_custom_ssl_port_label"></label>
                                                 </div>
                                             </div>
@@ -135,11 +131,11 @@
                                         <div class="col s12">
                                             <div class="row">
                                                 <div class="input-field col s8">
-                                                    <input type="text" name="proxy.custom.ftp" id="proxy.custom.ftp"/>
+                                                    <input type="text" name="proxy.custom.ftp" id="proxy.custom.ftp" disabled="disabled" placeholder="127.0.0.1"/>
                                                   <label for="proxy.custom.ftp" data-l10n-id="option_optionpage_proxy_custom_ftp_label"></label>
                                                 </div>
                                                 <div class="input-field col s4">
-                                                    <input type="text" name="proxy.custom.ftp_port" id="proxy.custom.ftp_port" />
+                                                    <input type="text" name="proxy.custom.ftp_port" id="proxy.custom.ftp_port" disabled="disabled" placeholder="0"/>
                                                     <label for="proxy.custom.ftp_port" data-l10n-id="option_optionpage_proxy_custom_ftp_port_label"></label>
                                                 </div>
                                             </div>
@@ -147,11 +143,11 @@
                                         <div class="col s12">
                                             <div class="row">
                                                 <div class="input-field col s8">
-                                                    <input type="text" name="proxy.custom.socks" id="proxy.custom.socks"/>
+                                                    <input type="text" name="proxy.custom.socks" id="proxy.custom.socks" disabled="disabled" placeholder="127.0.0.1"/>
                                                   <label for="proxy.custom.socks" data-l10n-id="option_optionpage_proxy_custom_socks_label"></label>
                                                 </div>
                                                 <div class="input-field col s4">
-                                                    <input type="text" name="proxy.custom.socks_port" id="proxy.custom.socks_port" />
+                                                    <input type="text" name="proxy.custom.socks_port" id="proxy.custom.socks_port" disabled="disabled" placeholder="0"/>
                                                     <label for="proxy.custom.socks_port" data-l10n-id="option_optionpage_proxy_custom_socks_port_label"></label>
                                                 </div>
                                             </div>
