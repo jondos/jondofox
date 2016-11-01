@@ -359,7 +359,7 @@ var proxyService = {
     }
   },
 
-  deinstall : function(){
+  uninstall : function(){
     for(var i = 0; i < this.proxy_prefs.length; i++){
       require("sdk/preferences/service").reset("extensions.jondofox." + this.proxy_prefs[i][0] );
     }
