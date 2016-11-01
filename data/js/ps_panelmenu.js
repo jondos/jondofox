@@ -23,7 +23,7 @@ $( document ).ready(function() {
     event.stopPropagation();
   });
 
-
+console.log(navigator.language);
 
 // Listener for ContentScript
 window.addEventListener('menuAction', function(event) {
@@ -40,10 +40,15 @@ window.addEventListener('message', function(event) {
         var messageArray = event.data;
         var messageValue = messageArray[0]
         window.document.querySelector('input[value="' + messageValue["proxy.choice"] + '"]').checked = true;
+        console.log(messageValue["proxy.isPrivateBrowsing"]);
         if(messageValue["proxy.isPrivateBrowsing"]){
           var inputsProxyChoice = window.document.querySelectorAll('input[name="proxy.choice"]');
           for (index = 0; index < inputsProxyChoice.length; ++index) {
-              inputsProxyChoice[index].disabled=false
+              inputsProxyChoice[index].disabled=false;
+          }
+        }else{
+          for (index = 0; index < inputsProxyChoice.length; ++index) {
+              inputsProxyChoice[index].disabled=true;
           }
         }
       }, false);
