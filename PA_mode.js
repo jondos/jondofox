@@ -184,11 +184,11 @@ function checkPrivateTab(PA, ShadowPrefs) {
       
           if(ShadowPrefs.localStorage.is_different_domain(tab)){
           
-            worker = tab.attach({
+            //worker = tab.attach({
               // clear window.name here
-              contentScript: 'if(window.name != \'\'){ window.name = \'\'; }'
+              //contentScript: 'if(window.name != \'\'){ window.name = \'\'; }'
         
-            });
+            //});
         
           }
       

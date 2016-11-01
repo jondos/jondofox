@@ -848,6 +848,26 @@ var localStorage = {
   
   },
   
+  is_different_domain_httpChannel: function(url, tabID){
+  
+    for(var i = 0; i < this.tab_data.length; i++){
+    
+      if(tabID == this.tab_data[i][1]){
+      
+        if(this.get_host_from_url(url) != this.tab_data[i][0]){
+        
+          return true;
+        
+        }
+      
+      }
+    
+    }
+    
+    return false;
+  
+  },
+  
   should_clear: function(tab){
   
     for(var i = 0; i < this.need_to_clear.length; i++){

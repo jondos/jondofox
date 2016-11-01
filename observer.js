@@ -141,6 +141,33 @@ function getCurrentTab(channel){
 }
 
 /*
+* this function replaces 'getTabContentWindow(tab)' => 'getBrowserForTab(tab).contentWindow'
+* from sdk/tabs/utils.js
+*/
+function getTabBrowser(channel){
+
+  var wind = this.getDOMWindow(channel);
+  
+  if(wind){
+  
+    try{
+    
+      return wind.getBrowser().selectedBrowser;
+    
+    }
+    catch(e){
+    
+      return null;
+    
+    }
+  
+  }
+  
+  return null;
+
+}
+
+/*
 * This function tries to get the parent Host, meaning the Website the Browser has opened
 * in the current Window/Tab (so that scripts loaded from the Website hosted on a different
 * host are third party Hosts)
@@ -308,6 +335,8 @@ var httpRequestObserver = {
       var httpChannel = subject.QueryInterface(Ci.nsIHttpChannel);
 
       var parentHost = getParentHost(httpChannel);
+      
+      var ShadowPrefs = getShadowPref();
 
       // If its a third-party Website
       if(parentHost && parentHost != httpChannel.URI.host){
@@ -331,6 +360,40 @@ var httpRequestObserver = {
           }
           
           httpChannel = clearReferer(httpChannel);
+          
+          if(ShadowPrefs.localStorage.is_different_domain_httpChannel(httpChannel.URI.spec, getCurrentTab(httpChannel).id)){
+          
+            //console.log("DETECTED BY OBSERVER");
+            
+            try{
+            
+              var options = {
+                contentScript: 'if(window.name != \'\'){ window.name = \'\'; }'
+              };
+            
+              let { Worker } = require("sdk/tabs/worker");
+              Worker(
+            
+                options,
+                //require("sdk/tabs/utils").getTabContentWindow(getCurrentTab(httpChannel))
+                // dont using the above line cause its causing errors, using our own way... (which does exactly the same as far as i know)
+                getTabBrowser(httpChannel).contentWindow
+            
+              );
+            
+            }
+            catch(e){
+            
+              console.log(e);
+            
+            }
+          
+          }
+          else{
+          
+            //console.log("[+] some of this url's is making the ip check red: " + httpChannel.URI.spec);
+          
+          }
       
       }
 
