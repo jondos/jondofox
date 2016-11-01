@@ -23,16 +23,14 @@ $( document ).ready(function() {
     event.stopPropagation();
   });
 
-console.log(navigator.language);
+
 
 // Listener for ContentScript
 window.addEventListener('menuAction', function(event) {
   console.log("Listener for ContentScript");
   console.log(event.data);
   if(null != event.data.proxyChoice){
-    console.log(event.data.proxyChoice);
     value = event.data.proxyChoice ;  // Message from content script
-    console.log("Init Proxy with : " + value )
   }
 }, false);
 
@@ -40,7 +38,8 @@ window.addEventListener('message', function(event) {
         var messageArray = event.data;
         var messageValue = messageArray[0]
         window.document.querySelector('input[value="' + messageValue["proxy.choice"] + '"]').checked = true;
-        console.log(messageValue["proxy.isPrivateBrowsing"]);
+
+
         if(messageValue["proxy.isPrivateBrowsing"]){
           var inputsProxyChoice = window.document.querySelectorAll('input[name="proxy.choice"]');
           for (index = 0; index < inputsProxyChoice.length; ++index) {
@@ -54,3 +53,17 @@ window.addEventListener('message', function(event) {
       }, false);
 
 });
+
+function hrefAnonimityTest(){
+  language = navigator.language;
+  if(language == "de"){
+    openInNewTab('http://ip-check.info/?lang=de');
+  }else{
+    openInNewTab('http://ip-check.info/?lang=en');
+  }
+}
+
+function openInNewTab(url) {
+  var win = window.open(url, "_newtab");
+  win.focus();
+}
