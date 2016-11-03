@@ -157,31 +157,17 @@ function checkPrivateTab(PA, ShadowPrefs) {
         
           if(ShadowPrefs.localStorage.should_clear(tab)){
           
-              console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
+              //console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
             
-              worker = tab.attach({
+              //worker = tab.attach({
             
-                contentScriptFile: require("sdk/self").data.url("js/localStorage.js")
+                //contentScriptFile: require("sdk/self").data.url("js/localStorage.js")
             
-              });
-            
-              worker.port.on("proceed", function(message){
-            
-                if(message == "YES"){
-              
-                  console.log("storage is cleared, but to late :(");
-                  
-                  ShadowPrefs.localStorage.cleared(tab);
-                
-                }
-                else{
-                  console.log("no local storage for me :/");
-                }
-            
-              });
+              //});
           
           }
       
+          // 'ShadowPrefs.localStorage.is_different_domain(tab)' is still important!! see definition
           if(ShadowPrefs.localStorage.is_different_domain(tab)){
           
             //worker = tab.attach({

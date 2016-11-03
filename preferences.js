@@ -884,6 +884,24 @@ var localStorage = {
   
   },
   
+  httpChannel_should_clear: function(url){
+  
+    url = this.get_host_from_url(url);
+  
+    for(var i = 0; i < this.need_to_clear.length; i++){
+    
+      if(this.need_to_clear[i] == url){
+      
+        return true;
+      
+      }
+    
+    }
+    
+    return false;
+  
+  },
+  
   host_known: function(host){
   
     for(var i = 0; i < this.need_to_clear.length; i++){
@@ -905,6 +923,25 @@ var localStorage = {
     var temp_array = [];
     var host = this.get_host_from_url(tab.url);
   
+    for(var i = 0; i < this.need_to_clear.length; i++){
+    
+      if(this.need_to_clear[i] != host){
+      
+        temp_array.push(host);
+      
+      }
+    
+    }
+    
+    need_to_clear = temp_array;
+  
+  },
+  
+  httpChannel_cleared: function(url){
+  
+    var temp_array = [];
+    var host = this.get_host_from_url(url);
+    
     for(var i = 0; i < this.need_to_clear.length; i++){
     
       if(this.need_to_clear[i] != host){

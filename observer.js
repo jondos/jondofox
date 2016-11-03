@@ -284,6 +284,63 @@ function clearReferer(httpChannel){
 
 }
 
+function clear_tabName(httpChannel){
+
+  if(ShadowPrefs.localStorage.is_different_domain_httpChannel(httpChannel.URI.spec, getCurrentTab(httpChannel).id)){
+            
+    try{
+            
+      var options = {
+        contentScript: 'if(window.name != \'\'){ window.name = \'\'; }'
+      };
+            
+      let { Worker } = require("sdk/tabs/worker");
+      Worker(options,
+        //require("sdk/tabs/utils").getTabContentWindow(getCurrentTab(httpChannel))
+        // dont using the above line cause its causing errors, using our own way... (which does exactly the same as far as i know)
+        getTabBrowser(httpChannel).contentWindow
+            
+      );
+            
+    }
+    catch(e){
+            
+      console.log(e);
+            
+    }
+          
+  }
+
+}
+
+function clear_localStorage(httpChannel){
+
+  if(ShadowPrefs.localStorage.is_different_domain_httpChannel(httpChannel.URI.spec, getCurrentTab(httpChannel).id) && ShadowPrefs.localStorage.httpChannel_should_clear(httpChannel.URI.spec)){
+  
+    try{
+    
+      var options = {
+        contentScriptFile: require("sdk/self").data.url("js/localStorage.js")
+      };
+      
+      let { Worker } = require("sdk/tabs/worker");
+      Worker(options,
+        getTabBrowser(httpChannel).contentWindow
+      );
+      
+      ShadowPrefs.localStorage.httpChannel_cleared(httpChannel.URI.spec);
+    
+    }
+    catch(e){
+    
+      console.log(e);
+    
+    }
+  
+  }
+
+}
+
 /*
 * The observer to get the 'http-on-examine-response' trigger used to intercept
 * incoming HTTP Headers (so we can remove the 'WWW-Authenticate' Header flag
@@ -342,6 +399,11 @@ var httpRequestObserver = {
       if(parentHost && parentHost != httpChannel.URI.host){
 
           httpChannel = clearReferer(httpChannel);
+          
+          clear_tabName(httpChannel);
+          // adding the above line to this section seems to fix the timing problem somehow..
+          
+          clear_localStorage(httpChannel);
 
       }
       else if(parentHost && parentHost == httpChannel.URI.host){
@@ -361,39 +423,9 @@ var httpRequestObserver = {
           
           httpChannel = clearReferer(httpChannel);
           
-          if(ShadowPrefs.localStorage.is_different_domain_httpChannel(httpChannel.URI.spec, getCurrentTab(httpChannel).id)){
+          clear_tabName(httpChannel);
           
-            //console.log("DETECTED BY OBSERVER");
-            
-            try{
-            
-              var options = {
-                contentScript: 'if(window.name != \'\'){ window.name = \'\'; }'
-              };
-            
-              let { Worker } = require("sdk/tabs/worker");
-              Worker(
-            
-                options,
-                //require("sdk/tabs/utils").getTabContentWindow(getCurrentTab(httpChannel))
-                // dont using the above line cause its causing errors, using our own way... (which does exactly the same as far as i know)
-                getTabBrowser(httpChannel).contentWindow
-            
-              );
-            
-            }
-            catch(e){
-            
-              console.log(e);
-            
-            }
-          
-          }
-          else{
-          
-            //console.log("[+] some of this url's is making the ip check red: " + httpChannel.URI.spec);
-          
-          }
+          clear_localStorage(httpChannel);
       
       }
 
