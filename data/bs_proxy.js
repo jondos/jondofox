@@ -367,12 +367,18 @@ var proxyService = {
 
   setProxyIfWasEnabledInDefault : function setProxyIfWasEnabledInDefault(){
     this.createDefaultBackup();
-    if(require("sdk/preferences/service").get("network.proxy.type") == 5){
-      this.createDefaultProxy();
-      this.setProxy("default");
-    }else if(require("sdk/preferences/service").get("network.proxy.type") == 0){
-      this.setProxy("no");
+
+    if(require("sdk/preferences/service").set("extensions.jondofox.proxy.choice") == "default"){
+      if(require("sdk/preferences/service").get("network.proxy.type") == 5){
+        this.createDefaultProxy();
+        this.setProxy("default");
+      }else if(require("sdk/preferences/service").get("network.proxy.type") == 0){
+        this.setProxy("no");
+      }
+    }else{
+      this.setProxy(require("sdk/preferences/service").set("extensions.jondofox.proxy.choice"));
     }
+
   }
 }
 
