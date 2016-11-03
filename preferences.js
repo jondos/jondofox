@@ -850,11 +850,17 @@ var localStorage = {
   
   is_different_domain_httpChannel: function(url, tabID){
   
+    var host = this.get_host_from_url(url);
+  
     for(var i = 0; i < this.tab_data.length; i++){
     
       if(tabID == this.tab_data[i][1]){
       
         if(this.get_host_from_url(url) != this.tab_data[i][0]){
+        
+          if(!this.host_known(host)){
+            this.need_to_clear.push(host);
+          }
         
           return true;
         
