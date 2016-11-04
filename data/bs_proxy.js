@@ -368,7 +368,7 @@ var proxyService = {
   setProxyIfWasEnabledInDefault : function setProxyIfWasEnabledInDefault(){
     this.createDefaultBackup();
 
-    if(require("sdk/preferences/service").set("extensions.jondofox.proxy.choice") == "default"){
+    if(require("sdk/preferences/service").get("extensions.jondofox.proxy.choice") == "default"){
       if(require("sdk/preferences/service").get("network.proxy.type") == 5){
         this.createDefaultProxy();
         this.setProxy("default");
@@ -376,7 +376,7 @@ var proxyService = {
         this.setProxy("no");
       }
     }else{
-      this.setProxy(require("sdk/preferences/service").set("extensions.jondofox.proxy.choice"));
+      this.setProxy(require("sdk/preferences/service").get("extensions.jondofox.proxy.choice"));
     }
 
   }

@@ -39,15 +39,17 @@ window.addEventListener('message', function(event) {
         var messageValue = messageArray[0]
         window.document.querySelector('input[value="' + messageValue["proxy.choice"] + '"]').checked = true;
 
-
-        if(messageValue["proxy.isPrivateBrowsing"]){
-          var inputsProxyChoice = window.document.querySelectorAll('input[name="proxy.choice"]');
+        console.log(messageValue["proxy.isPrivateBrowsing"]);
+        var inputsProxyChoice = window.document.querySelectorAll('input[name="proxy.choice"]');
+        if(messageValue["proxy.isPrivateBrowsing"] == "true" || messageValue["proxy.isPrivateBrowsing"] == true){
           for (index = 0; index < inputsProxyChoice.length; ++index) {
               inputsProxyChoice[index].disabled=false;
           }
-        }else{
+        }
+        if(messageValue["proxy.isPrivateBrowsing"] == "false" || messageValue["proxy.isPrivateBrowsing"] == false){
           for (index = 0; index < inputsProxyChoice.length; ++index) {
-              inputsProxyChoice[index].disabled=true;
+
+              inputsProxyChoice[index].disabled= true;
           }
         }
       }, false);

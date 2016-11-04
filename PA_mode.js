@@ -131,57 +131,59 @@ function checkPrivateTab(PA, ShadowPrefs) {
     PA.PA.InitialCheckIfOneTabIsPrivate(ShadowPrefs);
 
     tabs.on('open', function(tab) {
-    
+
         if (require("sdk/private-browsing").isPrivate(tab) && !( require("sdk/preferences/service").get("extensions.jondofox.privateMode" ))) {
             PA.PA.setPAMode(ShadowPrefs);
+            console.log("set P Mode");
             windows.on('resize', function(window) {
               console.log("resize");
             });
             console.log("test");
         }else if (!require("sdk/private-browsing").isPrivate(tab) && ( require("sdk/preferences/service").get("extensions.jondofox.privateMode" ))){
           PA.PA.setDMode(ShadowPrefs)
+          console.log("set D Mode");
         }
 
     });
 
     tabs.on('ready', function(tab) {
-    
+
       if(require("sdk/private-browsing").isPrivate(tab) && (require("sdk/preferences/service").get("extensions.jondofox.privateMode"))){
 
         if(!ShadowPrefs.localStorage.is_known(tab)){
-      
+
           ShadowPrefs.localStorage.add(tab);
-      
+
         }
         else{
-        
+
           if(ShadowPrefs.localStorage.should_clear(tab)){
-          
+
               //console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
-            
+
               //worker = tab.attach({
-            
+
                 //contentScriptFile: require("sdk/self").data.url("js/localStorage.js")
-            
+
               //});
-          
+
           }
-      
+
           // 'ShadowPrefs.localStorage.is_different_domain(tab)' is still important!! see definition
           if(ShadowPrefs.localStorage.is_different_domain(tab)){
-          
+
             //worker = tab.attach({
               // clear window.name here
               //contentScript: 'if(window.name != \'\'){ window.name = \'\'; }'
-        
+
             //});
-        
+
           }
-      
+
         }
-      
+
       }
-    
+
     });
 
     tabs.on('close', function(tab) {
@@ -198,6 +200,9 @@ function checkPrivateTab(PA, ShadowPrefs) {
         if (i == 0 && require("sdk/preferences/service").get("extensions.jondofox.privateMode" )) {
             console.log("set D Mode");
             PA.PA.setDMode(ShadowPrefs);
+        }else{
+            console.log("set P Mode");
+            PA.PA.setPAMode(ShadowPrefs);
         }
 
     });

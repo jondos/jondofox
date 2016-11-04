@@ -70,10 +70,12 @@ function getPanelCall(jsonParamters) {
     }
     // if key is proxyChoice
     if (null != jsonParamters.proxyChoice) {
-        require("sdk/preferences/service").set("extensions.jondofox.proxy.choice" , jsonParamters.proxyChoice);
-        if(require("sdk/preferences/service").get("extensions.jondofox.privateMode")){
-          proxy.proxyService.setProxy(jsonParamters.proxyChoice);
-        }
+        if(jsonParamters.proxyChoice != undefined){
+          require("sdk/preferences/service").set("extensions.jondofox.proxy.choice" , jsonParamters.proxyChoice);
+          if(require("sdk/preferences/service").get("extensions.jondofox.privateMode")){
+            proxy.proxyService.setProxy(jsonParamters.proxyChoice);
+          }
+        }  
     }
 }
 
@@ -135,6 +137,7 @@ function handleChange(state) {
         var panelmenuInitParameter = [];
         var obj = {};
         obj["proxy.choice"] = require("sdk/preferences/service").get("extensions.jondofox.proxy.choice");
+        console.log(obj["proxy.choice"]);
         obj["proxy.isPrivateBrowsing"] = require("sdk/preferences/service").get("extensions.jondofox.privateMode");
         panelmenuInitParameter.push(obj);
         //panelmenu.port.emit("menuAction", panelmenuInitParameter);
