@@ -652,9 +652,22 @@ var SPref = {
 
           for(var i = 0; i < this.important_prefs.length; i++){
 
-              var tempPref = "extensions.jondofox." + this.important_prefs[i][0];
+              //var tempPref = "extensions.jondofox." + this.important_prefs[i][0];
 
-              require("sdk/preferences/service").set(tempPref, this.getSPValue(this.important_prefs[i][0], 1));
+              //require("sdk/preferences/service").set(tempPref, this.getSPValue(this.important_prefs[i][0], 1));
+              
+              var pref = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService);
+              pref = pref.getDefaultBranch("extensions.jondofox.");
+              
+              if (typeof(this.getSPValue(this.important_prefs[i][0], 1)) == "boolean"){
+                pref.setBoolPref(this.important_prefs[i][0], this.getSPValue(this.important_prefs[i][0], 1));
+              }
+              else if(typeof(this.getSPValue(this.important_prefs[i][0], 1)) == "number"){
+                pref.setIntPref(this.important_prefs[i][0], this.getSPValue(this.important_prefs[i][0], 1));
+              }
+              else if(typeof(this.getSPValue(this.important_prefs[i][0], 1)) == "string"){
+                pref.setCharPref(this.important_prefs[i][0], this.getSPValue(this.important_prefs[i][0], 1));
+              }
 
           }
 
