@@ -740,9 +740,21 @@ var SPref = {
           
               var tempPref = "extensions.jondofox.crashbackup." + this.important_prefs[i][0];
               
+              var pref = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService);
+              pref = pref.getDefaultBranch("extensions.jondofox.");
+              
               if(this.getSPValue(this.important_prefs[i][0], 0) != undefined && this.getSPValue(this.important_prefs[i][0], 0) != ""){
               
-                  require("sdk/preferences/service").set(tempPref, this.getSPValue(this.important_prefs[i][0], 0));
+                  //require("sdk/preferences/service").set(tempPref, this.getSPValue(this.important_prefs[i][0], 0));
+                  if(typeof(this.getSPValue(this.important_prefs[i][0], 0)) == "boolean"){
+                    pref.setBoolPref(tempPref, this.getSPValue(this.important_prefs[i][0], 0));
+                  }
+                  else if(typeof(this.getSPValue(this.important_prefs[i][0], 0)) == "number"){
+                    pref.setIntPref(tempPref, this.getSPValue(this.important_prefs[i][0], 0));
+                  }
+                  else if(typeof(this.getSPValue(this.important_prefs[i][0], 0)) == "string"){
+                    pref.setCharPref(tempPref, this.getSPValue(this.important_prefs[i][0], 0));
+                  }
               
               }
           
