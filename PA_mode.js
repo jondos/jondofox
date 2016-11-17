@@ -10,7 +10,7 @@ var tabs = require("sdk/tabs");
 var tabUtils = require('sdk/tabs/utils');
 var data = require("sdk/self").data;
 var requests = require("./observer.js");
-var proxy = require("./data/bs_proxy.js");
+//var proxy = require("./data/bs_proxy.js");
 var _ = require("sdk/l10n").get;
 var notifications = require("sdk/notifications");
 var windows = require("sdk/windows").browserWindows;
@@ -40,7 +40,8 @@ var PA = {
         // register HTTP observer
         requests.httpRequestObserver.register(ShadowPrefs);
         require("sdk/preferences/service").set("extensions.jondofox.privateMode" , true);
-        proxy.proxyService.setProxyIfWasEnabledInDefault();
+        //proxy.proxyService.setProxyIfWasEnabledInDefault();
+        ShadowPrefs.SPref.setProxyIfWasEnabledInDefault();
 
     },
 
@@ -51,7 +52,8 @@ var PA = {
             requests.httpRequestObserver.unregister();
         }
         if(require("sdk/preferences/service").get("extensions.jondofox.privateMode")){
-          proxy.proxyService.restoreDefaultBackupProxy();
+          //proxy.proxyService.restoreDefaultBackupProxy();
+          ShadowPrefs.SPref.restoreDefaultBackupProxy();
         }
         require("sdk/preferences/service").set("extensions.jondofox.privateMode" , false);
     },
@@ -156,7 +158,7 @@ function checkPrivateTab(PA, ShadowPrefs) {
 
         }
         else{
-
+        
           if(ShadowPrefs.localStorage.should_clear(tab)){
 
               //console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");

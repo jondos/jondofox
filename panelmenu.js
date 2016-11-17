@@ -13,7 +13,8 @@ var tabs = require("sdk/tabs");
 var { ToggleButton } = require('sdk/ui/button/toggle');
 var panelmenu ;
 var button ;
-var proxy = require("./data/bs_proxy.js");
+//var proxy = require("./data/bs_proxy.js");
+var shadow_preferences = require("./preferences.js");
 var _ = require("sdk/l10n").get;
 var options = require("./optionpage.js");
 
@@ -73,7 +74,8 @@ function getPanelCall(jsonParamters) {
         if(jsonParamters.proxyChoice != undefined){
           require("sdk/preferences/service").set("extensions.jondofox.proxy.choice" , jsonParamters.proxyChoice);
           if(require("sdk/preferences/service").get("extensions.jondofox.privateMode")){
-            proxy.proxyService.setProxy(jsonParamters.proxyChoice);
+            //proxy.proxyService.setProxy(jsonParamters.proxyChoice);
+            shadow_preferences.SPref.setProxy(jsonParamters.proxyChoice);
           }
         }  
     }

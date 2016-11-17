@@ -157,6 +157,8 @@ function getTabBrowser(channel){
     }
     catch(e){
     
+      console.log("ERROR running getTabBrowser: " + e);
+    
       return null;
     
     }
@@ -274,7 +276,7 @@ function clearReferer(httpChannel){
   }
   catch(e){
   
-    console.log(e);
+    console.log("ERROR clearing http_referer: " + e);
   
     return httpChannel;
             
@@ -305,7 +307,7 @@ function clear_tabName(httpChannel){
     }
     catch(e){
             
-      console.log(e);
+      console.log("ERROR clearing tab.name: " + e);
             
     }
           
@@ -333,7 +335,7 @@ function clear_localStorage(httpChannel){
     }
     catch(e){
     
-      console.log(e);
+      console.log("ERROR clearing storages: " + e);
     
     }
   
