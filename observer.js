@@ -370,10 +370,14 @@ var httpRequestObserver = {
         // If the 'WWW-Authenticate' Header is set
         try{
           if(httpChannel.getResponseHeader("WWW-Authenticate") != 0x80040111){
+          
+            if(getShadowPref().SPref.getSPValue("protect_auth_id", 1)){
+            
+              console.log("[i] Blocked Auth-ID: " + httpChannel.getResponseHeader("WWW-Authenticate"));
 
-            console.log("[i] Blocked Auth-ID: " + httpChannel.getResponseHeader("WWW-Authenticate"));
-
-            httpChannel.setResponseHeader("WWW-Authenticate", null, false);
+              httpChannel.setResponseHeader("WWW-Authenticate", null, false);
+            
+            }
 
           }
         }
@@ -394,18 +398,27 @@ var httpRequestObserver = {
       var httpChannel = subject.QueryInterface(Ci.nsIHttpChannel);
 
       var parentHost = getParentHost(httpChannel);
-      
-      var ShadowPrefs = getShadowPref();
 
       // If its a third-party Website
       if(parentHost && parentHost != httpChannel.URI.host){
 
-          httpChannel = clearReferer(httpChannel);
+          if(getShadowPref().SPref.getSPValue("hide_referer", 1)){
           
-          clear_tabName(httpChannel);
-          // adding the above line to this section seems to fix the timing problem somehow..
+            httpChannel = clearReferer(httpChannel);
           
-          clear_localStorage(httpChannel);
+          }
+          
+          if(getShadowPref().SPref.getSPValue("protect_tab_name", 1)){
+          
+            clear_tabName(httpChannel);
+          
+          }
+          
+          if(getShadowPref().SPref.getSPValue("protect_local_session_storage", 1)){
+          
+            clear_localStorage(httpChannel);
+          
+          }
 
       }
       else if(parentHost && parentHost == httpChannel.URI.host){
@@ -413,9 +426,13 @@ var httpRequestObserver = {
           if(require("sdk/preferences/service").get("extensions.jondofox.proxy.choice") == "jondo"){
             
               try{
-
-                  httpChannel.setRequestHeader("Proxy-Connection", "close", false);
-                  httpChannel.setRequestHeader("Connection", "close", false);
+              
+                  if(getShadowPref().SPref.getSPValue("stateless_http_session", 1)){
+                  
+                    httpChannel.setRequestHeader("Proxy-Connection", "close", false);
+                    httpChannel.setRequestHeader("Connection", "close", false);
+                  
+                  }
               
               }
               catch(e){
@@ -423,18 +440,35 @@ var httpRequestObserver = {
           
           }
           
-          httpChannel = clearReferer(httpChannel);
+          if(getShadowPref().SPref.getSPValue("hide_referer", 1)){
           
-          clear_tabName(httpChannel);
+            httpChannel = clearReferer(httpChannel);
           
-          clear_localStorage(httpChannel);
+          }
+          
+          if(getShadowPref().SPref.getSPValue("protect_tab_name", 1)){
+          
+            clear_tabName(httpChannel);
+          
+          }
+          
+          if(getShadowPref().SPref.getSPValue("protect_local_session_storage", 1)){
+          
+            clear_localStorage(httpChannel);
+          
+          }
       
       }
 
       //If Content-Type Header is not correctly set
       try{
          if(httpChannel.getRequestHeader("Accept") != "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"){
-           httpChannel.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", false);
+         
+           if(getShadowPref().SPref.getSPValue("fake_http_contenttype_header", 1)){
+           
+             httpChannel.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", false);
+           
+           }
 
          }
       }

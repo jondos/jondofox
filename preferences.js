@@ -45,139 +45,150 @@ var SPref = {
       
       this.add("media.peerconnection.enabled", "", false, true, 0);
       
+      // ###### prefs to control our features
+      
+      this.add("protect_auth_id", "", true, true, 2);
+      this.add("stateless_http_session", "", true, true, 2);
+      this.add("hide_referer", "", true, true, 2);
+      this.add("fake_http_contenttype_header", "", true, true, 2);
+      this.add("protect_tab_name", "", true, true, 2);
+      this.add("protect_local_session_storage", "", true, true, 2);
+      
+      // ###### end prefs to control our features
+      
       // ###### init from 'bs_proxy.js' ######
       
       // Privacy preferences
-      this.add("close.normalTabsInPrivateMode", "", true, true, 0);
-      this.add("privateMode", "", false, true, 0);
+      this.add("close.normalTabsInPrivateMode", "", true, true, 1);
+      this.add("privateMode", "", false, true, 1);
 
       // Proxy preferences
 
-      this.add("proxy.choice", "", "default", true, 0);
+      this.add("proxy.choice", "", "default", true, 1);
 
       // custrom backup preferences
-      this.add("proxy.default.backup.autoconfig_retry_interval_max", "", 300, true, 0);
-      this.add("proxy.default.backup.autoconfig_retry_interval_min", "", 5, true, 0);
-      this.add("proxy.default.backup.autoconfig_url", "", "", true, 0);
-      this.add("proxy.default.backup.failover_timeout", "", 1800, true, 0);
-      this.add("proxy.default.backup.ftp", "", "", true, 0);
-      this.add("proxy.default.backup.ftp_port", "", 0, true, 0);
-      this.add("proxy.default.backup.http", "", "", true, 0);
-      this.add("proxy.default.backup.http_port", "", 0, true, 0);
-      this.add("proxy.default.backup.no_proxies_on", "", "localhost, 127.0.0.1", true, 0);
-      this.add("proxy.default.backup.proxy_over_tls", "", true, true, 0);
-      this.add("proxy.default.backup.share_proxy_settings", "", false, true, 0);
-      this.add("proxy.default.backup.socks", "", "", true, 0);
-      this.add("proxy.default.backup.socks_port", "", 0, true, 0);
-      this.add("proxy.default.backup.socks_remote_dns", "", false, true, 0);
-      this.add("proxy.default.backup.socks_version", "", 5, true, 0);
-      this.add("proxy.default.backup.ssl", "", "", true, 0);
-      this.add("proxy.default.backup.ssl_port", "", 0, true, 0);
-      this.add("proxy.default.backup.type", "", 0, true, 0);
+      this.add("proxy.default.backup.autoconfig_retry_interval_max", "", 300, true, 1);
+      this.add("proxy.default.backup.autoconfig_retry_interval_min", "", 5, true, 1);
+      this.add("proxy.default.backup.autoconfig_url", "", "", true, 1);
+      this.add("proxy.default.backup.failover_timeout", "", 1800, true, 1);
+      this.add("proxy.default.backup.ftp", "", "", true, 1);
+      this.add("proxy.default.backup.ftp_port", "", 0, true, 1);
+      this.add("proxy.default.backup.http", "", "", true, 1);
+      this.add("proxy.default.backup.http_port", "", 0, true, 1);
+      this.add("proxy.default.backup.no_proxies_on", "", "localhost, 127.0.0.1", true, 1);
+      this.add("proxy.default.backup.proxy_over_tls", "", true, true, 1);
+      this.add("proxy.default.backup.share_proxy_settings", "", false, true, 1);
+      this.add("proxy.default.backup.socks", "", "", true, 1);
+      this.add("proxy.default.backup.socks_port", "", 0, true, 1);
+      this.add("proxy.default.backup.socks_remote_dns", "", false, true, 1);
+      this.add("proxy.default.backup.socks_version", "", 5, true, 1);
+      this.add("proxy.default.backup.ssl", "", "", true, 1);
+      this.add("proxy.default.backup.ssl_port", "", 0, true, 1);
+      this.add("proxy.default.backup.type", "", 0, true, 1);
 
       //Proxy preferences no
-      this.add("proxy.no.backup.autoconfig_retry_interval_max", "", 300, true, 0);
-      this.add("proxy.no.backup.autoconfig_retry_interval_min", "", 5, true, 0);
-      this.add("proxy.no.backup.autoconfig_url", "", "", true, 0);
-      this.add("proxy.no.backup.failover_timeout", "", 1800, true, 0);
-      this.add("proxy.no.backup.ftp", "", "", true, 0);
-      this.add("proxy.no.backup.ftp_port", "", 0, true, 0);
-      this.add("proxy.no.backup.http", "", "", true, 0);
-      this.add("proxy.no.backup.http_port", "", 0, true, 0);
-      this.add("proxy.no.backup.no_proxies_on", "", "localhost, 127.0.0.1", true, 0);
-      this.add("proxy.no.backup.proxy_over_tls", "", true, true, 0);
-      this.add("proxy.no.backup.share_proxy_settings", "", false, true, 0);
-      this.add("proxy.no.backup.socks", "", "", true, 0);
-      this.add("proxy.no.backup.socks_port", "", 0, true, 0);
-      this.add("proxy.no.backup.socks_remote_dns", "", false, true, 0);
-      this.add("proxy.no.backup.socks_version", "", 5, true, 0);
-      this.add("proxy.no.backup.ssl", "", "", true, 0);
-      this.add("proxy.no.backup.ssl_port", "", 0, true, 0);
-      this.add("proxy.no.backup.type", "", 0, true, 0);
+      this.add("proxy.no.backup.autoconfig_retry_interval_max", "", 300, true, 1);
+      this.add("proxy.no.backup.autoconfig_retry_interval_min", "", 5, true, 1);
+      this.add("proxy.no.backup.autoconfig_url", "", "", true, 1);
+      this.add("proxy.no.backup.failover_timeout", "", 1800, true, 1);
+      this.add("proxy.no.backup.ftp", "", "", true, 1);
+      this.add("proxy.no.backup.ftp_port", "", 0, true, 1);
+      this.add("proxy.no.backup.http", "", "", true, 1);
+      this.add("proxy.no.backup.http_port", "", 0, true, 1);
+      this.add("proxy.no.backup.no_proxies_on", "", "localhost, 127.0.0.1", true, 1);
+      this.add("proxy.no.backup.proxy_over_tls", "", true, true, 1);
+      this.add("proxy.no.backup.share_proxy_settings", "", false, true, 1);
+      this.add("proxy.no.backup.socks", "", "", true, 1);
+      this.add("proxy.no.backup.socks_port", "", 0, true, 1);
+      this.add("proxy.no.backup.socks_remote_dns", "", false, true, 1);
+      this.add("proxy.no.backup.socks_version", "", 5, true, 1);
+      this.add("proxy.no.backup.ssl", "", "", true, 1);
+      this.add("proxy.no.backup.ssl_port", "", 0, true, 1);
+      this.add("proxy.no.backup.type", "", 0, true, 1);
 
       // Proxy preferences default
-      this.add("proxy.default.autoconfig_retry_interval_max", "", 300, true, 0);
-      this.add("proxy.default.autoconfig_retry_interval_min", "", 5, true, 0);
-      this.add("proxy.default.autoconfig_url", "", "", true, 0);
-      this.add("proxy.default.failover_timeout", "", 1800, true, 0);
-      this.add("proxy.default.ftp", "", "", true, 0);
-      this.add("proxy.default.ftp_port", "", 0, true, 0);
-      this.add("proxy.default.http", "", "", true, 0);
-      this.add("proxy.default.http_port", "", 0, true, 0);
-      this.add("proxy.default.no_proxies_on", "", "localhost, 127.0.0.1", true, 0);
-      this.add("proxy.default.proxy_over_tls", "", true, true, 0);
-      this.add("proxy.default.share_proxy_settings", "", false, true, 0);
-      this.add("proxy.default.socks", "", "", true, 0);
-      this.add("proxy.default.socks_port", "", 0, true, 0);
-      this.add("proxy.default.socks_remote_dns", "", false, true, 0);
-      this.add("proxy.default.socks_version", "", 5, true, 0);
-      this.add("proxy.default.ssl", "", "", true, 0);
-      this.add("proxy.default.ssl_port", "", 0, true, 0);
-      this.add("proxy.default.type", "", 0, true, 0);
+      this.add("proxy.default.autoconfig_retry_interval_max", "", 300, true, 1);
+      this.add("proxy.default.autoconfig_retry_interval_min", "", 5, true, 1);
+      this.add("proxy.default.autoconfig_url", "", "", true, 1);
+      this.add("proxy.default.failover_timeout", "", 1800, true, 1);
+      this.add("proxy.default.ftp", "", "", true, 1);
+      this.add("proxy.default.ftp_port", "", 0, true, 1);
+      this.add("proxy.default.http", "", "", true, 1);
+      this.add("proxy.default.http_port", "", 0, true, 1);
+      this.add("proxy.default.no_proxies_on", "", "localhost, 127.0.0.1", true, 1);
+      this.add("proxy.default.proxy_over_tls", "", true, true, 1);
+      this.add("proxy.default.share_proxy_settings", "", false, true, 1);
+      this.add("proxy.default.socks", "", "", true, 1);
+      this.add("proxy.default.socks_port", "", 0, true, 1);
+      this.add("proxy.default.socks_remote_dns", "", false, true, 1);
+      this.add("proxy.default.socks_version", "", 5, true, 1);
+      this.add("proxy.default.ssl", "", "", true, 1);
+      this.add("proxy.default.ssl_port", "", 0, true, 1);
+      this.add("proxy.default.type", "", 0, true, 1);
 
       // Proxy preferences custom
-      this.add("proxy.custom.label", "", "", true, 0);
-      this.add("proxy.custom.user_agent", "", "normal", true, 0);
-      this.add("proxy.custom.proxyKeepAlive", "", true, true, 0);
-      this.add("proxy.custom.autoconfig_retry_interval_max", "", 300, true, 0);
-      this.add("proxy.custom.autoconfig_retry_interval_min", "", 5, true, 0);
-      this.add("proxy.custom.autoconfig_url", "", "", true, 0);
-      this.add("proxy.custom.failover_timeout", "", 1800, true, 0);
-      this.add("proxy.custom.ftp", "", "", true, 0);
-      this.add("proxy.custom.ftp_port", "", 00000, true, 0);
-      this.add("proxy.custom.http", "", "", true, 0);
-      this.add("proxy.custom.http_port", "", 00000, true, 0);
-      this.add("proxy.custom.no_proxies_on", "", "localhost, 127.0.0.1", true, 0);
-      this.add("proxy.custom.proxy_over_tls", "", true, true, 0);
-      this.add("proxy.custom.share_proxy_settings", "", true, true, 0);
-      this.add("proxy.custom.socks", "", "", true, 0);
-      this.add("proxy.custom.socks_port", "", 00000, true, 0);
-      this.add("proxy.custom.socks_remote_dns", "", false, true, 0);
-      this.add("proxy.custom.socks_version", "", 5, true, 0);
-      this.add("proxy.custom.ssl", "", "", true, 0);
-      this.add("proxy.custom.ssl_port", "", 00000, true, 0);
-      this.add("proxy.custom.type", "", 1, true, 0);
+      this.add("proxy.custom.label", "", "", true, 1);
+      this.add("proxy.custom.user_agent", "", "normal", true, 1);
+      this.add("proxy.custom.proxyKeepAlive", "", true, true, 1);
+      this.add("proxy.custom.autoconfig_retry_interval_max", "", 300, true, 1);
+      this.add("proxy.custom.autoconfig_retry_interval_min", "", 5, true, 1);
+      this.add("proxy.custom.autoconfig_url", "", "", true, 1);
+      this.add("proxy.custom.failover_timeout", "", 1800, true, 1);
+      this.add("proxy.custom.ftp", "", "", true, 1);
+      this.add("proxy.custom.ftp_port", "", 00000, true, 1);
+      this.add("proxy.custom.http", "", "", true, 1);
+      this.add("proxy.custom.http_port", "", 00000, true, 1);
+      this.add("proxy.custom.no_proxies_on", "", "localhost, 127.0.0.1", true, 1);
+      this.add("proxy.custom.proxy_over_tls", "", true, true, 1);
+      this.add("proxy.custom.share_proxy_settings", "", true, true, 1);
+      this.add("proxy.custom.socks", "", "", true, 1);
+      this.add("proxy.custom.socks_port", "", 00000, true, 1);
+      this.add("proxy.custom.socks_remote_dns", "", false, true, 1);
+      this.add("proxy.custom.socks_version", "", 5, true, 1);
+      this.add("proxy.custom.ssl", "", "", true, 1);
+      this.add("proxy.custom.ssl_port", "", 00000, true, 1);
+      this.add("proxy.custom.type", "", 1, true, 1);
 
       // Proxy preferences JonDoFox
-      this.add("proxy.jondo.autoconfig_retry_interval_max", "", 300, true, 0);
-      this.add("proxy.jondo.autoconfig_retry_interval_min", "", 5, true, 0);
-      this.add("proxy.jondo.autoconfig_url", "", "", true, 0);
-      this.add("proxy.jondo.failover_timeout", "", 1800, true, 0);
-      this.add("proxy.jondo.ftp", "", "127.0.01", true, 0);
-      this.add("proxy.jondo.ftp_port", "", 4001, true, 0);
-      this.add("proxy.jondo.http", "", "127.0.0.1", true, 0);
-      this.add("proxy.jondo.http_port", "", 4001, true, 0);
-      this.add("proxy.jondo.no_proxies_on", "", "localhost,127.0.0.1", true, 0);
-      this.add("proxy.jondo.proxy_over_tls", "", true, true, 0);
-      this.add("proxy.jondo.share_proxy_settings", "", true, true, 0);
-      this.add("proxy.jondo.socks", "", "127.0.0.1", true, 0);
-      this.add("proxy.jondo.socks_port", "", 4001, true, 0);
-      this.add("proxy.jondo.socks_remote_dns", "", true, true, 0);
-      this.add("proxy.jondo.socks_version", "", 5, true, 0);
-      this.add("proxy.jondo.ssl", "", "127.0.0.1", true, 0);
-      this.add("proxy.jondo.ssl_port", "", 4001, true, 0);
-      this.add("proxy.jondo.type", "", 1, true, 0);
+      this.add("proxy.jondo.autoconfig_retry_interval_max", "", 300, true, 1);
+      this.add("proxy.jondo.autoconfig_retry_interval_min", "", 5, true, 1);
+      this.add("proxy.jondo.autoconfig_url", "", "", true, 1);
+      this.add("proxy.jondo.failover_timeout", "", 1800, true, 1);
+      this.add("proxy.jondo.ftp", "", "127.0.01", true, 1);
+      this.add("proxy.jondo.ftp_port", "", 4001, true, 1);
+      this.add("proxy.jondo.http", "", "127.0.0.1", true, 1);
+      this.add("proxy.jondo.http_port", "", 4001, true, 1);
+      this.add("proxy.jondo.no_proxies_on", "", "localhost,127.0.0.1", true, 1);
+      this.add("proxy.jondo.proxy_over_tls", "", true, true, 1);
+      this.add("proxy.jondo.share_proxy_settings", "", true, true, 1);
+      this.add("proxy.jondo.socks", "", "127.0.0.1", true, 1);
+      this.add("proxy.jondo.socks_port", "", 4001, true, 1);
+      this.add("proxy.jondo.socks_remote_dns", "", true, true, 1);
+      this.add("proxy.jondo.socks_version", "", 5, true, 1);
+      this.add("proxy.jondo.ssl", "", "127.0.0.1", true, 1);
+      this.add("proxy.jondo.ssl_port", "", 4001, true, 1);
+      this.add("proxy.jondo.type", "", 1, true, 1);
 
 
       // Proxy preferences Tor
-      this.add("proxy.tor.autoconfig_retry_interval_max", "", 300, true, 0);
-      this.add("proxy.tor.autoconfig_retry_interval_min", "", 5, true, 0);
-      this.add("proxy.tor.autoconfig_url", "", "", true, 0);
-      this.add("proxy.tor.failover_timeout", "", 1800, true, 0);
-      this.add("proxy.tor.ftp", "", "", true, 0);
-      this.add("proxy.tor.ftp_port", "", 0, true, 0);
-      this.add("proxy.tor.http", "", "", true, 0);
-      this.add("proxy.tor.http_port", "", 0, true, 0);
-      this.add("proxy.tor.no_proxies_on", "", "localhost,127.0.0.1", true, 0);
-      this.add("proxy.tor.proxy_over_tls", "", true, true, 0);
-      this.add("proxy.tor.share_proxy_settings", "", false, true, 0);
-      this.add("proxy.tor.socks", "", "127.0.0.1", true, 0);
-      this.add("proxy.tor.socks_port", "", 9050, true, 0);
-      this.add("proxy.tor.socks_remote_dns", "", true, true, 0);
-      this.add("proxy.tor.socks_version", "", 5, true, 0);
-      this.add("proxy.tor.ssl", "", "", true, 0);
-      this.add("proxy.tor.ssl_port", "", 0, true, 0);
-      this.add("proxy.tor.type", "", 1, true, 0);
+      this.add("proxy.tor.autoconfig_retry_interval_max", "", 300, true, 1);
+      this.add("proxy.tor.autoconfig_retry_interval_min", "", 5, true, 1);
+      this.add("proxy.tor.autoconfig_url", "", "", true, 1);
+      this.add("proxy.tor.failover_timeout", "", 1800, true, 1);
+      this.add("proxy.tor.ftp", "", "", true, 1);
+      this.add("proxy.tor.ftp_port", "", 0, true, 1);
+      this.add("proxy.tor.http", "", "", true, 1);
+      this.add("proxy.tor.http_port", "", 0, true, 1);
+      this.add("proxy.tor.no_proxies_on", "", "localhost,127.0.0.1", true, 1);
+      this.add("proxy.tor.proxy_over_tls", "", true, true, 1);
+      this.add("proxy.tor.share_proxy_settings", "", false, true, 1);
+      this.add("proxy.tor.socks", "", "127.0.0.1", true, 1);
+      this.add("proxy.tor.socks_port", "", 9050, true, 1);
+      this.add("proxy.tor.socks_remote_dns", "", true, true, 1);
+      this.add("proxy.tor.socks_version", "", 5, true, 1);
+      this.add("proxy.tor.ssl", "", "", true, 1);
+      this.add("proxy.tor.ssl_port", "", 0, true, 1);
+      this.add("proxy.tor.type", "", 1, true, 1);
       
       // ###### end init from 'bs_proxy.js' ######
 
@@ -324,8 +335,18 @@ var SPref = {
 
           // index 1 cause of xpi version number at 0
           for(var i = 1; i < this.important_prefs.length; i++){
-
-              this.setSPValue(this.important_prefs[i][0], 0, require("sdk/preferences/service").get(this.important_prefs[i][0]));
+          
+              if(this.getSPValue(this.important_prefs[i][0], 3) == 2 && require("sdk/preferences/service").get("extensions.jondofox." + this.important_prefs[i][0]) != undefined){
+              
+                  // because our feature prefs are saved in class 2 and there are no defautl firefox prefs that do match them
+                  this.setSPValue(this.important_prefs[i][0], 1, require("sdk/preferences/service").get("extensions.jondofox." + this.important_prefs[i][0]));
+              
+              }
+              else{
+              
+                  this.setSPValue(this.important_prefs[i][0], 0, require("sdk/preferences/service").get(this.important_prefs[i][0]));
+              
+              }
 
           }
 
