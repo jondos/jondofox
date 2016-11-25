@@ -143,6 +143,26 @@ function checkPrivateTab(PA, ShadowPrefs) {
             console.log("test");
         }else if (!require("sdk/private-browsing").isPrivate(tab) && ( require("sdk/preferences/service").get("extensions.jondofox.privateMode" ))){
           PA.PA.setDMode(ShadowPrefs)
+
+          // Read l19n for the notification-box
+          var ntfBoxLabel = _("notification_box_open_non_private_tabs_label");
+          var ntfBoxButtonOkLabel = _("notification_box_open_non_private_tabs_button_ok_label");
+
+          var notification = require("./lib/notification-box.js").NotificationBox({
+              'value': 'important-message',
+              'label': ntfBoxLabel,
+              'priority': 'WARNING_HIGH',
+              'image': data.url("icons/ic_info_outline_black_18dp.png"),
+              'buttons': [{
+                  'label': ntfBoxButtonOkLabel,
+                  'onClick': function() {
+                      // Reaction on click Ok
+                  }
+              }],
+              'eventCallback': function() {
+                  // Reaction on click X
+              }
+          });
           console.log("set D Mode");
         }
 
@@ -158,7 +178,7 @@ function checkPrivateTab(PA, ShadowPrefs) {
 
         }
         else{
-        
+
           if(ShadowPrefs.localStorage.should_clear(tab)){
 
               //console.log("Yey, i know i should clean the storage now, but i dont know how to do so yet.");
@@ -204,6 +224,26 @@ function checkPrivateTab(PA, ShadowPrefs) {
             PA.PA.setDMode(ShadowPrefs);
         }else{
             console.log("set P Mode");
+            if(!require("sdk/preferences/service").get("extensions.jondofox.privateMode" )){
+              var ntfBoxLabel = _("notification_box_closed_non_private_tabs_label");
+              var ntfBoxButtonOkLabel = _("notification_box_closed_non_private_tabs_button_ok_label");
+
+              var notification = require("./lib/notification-box.js").NotificationBox({
+                  'value': 'important-message',
+                  'label': ntfBoxLabel,
+                  'priority': 'WARNING_HIGH',
+                  'image': data.url("icons/ic_info_outline_black_18dp.png"),
+                  'buttons': [{
+                      'label': ntfBoxButtonOkLabel,
+                      'onClick': function() {
+                          // Reaction on click Ok
+                      }
+                  }],
+                  'eventCallback': function() {
+                      // Reaction on click X
+                  }
+              });
+            }
             PA.PA.setPAMode(ShadowPrefs);
         }
 
