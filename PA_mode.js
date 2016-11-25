@@ -224,7 +224,7 @@ function checkPrivateTab(PA, ShadowPrefs) {
         if (i == 0 && require("sdk/preferences/service").get("extensions.jondofox.privateMode" )) {
             console.log("set D Mode");
             PA.PA.setDMode(ShadowPrefs);
-        }else if(j > 1){
+        }else if(j > 0){
             console.log("set P Mode");
             if(!require("sdk/preferences/service").get("extensions.jondofox.privateMode" )){
               var ntfBoxLabel = _("notification_box_closed_non_private_tabs_label");
