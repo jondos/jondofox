@@ -53,6 +53,7 @@ var SPref = {
       this.add("fake_http_contenttype_header", "", true, true, 2);
       this.add("protect_tab_name", "", true, true, 2);
       this.add("protect_local_session_storage", "", true, true, 2);
+      this.add("protect_cache_etags", "", true, true, 2);
       
       // ###### end prefs to control our features
       
@@ -921,6 +922,24 @@ var SPref = {
       
       }
 
+  },
+  
+  clearCache_getService: function(service_type){
+  
+    switch(service_type){
+    
+      case 'cache':
+        return Cc["@mozilla.org/netwerk/cache-storage-service;1"].getService(Ci.nsICacheStorageService);
+      break;
+    
+    }
+  
+  },
+  
+  clearCache_clear: function(){
+  
+    this.clearCache_getService('cache').clear();
+  
   },
   
   // ###### from 'bs_proxy.js' ########

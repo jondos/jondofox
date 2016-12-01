@@ -419,6 +419,12 @@ var httpRequestObserver = {
             clear_localStorage(httpChannel);
           
           }
+          
+          if(getShadowPref().SPref.getSPValue("protect_cache_etags", 1)){
+          
+            getShadowPref().SPref.clearCache_clear();
+          
+          }
 
       }
       else if(parentHost && parentHost == httpChannel.URI.host){
