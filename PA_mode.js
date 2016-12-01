@@ -42,6 +42,8 @@ var PA = {
         require("sdk/preferences/service").set("extensions.jondofox.privateMode" , true);
         //proxy.proxyService.setProxyIfWasEnabledInDefault();
         ShadowPrefs.SPref.setProxyIfWasEnabledInDefault();
+        
+        ShadowPrefs.SPref.flash_clicktoplay_activate();
 
     },
 
@@ -56,6 +58,8 @@ var PA = {
           ShadowPrefs.SPref.restoreDefaultBackupProxy();
         }
         require("sdk/preferences/service").set("extensions.jondofox.privateMode" , false);
+        
+        ShadowPrefs.SPref.flash_clicktoplay_deactivate();
     },
     showNotificationBoxIfTabIsPrivate: function() {
 

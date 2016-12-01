@@ -942,6 +942,39 @@ var SPref = {
   
   },
   
+  flash_clicktoplay_activate: function(){
+  
+    var pluginHost = Cc["@mozilla.org/plugin/host;1"].getService(Ci.nsIPluginHost);
+    var plugins = pluginHost.getPluginTags();
+    
+    for(var i = 0; i < plugins.length; i++){
+    
+      plugins[i].enabledState = Ci.nsIPluginTag.STATE_CLICKTOPLAY;
+    
+    }
+    
+    // We do not want to show a warning about missing plugins. (from old xpi)
+    require("sdk/preferences/service").set("plugins.hide_infobar_for_missing_plugin", true);
+  
+  },
+  
+  flash_clicktoplay_deactivate: function(){
+  
+    var pluginHost = Cc["@mozilla.org/plugin/host;1"].getService(Ci.nsIPluginHost);
+    var plugins = pluginHost.getPluginTags();
+    
+    for(var i = 0; i < plugins.length; i++){
+    
+      // also for this we need a backupvalue
+      plugins[i].enabledState = Ci.nsIPluginTag.STATE_ENABLED;
+    
+    }
+    
+    // reset (this is no resetting atm, need a backup of potential user value)
+    require("sdk/preferences/service").set("plugins.hide_infobar_for_missing_plugin", false);
+  
+  },
+  
   // ###### from 'bs_proxy.js' ########
   
   setProxy : function setProxy(pProxyName){
