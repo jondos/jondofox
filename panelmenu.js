@@ -77,7 +77,12 @@ function getPanelCall(jsonParamters) {
             //proxy.proxyService.setProxy(jsonParamters.proxyChoice);
             shadow_preferences.SPref.setProxy(jsonParamters.proxyChoice);
           }
-        }  
+        }
+    }
+    // if key is privateBrowsing
+    if (null != jsonParamters.anonymitytest) {
+      console.log(jsonParamters.anonymitytest)
+      openAnonymitytestClick();
     }
 }
 
@@ -99,6 +104,12 @@ function buildPanel(){
   });
 }
 
+function openAnonymitytestClick() {
+    //optionTab.open({url: data.url("options.html")});
+    tabs.open({
+        url: _("option_panelmenu_item_option_anonymtest_link")
+    });
+}
 
 /*
  * Listener button and open the tab

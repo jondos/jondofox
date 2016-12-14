@@ -23,6 +23,13 @@ $( document ).ready(function() {
     event.stopPropagation();
   });
 
+  $("#JonDoFoxLite_openAnonymtest").on( "click", function(event) {
+    var jsonParamters = { "anonymitytest" : true };
+    window.postMessage(jsonParamters , "*");
+    console.log(jsonParamters);
+    event.stopPropagation();
+  });
+
 
 
 // Listener for ContentScript
@@ -55,7 +62,7 @@ window.addEventListener('message', function(event) {
       }, false);
 
 });
-
+// obsolete
 function hrefAnonimityTest(){
   language = navigator.language;
   if(language == "de"){
@@ -64,7 +71,7 @@ function hrefAnonimityTest(){
     openInNewTab('http://ip-check.info/?lang=en');
   }
 }
-
+// obsolete
 function openInNewTab(url) {
   var win = window.open(url, "_newtab");
   win.focus();
