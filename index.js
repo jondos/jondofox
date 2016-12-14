@@ -19,7 +19,13 @@ var shadow_preferences = require("./preferences.js"); //renamed cause of dublica
 var PA = require("./PA_mode.js");
 var PMS = require("./panelmenu.js");
 var _ = require("sdk/l10n").get;
+var aboutPage = require('./aboutCustom.js');
 
+
+/*
+*  Initialize the AboutCustom Page here
+*/
+aboutPage.main();
 /*
  *  Initialize the ShadowPrefs here if needed
  */
@@ -36,7 +42,7 @@ if (shadow_preferences.SPref.check_installation() == -1) {
 
     // read ShadowPref values from about:config
     shadow_preferences.SPref.config_readSPValue();
-    
+
     // check if we crashed in pr mode and if so restore user prefs
     if(shadow_preferences.SPref.crashed){
         shadow_preferences.SPref.restore_backup_after_crash();
@@ -46,19 +52,19 @@ if (shadow_preferences.SPref.check_installation() == -1) {
 
     // some 'extensions.jondofox.*' values are missing or differ from our def values.
     if(shadow_preferences.SPref.check_if_update()){
-    
+
         shadow_preferences.SPref.fix_missing(true);
-    
+
     }
     else{
-    
+
         shadow_preferences.SPref.fix_missing(false);
-    
+
     }
-    
+
     // read ShadowPref values from about:config
     shadow_preferences.SPref.config_readSPValue();
-    
+
     // check if we crashed in pr mode and if so restore user prefs
     if(shadow_preferences.SPref.crashed){
         shadow_preferences.SPref.restore_backup_after_crash();
@@ -101,7 +107,8 @@ exports.onUnload = function (reason){
 
     shadow_preferences.SPref.uninstall();
     //proxy.proxyService.uninstall();
-
   }
+  // remove About Page
+  aboutPage.onUnload();
 
 };
