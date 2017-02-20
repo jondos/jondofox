@@ -1008,20 +1008,6 @@ var SPref = {
 
     }
     
-    var tabs = require("sdk/tabs");
-    
-    for(let tab of tabs){
-        
-        if(tab.index == 0){
-            tab++;
-        }
-        
-        if(tab.id != undefined){
-            tab.close();
-        }
-        
-    }
-    
   },
 
   createDefaultBackup : function createDefaultBackup(){

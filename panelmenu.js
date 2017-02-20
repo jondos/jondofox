@@ -76,6 +76,12 @@ function getPanelCall(jsonParamters) {
           if(require("sdk/preferences/service").get("extensions.jondofox.privateMode")){
             //proxy.proxyService.setProxy(jsonParamters.proxyChoice);
             shadow_preferences.SPref.setProxy(jsonParamters.proxyChoice);
+            
+            for(let tab of tabs){
+                tab.close();
+            }
+            
+            PA.PA.openPrivateWindow();
           }
         }
     }
